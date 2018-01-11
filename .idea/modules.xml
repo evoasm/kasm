@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/kasm-core/kasm-core.iml" filepath="$PROJECT_DIR$/kasm-core/kasm-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kasm-gen/kasm-gen.iml" filepath="$PROJECT_DIR$/kasm-gen/kasm-gen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kasm-native/kasm-native.iml" filepath="$PROJECT_DIR$/kasm-native/kasm-native.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kasm-x64/kasm-x64.iml" filepath="$PROJECT_DIR$/kasm-x64/kasm-x64.iml" />
+    </modules>
+  </component>
+</project>

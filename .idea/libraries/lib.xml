@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES />
+    <JAVADOC />
+    <NATIVE>
+      <root url="file://$PROJECT_DIR$/kasm-native/lib" />
+    </NATIVE>
+    <SOURCES />
+  </library>
+</component>

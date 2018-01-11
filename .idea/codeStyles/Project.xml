@@ -1,0 +1,15 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <JetCodeStyleSettings>
+      <option name="ALIGN_IN_COLUMNS_CASE_BRANCH" value="true" />
+    </JetCodeStyleSettings>
+    <codeStyleSettings language="kotlin">
+      <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
+      <option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true" />
+      <option name="ALIGN_MULTILINE_METHOD_BRACKETS" value="true" />
+      <option name="CALL_PARAMETERS_WRAP" value="5" />
+      <option name="METHOD_PARAMETERS_WRAP" value="5" />
+      <option name="EXTENDS_LIST_WRAP" value="5" />
+    </codeStyleSettings>
+  </code_scheme>
+</component>
