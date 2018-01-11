@@ -10,7 +10,7 @@ extern "C" {
 /*
  * Class:     kasm_NativeBuffer
  * Method:    allocate
- * Signature: (JZ)Ljava/nio/ByteNativeBuffer;
+ * Signature: (JZ)Ljava/nio/ByteBuffer;
  */
 JNIEXPORT jobject JNICALL Java_kasm_NativeBuffer_allocate
   (JNIEnv *, jclass, jlong, jboolean);
@@ -18,7 +18,7 @@ JNIEXPORT jobject JNICALL Java_kasm_NativeBuffer_allocate
 /*
  * Class:     kasm_NativeBuffer
  * Method:    toArray
- * Signature: (Ljava/nio/ByteNativeBuffer;)[B
+ * Signature: (Ljava/nio/ByteBuffer;)[B
  */
 JNIEXPORT jbyteArray JNICALL Java_kasm_NativeBuffer_toArray
   (JNIEnv *, jclass, jobject);
@@ -26,23 +26,31 @@ JNIEXPORT jbyteArray JNICALL Java_kasm_NativeBuffer_toArray
 /*
  * Class:     kasm_NativeBuffer
  * Method:    protect
- * Signature: (Ljava/nio/ByteNativeBuffer;Z)V
+ * Signature: (Ljava/nio/ByteBuffer;Z)V
  */
 JNIEXPORT void JNICALL Java_kasm_NativeBuffer_protect
   (JNIEnv *, jclass, jobject, jboolean);
 
 /*
  * Class:     kasm_NativeBuffer
- * Method:    execute
- * Signature: (Ljava/nio/ByteNativeBuffer;)J
+ * Method:    execute0
+ * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_execute
+JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_execute0
   (JNIEnv *, jclass, jobject);
 
 /*
  * Class:     kasm_NativeBuffer
+ * Method:    execute1
+ * Signature: (Ljava/nio/ByteBuffer;J)J
+ */
+JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_execute1
+  (JNIEnv *, jclass, jobject, jlong);
+
+/*
+ * Class:     kasm_NativeBuffer
  * Method:    executeUnsafe
- * Signature: (Ljava/nio/ByteNativeBuffer;)J
+ * Signature: (Ljava/nio/ByteBuffer;)J
  */
 JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_executeUnsafe
   (JNIEnv *, jclass, jobject);
@@ -50,7 +58,7 @@ JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_executeUnsafe
 /*
  * Class:     kasm_NativeBuffer
  * Method:    release
- * Signature: (Ljava/nio/ByteNativeBuffer;Z)V
+ * Signature: (Ljava/nio/ByteBuffer;Z)V
  */
 JNIEXPORT void JNICALL Java_kasm_NativeBuffer_release
   (JNIEnv *, jclass, jobject, jboolean);
@@ -58,7 +66,7 @@ JNIEXPORT void JNICALL Java_kasm_NativeBuffer_release
 /*
  * Class:     kasm_NativeBuffer
  * Method:    address
- * Signature: (Ljava/nio/ByteNativeBuffer;)J
+ * Signature: (Ljava/nio/ByteBuffer;)J
  */
 JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_address
   (JNIEnv *, jclass, jobject);

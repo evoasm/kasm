@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(jni C)
+project(kasm_native C)
 
 set(CMAKE_C_STANDARD 11)
 

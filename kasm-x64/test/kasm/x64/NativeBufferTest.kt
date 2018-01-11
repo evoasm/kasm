@@ -49,4 +49,16 @@ internal class NativeBufferTest {
         assertEquals(displacement.toLong(), exception.address)
     }
 
+    @Test
+    fun executeWithArgument() {
+        Assembler(buffer).emitStackFrame {
+            add(RDI, 10)
+            mov(RAX, RDI)
+        }
+
+        assertEquals(10L, buffer.execute(0))
+        assertEquals(11L, buffer.execute(1))
+        assertEquals(110L, buffer.execute(100))
+
+    }
 }

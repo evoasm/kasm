@@ -26,7 +26,9 @@ public class NativeBuffer extends Buffer {
     private static native ByteBuffer allocate(long capacity, boolean mmap);
     public static native byte[] toArray(ByteBuffer byteBuffer);
     private static native void protect(ByteBuffer byteBuffer, boolean executable);
-    private static native long execute(ByteBuffer byteBuffer) throws SignalException;
+    private static native long execute0(ByteBuffer byteBuffer) throws SignalException;
+    private static native long execute1(ByteBuffer byteBuffer, long arg0) throws SignalException;
+
     private static native long executeUnsafe(ByteBuffer byteBuffer);
     private static native void release(ByteBuffer byteBuffer, boolean mmap);
     private static native long address(ByteBuffer byteBuffer);
@@ -37,10 +39,24 @@ public class NativeBuffer extends Buffer {
         super.finalize();
     }
 
-    public synchronized void execute() throws Exception {
+    public synchronized long execute() throws Exception {
+        long result;
+
         protect(byteBuffer, true);
-        execute(byteBuffer);
+        result = execute0(byteBuffer);
         protect(byteBuffer, false);
+
+        return result;
+    }
+
+    public synchronized long execute(long arg1) throws Exception {
+        long result;
+
+        protect(byteBuffer, true);
+        result = execute1(byteBuffer, arg1);
+        protect(byteBuffer, false);
+
+        return result;
     }
 
     public synchronized void executeUnsafe() {

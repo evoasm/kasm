@@ -298,7 +298,7 @@ Java_kasm_NativeBuffer_register(JNIEnv *env, jclass cls) {
 #endif
 
 static intptr_t
-kasm_exec_asm(void *mem) {
+kasm_exec_asm0(void *mem) {
   intptr_t (*func)(void);
   intptr_t result = 0;
   *(void **) (&func) = mem;
@@ -306,42 +306,54 @@ kasm_exec_asm(void *mem) {
   return result;
 }
 
-jlong Java_kasm_NativeBuffer_execute(JNIEnv *env, jclass cls, jobject buf) {
-  void *mem = (*env)->GetDirectBufferAddress(env, buf);
-  jlong result = -1;
+static intptr_t
+kasm_exec_asm1(void *mem, intptr_t arg1) {
+  intptr_t (*func)(intptr_t);
+  intptr_t result = 0;
+  *(void **) (&func) = mem;
+  result = func(arg1);
+  return result;
+}
 
-  kasm_sig_install();
+#define KASM_EXEC_ASM_PRE \
+  void *mem = (*env)->GetDirectBufferAddress(env, buf);\
+  jlong result = -1;\
+  \
+  kasm_sig_install();\
+  \
+  if(KASM_SIG_TRY()) {\
 
-  if(KASM_SIG_TRY()) {
-    result = kasm_exec_asm(mem);
-    kasm_sig_uninstall();
-  } else {
-    const char *excp_cls;
-
-    switch(_kasm_sig_ctx.last_sig) {
-      case KASM_EXCP_ZERO_DIV:
-        excp_cls = KASM_ZERO_DIVISION_EXCEPTION;
-        break;
-      case KASM_EXCP_SEG_FAULT:
-        excp_cls = KASM_SEGMENTATION_FAULT_EXCEPTION;
-        break;
-      default:
-        abort();
-
-    }
-    kasm_sig_uninstall();
-//    kasm_throw(env, KASM_RUNTIME_EXCEPTION, "test");
-    kasm_throw_sig(env, excp_cls, _kasm_sig_ctx.sig_addr);
-  }
+#define KASM_EXEC_ASM_POST \
+    kasm_sig_uninstall();\
+  } else {\
+    const char *excp_cls;\
+  \
+    switch(_kasm_sig_ctx.last_sig) {\
+      case KASM_EXCP_ZERO_DIV:\
+        excp_cls = KASM_ZERO_DIVISION_EXCEPTION;\
+        break;\
+      case KASM_EXCP_SEG_FAULT:\
+        excp_cls = KASM_SEGMENTATION_FAULT_EXCEPTION;\
+        break;\
+      default:\
+        abort();\
+    }\
+    kasm_sig_uninstall();\
+    kasm_throw_sig(env, excp_cls, _kasm_sig_ctx.sig_addr);\
+  }\
   return (jlong) result;
+
+jlong Java_kasm_NativeBuffer_execute0(JNIEnv *env, jclass cls, jobject buf) {
+  KASM_EXEC_ASM_PRE
+    result = kasm_exec_asm0(mem);
+  KASM_EXEC_ASM_POST
 }
 
-
-jlong Java_kasm_NativeBuffer_executeUnsafe(JNIEnv *env, jclass cls, jobject buf) {
-  void *mem = (*env)->GetDirectBufferAddress(env, buf);
-  return (jlong) kasm_exec_asm(mem);
+jlong Java_kasm_NativeBuffer_execute1(JNIEnv *env, jclass cls, jobject buf, jlong arg1) {
+  KASM_EXEC_ASM_PRE
+    result = kasm_exec_asm1(mem, (intptr_t) arg1);
+  KASM_EXEC_ASM_POST
 }
-
 
 void Java_kasm_NativeBuffer_release(JNIEnv *env, jclass cls, jobject buf, jboolean mmap) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
