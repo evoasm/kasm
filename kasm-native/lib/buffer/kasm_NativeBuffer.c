@@ -42,6 +42,7 @@
 #define KASM_RUNTIME_EXCEPTION "java/lang/RuntimeException"
 #define KASM_ZERO_DIVISION_EXCEPTION "kasm/ZeroDivisionException"
 #define KASM_SEGMENTATION_FAULT_EXCEPTION "kasm/SegmentationFaultException"
+#define KASM_ILLEGAL_INSTRUCTION_EXCEPTION "kasm/IllegalInstructionException"
 
 #define KASM_ARY_LEN(ary) (sizeof(ary) / sizeof((ary)[0]))
 
@@ -226,12 +227,13 @@ typedef struct {
 } kasm_signal_ctx_t;
 
 _Thread_local kasm_signal_ctx_t _kasm_sig_ctx;
-static int _kasm_sigs[] = {SIGFPE, SIGSEGV};
+static int _kasm_sigs[] = {SIGFPE, SIGSEGV, SIGILL};
 static struct sigaction _kasm_prev_sigactions[KASM_ARY_LEN(_kasm_sigs)];
 
 typedef enum {
   KASM_EXCP_ZERO_DIV,
   KASM_EXCP_SEG_FAULT,
+  KASM_EXCP_ILL_INST
 } kasm_excp_t;
 
 
@@ -256,6 +258,11 @@ kasm_sig_handler(int sig, siginfo_t *siginfo, void *ctx) {
     }
     case SIGSEGV: {
       _kasm_sig_ctx.last_sig = KASM_EXCP_SEG_FAULT;
+      handle = true;
+      break;
+    }
+    case SIGILL: {
+      _kasm_sig_ctx.last_sig = KASM_EXCP_ILL_INST;
       handle = true;
       break;
     }
@@ -334,6 +341,9 @@ kasm_exec_asm1(void *mem, intptr_t arg1) {
         break;\
       case KASM_EXCP_SEG_FAULT:\
         excp_cls = KASM_SEGMENTATION_FAULT_EXCEPTION;\
+        break;\
+      case KASM_EXCP_ILL_INST:\
+        excp_cls = KASM_ILLEGAL_INSTRUCTION_EXCEPTION;\
         break;\
       default:\
         abort();\

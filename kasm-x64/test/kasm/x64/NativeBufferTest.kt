@@ -1,9 +1,6 @@
 package kasm.x64
 
-import kasm.Buffer
-import kasm.NativeBuffer
-import kasm.SegmentationFaultException
-import kasm.ZeroDivisionException
+import kasm.*
 import org.junit.jupiter.api.Test
 import kotlin.test.*
 
@@ -60,5 +57,21 @@ internal class NativeBufferTest {
         assertEquals(11L, buffer.execute(1))
         assertEquals(110L, buffer.execute(100))
 
+    }
+
+    @Test
+    fun illegalInstruction() {
+        var offset = 0
+
+        Assembler(buffer).emitStackFrame {
+            offset = buffer.position()
+            ud2()
+        }
+
+        val exception = assertFailsWith<IllegalInstructionException> {
+            buffer.execute()
+        }
+
+        assertEquals(buffer.address() + offset, exception.address)
     }
 }

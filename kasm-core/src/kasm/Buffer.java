@@ -146,4 +146,7 @@ public class Buffer {
         return new Vector512(get(offset, VectorSize._512));
     }
 
+    public int position() {
+        return byteBuffer.position();
+    }
 }
