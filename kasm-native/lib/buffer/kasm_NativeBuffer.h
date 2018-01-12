@@ -49,6 +49,14 @@ JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_execute1
 
 /*
  * Class:     kasm_NativeBuffer
+ * Method:    execute2
+ * Signature: (Ljava/nio/ByteBuffer;J;J)J
+ */
+JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_execute2
+    (JNIEnv *, jclass, jobject, jlong, jlong);
+
+/*
+ * Class:     kasm_NativeBuffer
  * Method:    executeUnsafe
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -65,10 +73,10 @@ JNIEXPORT void JNICALL Java_kasm_NativeBuffer_release
 
 /*
  * Class:     kasm_NativeBuffer
- * Method:    address
+ * Method:    getAddress
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_address
+JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_getAddress
   (JNIEnv *, jclass, jobject);
 
 #ifdef __cplusplus

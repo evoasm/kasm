@@ -3,8 +3,16 @@ package kasm.x64
 import kasm.Buffer
 
 enum class DisplacementSize {
-    AUTO,
-    _32,
+    AUTO {
+        override val bitSize: Int get() = throw UnsupportedOperationException()
+    },
+    _8 {
+        override val bitSize get() = 8
+    },
+    _32 {
+        override val bitSize get() = 32
+    };
+    abstract val bitSize: Int
 }
 
 enum class AddressSize {
@@ -92,7 +100,7 @@ sealed class LegacyPrefix(val prefixGroup: LegacyPrefixGroup, byte: Int) {
 }
 
 abstract class Address(val base: AddressRegister?, val index: AddressRegister?, val scale : Scale, val displacement: Int) {
-    val needsRex = base?.rexBit != 0 || index?.rexBit != 0
+    val needsRex = base?.rexBit == 1 || index?.rexBit == 1
 }
 
 class Address8(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {

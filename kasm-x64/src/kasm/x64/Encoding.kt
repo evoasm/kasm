@@ -1,7 +1,6 @@
 package kasm.x64
 
 import kasm.Buffer
-import kasm.x64.*
 
 interface InstructionTracer {
     fun beginTracing() {}
@@ -24,31 +23,31 @@ interface InstructionTracer {
 }
 
 interface InstructionModel {
-    fun getGpRegister8(index: Int, isRead: Boolean, isWritten: Boolean) : GpRegister8
-    fun getGpRegister16(index: Int, isRead: Boolean, isWritten: Boolean) : GpRegister16
-    fun getGpRegister32(index: Int, isRead: Boolean, isWritten: Boolean) : GpRegister32
-    fun getGpRegister64(index: Int, isRead: Boolean, isWritten: Boolean) : GpRegister64
-    fun getMmRegister(index: Int, isRead: Boolean, isWritten: Boolean) : MmRegister
-    fun getXmmRegister(index: Int, isRead: Boolean, isWritten: Boolean) : XmmRegister
-    fun getYmmRegister(index: Int, isRead: Boolean, isWritten: Boolean) : YmmRegister
-    fun getZmmRegister(index: Int, isRead: Boolean, isWritten: Boolean) : ZmmRegister
+    fun getGpRegister8(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister8
+    fun getGpRegister16(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister16
+    fun getGpRegister32(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister32
+    fun getGpRegister64(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister64
+    fun getMmRegister(index: Int, isRead: Boolean, isWritten: Boolean): MmRegister
+    fun getXmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): XmmRegister
+    fun getYmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): YmmRegister
+    fun getZmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): ZmmRegister
 
-    fun getAddress8(index: Int, isRead: Boolean, isWritten: Boolean) : Address8
-    fun getAddress16(index: Int, isRead: Boolean, isWritten: Boolean) : Address16
-    fun getAddress32(index: Int, isRead: Boolean, isWritten: Boolean) : Address32
-    fun getAddress64(index: Int, isRead: Boolean, isWritten: Boolean) : Address64
-    fun getAddress128(index: Int, isRead: Boolean, isWritten: Boolean) : Address128
-    fun getAddress256(index: Int, isRead: Boolean, isWritten: Boolean) : Address256
-    fun getAddress512(index: Int, isRead: Boolean, isWritten: Boolean) : Address512
+    fun getAddress8(index: Int, isRead: Boolean, isWritten: Boolean): Address8
+    fun getAddress16(index: Int, isRead: Boolean, isWritten: Boolean): Address16
+    fun getAddress32(index: Int, isRead: Boolean, isWritten: Boolean): Address32
+    fun getAddress64(index: Int, isRead: Boolean, isWritten: Boolean): Address64
+    fun getAddress128(index: Int, isRead: Boolean, isWritten: Boolean): Address128
+    fun getAddress256(index: Int, isRead: Boolean, isWritten: Boolean): Address256
+    fun getAddress512(index: Int, isRead: Boolean, isWritten: Boolean): Address512
 
-    fun getVectorAddress(index: Int, isRead: Boolean, isWritten: Boolean) : VectorAddress
+    fun getVectorAddress(index: Int, isRead: Boolean, isWritten: Boolean): VectorAddress
 
-    fun useAddress() : Boolean
+    fun useAddress(): Boolean
 
-    fun getByteImmediate(index: Int) : Byte
-    fun getShortImmediate(index: Int) : Short
-    fun getIntImmediate(index: Int) : Int
-    fun getLongImmediate(index: Int) : Long
+    fun getByteImmediate(index: Int): Byte
+    fun getShortImmediate(index: Int): Short
+    fun getIntImmediate(index: Int): Int
+    fun getLongImmediate(index: Int): Long
 }
 
 data class EncodingOptions(
@@ -74,9 +73,9 @@ data class EncodingOptions(
         val sibIndex: Int = 0,
         val sibBase: Int = 0) {
 
-    val encodedLegacyPrefix4 : LegacyPrefix.Group4?
+    val encodedLegacyPrefix4: LegacyPrefix.Group4?
         get() {
-            return if(addressSize == AddressSize._32) {
+            return if (addressSize == AddressSize._32) {
                 LegacyPrefix.Group4._67
             } else {
                 legacyPrefix4
@@ -89,14 +88,14 @@ data class EncodingOptions(
                                  val fourthGroup: LegacyPrefixGroup) {
         companion object {
             val DEFAULT = LegacyPrefixOrder(LegacyPrefixGroup._1,
-                    LegacyPrefixGroup._2,
-                    LegacyPrefixGroup._3,
-                    LegacyPrefixGroup._4)
+                                            LegacyPrefixGroup._2,
+                                            LegacyPrefixGroup._3,
+                                            LegacyPrefixGroup._4)
 
             val REVERSE = LegacyPrefixOrder(LegacyPrefixGroup._4,
-                    LegacyPrefixGroup._3,
-                    LegacyPrefixGroup._2,
-                    LegacyPrefixGroup._1)
+                                            LegacyPrefixGroup._3,
+                                            LegacyPrefixGroup._2,
+                                            LegacyPrefixGroup._1)
 
         }
     }
@@ -116,33 +115,37 @@ object Encoding {
                              legacyPrefix4: LegacyPrefix.Group4?) {
 
         encodeLegacyPrefixes(buffer,
-                legacyPrefixOrder.firstGroup,
-                legacyPrefix1,
-                legacyPrefix2,
-                legacyPrefix3,
-                legacyPrefix4);
+                             legacyPrefixOrder.firstGroup,
+                             legacyPrefix1,
+                             legacyPrefix2,
+                             legacyPrefix3,
+                             legacyPrefix4);
         encodeLegacyPrefixes(buffer,
-                legacyPrefixOrder.secondGroup,
-                legacyPrefix1,
-                legacyPrefix2,
-                legacyPrefix3,
-                legacyPrefix4);
+                             legacyPrefixOrder.secondGroup,
+                             legacyPrefix1,
+                             legacyPrefix2,
+                             legacyPrefix3,
+                             legacyPrefix4);
         encodeLegacyPrefixes(buffer,
-                legacyPrefixOrder.thirdGroup,
-                legacyPrefix1,
-                legacyPrefix2,
-                legacyPrefix3,
-                legacyPrefix4);
+                             legacyPrefixOrder.thirdGroup,
+                             legacyPrefix1,
+                             legacyPrefix2,
+                             legacyPrefix3,
+                             legacyPrefix4);
         encodeLegacyPrefixes(buffer,
-                legacyPrefixOrder.fourthGroup,
-                legacyPrefix1,
-                legacyPrefix2,
-                legacyPrefix3,
-                legacyPrefix4);
+                             legacyPrefixOrder.fourthGroup,
+                             legacyPrefix1,
+                             legacyPrefix2,
+                             legacyPrefix3,
+                             legacyPrefix4);
     }
 
-    private fun encodeLegacyPrefixes(buffer: Buffer, legacyGroup: LegacyPrefixGroup, legacyPrefix1: LegacyPrefix.Group1?,
-                                     legacyPrefix2: LegacyPrefix.Group2?, legacyPrefix3: LegacyPrefix.Group3?, legacyPrefix4: LegacyPrefix.Group4?) {
+    private fun encodeLegacyPrefixes(buffer: Buffer,
+                                     legacyGroup: LegacyPrefixGroup,
+                                     legacyPrefix1: LegacyPrefix.Group1?,
+                                     legacyPrefix2: LegacyPrefix.Group2?,
+                                     legacyPrefix3: LegacyPrefix.Group3?,
+                                     legacyPrefix4: LegacyPrefix.Group4?) {
         val legacyPrefix = when (legacyGroup) {
             LegacyPrefixGroup._1 -> legacyPrefix1
             LegacyPrefixGroup._2 -> legacyPrefix2
@@ -239,7 +242,7 @@ object ModRmSib {
     }
 
     fun encode(buffer: Buffer, options: EncodingOptions, reg: Int, address: Address) {
-        if(address.base == IpRegister.RIP) {
+        if (address.base == IpRegister.RIP) {
             encodeRip(buffer, options, reg, address)
         } else {
             if (address.index == null) {
@@ -251,26 +254,26 @@ object ModRmSib {
             } else {
                 if (address.base == null) {
                     encodeIndexOnly(buffer,
-                            options,
-                            reg,
-                            address.index!!,
-                            address.scale,
-                            address.displacement)
+                                    options,
+                                    reg,
+                                    address.index!!,
+                                    address.scale,
+                                    address.displacement)
                 } else {
                     encodeBaseIndexScale(buffer,
-                            options,
-                            reg,
-                            address.base!!,
-                            address.index!!,
-                            address.scale,
-                            address.displacement)
+                                         options,
+                                         reg,
+                                         address.base!!,
+                                         address.index!!,
+                                         address.scale,
+                                         address.displacement)
                 }
             }
         }
     }
 
     private fun encodeRip(buffer: Buffer, options: EncodingOptions, reg: Int, address: Address) {
-        if(address.index != null || address.scale != Scale._1) throw EncodingException("RIP base cannot have index or scale")
+        if (address.index != null || address.scale != Scale._1) throw EncodingException("RIP base cannot have index or scale")
         encodeBaseOnly(buffer, options, reg, IpRegister.RIP, address.displacement)
     }
 
@@ -279,7 +282,13 @@ object ModRmSib {
         encode(buffer, options, reg, address)
     }
 
-    private fun encodeBaseIndexScale(buffer: Buffer, options: EncodingOptions, reg: Int, base: AddressRegister, index: Register, scale: Scale, displacement: Int) {
+    private fun encodeBaseIndexScale(buffer: Buffer,
+                                     options: EncodingOptions,
+                                     reg: Int,
+                                     base: AddressRegister,
+                                     index: Register,
+                                     scale: Scale,
+                                     displacement: Int) {
         checkIfIndexEncodable(index)
         putModrmSibDisplacement(buffer, options, reg, base, index, scale, displacement)
     }
@@ -293,19 +302,19 @@ object ModRmSib {
 
         if (vectorAddress.base == null) {
             encodeIndexOnlyWithoutIndexCheck(buffer,
-                    options,
-                    reg,
-                    vectorAddress.index,
-                    vectorAddress.scale,
-                    vectorAddress.displacement)
+                                             options,
+                                             reg,
+                                             vectorAddress.index,
+                                             vectorAddress.scale,
+                                             vectorAddress.displacement)
         } else {
             encodeBaseIndexScale(buffer,
-                    options,
-                    reg,
-                    vectorAddress.base!!,
-                    vectorAddress.index,
-                    vectorAddress.scale,
-                    vectorAddress.displacement)
+                                 options,
+                                 reg,
+                                 vectorAddress.base!!,
+                                 vectorAddress.index,
+                                 vectorAddress.scale,
+                                 vectorAddress.displacement)
         }
     }
 
@@ -330,13 +339,23 @@ object ModRmSib {
         if (GpRegister.isSp(index)) throw IllegalIndexException(index)
     }
 
-    private fun encodeIndexOnly(buffer: Buffer, options: EncodingOptions, reg: Int, indexRegister: Register, scale: Scale, displacement: Int) {
+    private fun encodeIndexOnly(buffer: Buffer,
+                                options: EncodingOptions,
+                                reg: Int,
+                                indexRegister: Register,
+                                scale: Scale,
+                                displacement: Int) {
         checkIfIndexEncodable(indexRegister)
 
         encodeIndexOnlyWithoutIndexCheck(buffer, options, reg, indexRegister, scale, displacement)
     }
 
-    private fun encodeIndexOnlyWithoutIndexCheck(buffer: Buffer, options: EncodingOptions, reg: Int, indexRegister: Register, scale: Scale, displacement: Int) {
+    private fun encodeIndexOnlyWithoutIndexCheck(buffer: Buffer,
+                                                 options: EncodingOptions,
+                                                 reg: Int,
+                                                 indexRegister: Register,
+                                                 scale: Scale,
+                                                 displacement: Int) {
         val mod = 0b00
         val rm = 0b100
 
@@ -354,7 +373,13 @@ object ModRmSib {
         buffer.putInt(displacement)
     }
 
-    private fun putModrmSibDisplacement(buffer: Buffer, options: EncodingOptions, reg: Int, baseRegister: AddressRegister, indexRegister: Register, scale: Scale, displacement: Int) {
+    private fun putModrmSibDisplacement(buffer: Buffer,
+                                        options: EncodingOptions,
+                                        reg: Int,
+                                        baseRegister: AddressRegister,
+                                        indexRegister: Register,
+                                        scale: Scale,
+                                        displacement: Int) {
         putModrmSibDisplacement(buffer, options, reg, GpRegister64.RSP, displacement) {
             val scaleCode = scale.code
             val index = indexRegister.unextendedCode
@@ -363,7 +388,11 @@ object ModRmSib {
         }
     }
 
-    private fun putModrmSibDisplacement(buffer: Buffer, options: EncodingOptions, reg: Int, baseRegister: AddressRegister, displacement: Int) {
+    private fun putModrmSibDisplacement(buffer: Buffer,
+                                        options: EncodingOptions,
+                                        reg: Int,
+                                        baseRegister: AddressRegister,
+                                        displacement: Int) {
         putModrmSibDisplacement(buffer, options, reg, GpRegister64.RSP, displacement) {
             val scaleCode = options.sibScale
             val index = GpRegister64.RSP.unextendedCode
@@ -372,24 +401,37 @@ object ModRmSib {
         }
     }
 
-    private fun putModrmDisplacement(buffer: Buffer, options: EncodingOptions, reg: Int, baseRegister: AddressRegister, displacement: Int) {
+    private fun putModrmDisplacement(buffer: Buffer,
+                                     options: EncodingOptions,
+                                     reg: Int,
+                                     baseRegister: AddressRegister,
+                                     displacement: Int) {
         putModrmSibDisplacement(buffer, options, reg, baseRegister, displacement) {}
     }
 
-    private inline fun putModrmSibDisplacement(buffer: Buffer, options: EncodingOptions, reg: Int, rmRegister: Register, displacement: Int, sibAction: () -> Unit) {
+    private inline fun putModrmSibDisplacement(buffer: Buffer,
+                                               options: EncodingOptions,
+                                               reg: Int,
+                                               rmRegister: Register,
+                                               displacement: Int,
+                                               sibAction: () -> Unit) {
         val rm = rmRegister.unextendedCode
 
-        if (displacement == 0 && !GpRegister.isBp(rmRegister) && !GpRegister.isR13(
+        val displacementSize = options.displacementSize
+        if (displacement == 0 && displacementSize == DisplacementSize.AUTO && !GpRegister.isBp(rmRegister) && !GpRegister.isR13(
                 rmRegister)) {
             val mod = 0b00
             putModRm(buffer, mod, reg, rm)
             sibAction()
-        } else if (options.displacementSize != DisplacementSize._32 && displacement >= Byte.MIN_VALUE && displacement <= Byte.MAX_VALUE) {
+        } else if (displacementSize != DisplacementSize._32 && displacement >= Byte.MIN_VALUE && displacement <= Byte.MAX_VALUE) {
             val mod = 0b01
             putModRm(buffer, mod, reg, rm)
             sibAction()
             buffer.putByte(displacement.toByte())
         } else {
+            if(displacementSize == DisplacementSize._8) {
+                throw OversizedDisplacementException(displacement, displacementSize)
+            }
             val mod = 0b10
             putModRm(buffer, mod, reg, rm)
             sibAction()
@@ -397,7 +439,11 @@ object ModRmSib {
         }
     }
 
-    private fun encodeBaseOnly(buffer: Buffer, options: EncodingOptions, reg: Int, baseRegister: AddressRegister, displacement: Int) {
+    private fun encodeBaseOnly(buffer: Buffer,
+                               options: EncodingOptions,
+                               reg: Int,
+                               baseRegister: AddressRegister,
+                               displacement: Int) {
         if (baseRegister == IpRegister.RIP) {
             val mod = 0b00
             val rm = 0b101
@@ -424,16 +470,32 @@ class IllegalIndexException(val index: Register) : EncodingException("$index can
 
 }
 
+class OversizedDisplacementException(var displacement: Int,
+                                     var displacementSize: DisplacementSize) : EncodingException("$displacement cannot be encoded as ${displacementSize.bitSize}-bit displacement")
+
 
 sealed class VexPrefix {
 
     companion object {
 
-        protected fun threeByteVexNeeded(options: EncodingOptions, vexW: Int, vexX: Int, vexB: Int, vexM: Int): Boolean {
+        protected fun threeByteVexNeeded(options: EncodingOptions,
+                                         vexW: Int,
+                                         vexX: Int,
+                                         vexB: Int,
+                                         vexM: Int): Boolean {
             return vexM != 0x01 || vexX != 0 || vexB != 0 || vexW != 0 || options.forceLongVex
         }
 
-        protected fun putVex(buffer: Buffer, options: EncodingOptions, vexW: Int, vexR: Int, vexX: Int, vexB: Int, vexM: Int, vexV: Int, vexL: Int, vexP: Int) {
+        protected fun putVex(buffer: Buffer,
+                             options: EncodingOptions,
+                             vexW: Int,
+                             vexR: Int,
+                             vexX: Int,
+                             vexB: Int,
+                             vexM: Int,
+                             vexV: Int,
+                             vexL: Int,
+                             vexP: Int) {
             if (threeByteVexNeeded(options, vexW, vexX, vexB, vexM)) {
                 putThreeByteVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
             } else {
@@ -451,11 +513,21 @@ sealed class VexPrefix {
             buffer.putByte(byte)
         }
 
-        private fun putThreeByteVex(buffer: Buffer, options: EncodingOptions, vexW: Int, vexR: Int, vexX: Int, vexB: Int, vexM: Int, vexV: Int, vexL: Int, vexP: Int) {
+        private fun putThreeByteVex(buffer: Buffer,
+                                    options: EncodingOptions,
+                                    vexW: Int,
+                                    vexR: Int,
+                                    vexX: Int,
+                                    vexB: Int,
+                                    vexM: Int,
+                                    vexV: Int,
+                                    vexL: Int,
+                                    vexP: Int) {
             buffer.putByte(0xC4.toByte())
 
-            val secondByte = vexM.or(vexB.maskedInv(0b1).shl(5)).or(vexX.maskedInv(0b1).shl(6)).or(vexR.maskedInv(0b1).shl(7)).toByte()
-            val thirdByte = vexP.or(vexL.shl(2)).or(vexV.maskedInv( 0b1111).shl(3)).or(vexW.shl(7)).toByte()
+            val secondByte = vexM.or(vexB.maskedInv(0b1).shl(5)).or(vexX.maskedInv(0b1).shl(6)).or(vexR.maskedInv(0b1).shl(
+                    7)).toByte()
+            val thirdByte = vexP.or(vexL.shl(2)).or(vexV.maskedInv(0b1111).shl(3)).or(vexW.shl(7)).toByte()
 
             buffer.putByte(secondByte)
             buffer.putByte(thirdByte)
@@ -466,13 +538,20 @@ sealed class VexPrefix {
 
         fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int) {
             putVex(buffer, options, vexW, options.rexR, options.rexX, options.rexB,
-                    vexM, options.vexV, vexL, vexP)
+                   vexM, options.vexV, vexL, vexP)
         }
     }
 
     object RegRm : VexPrefix() {
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, register: Register, address: Address) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   register: Register,
+                   address: Address) {
 
             val vexR = register.rexBit
             val vexX = address.index?.rexBit ?: options.rexX
@@ -484,7 +563,14 @@ sealed class VexPrefix {
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
         }
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, register0: Register, register1: Register) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   register0: Register,
+                   register1: Register) {
             val vexR = register0.rexBit
             val vexX = options.rexX
             val vexB = register1.rexBit
@@ -499,7 +585,14 @@ sealed class VexPrefix {
 
     object RmVex : VexPrefix() {
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, address: Address, register: Register) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   address: Address,
+                   register: Register) {
 
             val vexR = options.rexR
             val vexX = address.index?.rexBit ?: options.rexX
@@ -509,7 +602,14 @@ sealed class VexPrefix {
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
         }
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, register0: Register, register1: Register) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   register0: Register,
+                   register1: Register) {
             val vexR = register0.rexBit
             val vexX = options.rexX
             val vexB = options.rexB
@@ -521,7 +621,13 @@ sealed class VexPrefix {
 
     object Rm : VexPrefix() {
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, address: Address) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   address: Address) {
             val vexR = options.rexR
             val vexX = address.index?.rexBit ?: options.rexX
             val vexB = address.base?.rexBit ?: options.rexB
@@ -533,7 +639,15 @@ sealed class VexPrefix {
 
     object RegRmVex : VexPrefix() {
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, register0: Register, address: Address, register1: Register) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   register0: Register,
+                   address: Address,
+                   register1: Register) {
 
             val vexR = register0.rexBit
             val vexX = address.index?.rexBit ?: options.rexX
@@ -543,7 +657,15 @@ sealed class VexPrefix {
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
         }
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, register0: Register, vectorAddress: VectorAddress, register1: Register) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   register0: Register,
+                   vectorAddress: VectorAddress,
+                   register1: Register) {
 
             val vexR = register0.rexBit
             val vexX = vectorAddress.index.rexBit
@@ -553,7 +675,15 @@ sealed class VexPrefix {
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
         }
 
-        fun encode(buffer: Buffer, options: EncodingOptions, vexW: Int, vexM: Int, vexL: Int, vexP: Int, register0: Register, register1: Register, register2: Register) {
+        fun encode(buffer: Buffer,
+                   options: EncodingOptions,
+                   vexW: Int,
+                   vexM: Int,
+                   vexL: Int,
+                   vexP: Int,
+                   register0: Register,
+                   register1: Register,
+                   register2: Register) {
             val vexR = register0.rexBit
             val vexX = options.rexX
             val vexB = register1.rexBit
@@ -586,7 +716,11 @@ sealed class RexPrefix {
             }
         }
 
-        internal fun encodeMandatory(buffer: Buffer, options: EncodingOptions, rexW: Int, register: Register, address: Address) {
+        internal fun encodeMandatory(buffer: Buffer,
+                                     options: EncodingOptions,
+                                     rexW: Int,
+                                     register: Register,
+                                     address: Address) {
             putRex(buffer, options, rexW, register, address)
         }
 
@@ -596,7 +730,11 @@ sealed class RexPrefix {
             }
         }
 
-        internal fun encodeMandatory(buffer: Buffer, options: EncodingOptions, rexW: Int, register0: Register, register1: Register) {
+        internal fun encodeMandatory(buffer: Buffer,
+                                     options: EncodingOptions,
+                                     rexW: Int,
+                                     register0: Register,
+                                     register1: Register) {
             putRex(buffer, options, rexW, register0, register1)
         }
 
@@ -608,7 +746,11 @@ sealed class RexPrefix {
             putRex(buffer, rexW, rexR, rexX, rexB)
         }
 
-        internal fun putRex(buffer: Buffer, options: EncodingOptions, rexW: Int, register0: Register, register1: Register) {
+        internal fun putRex(buffer: Buffer,
+                            options: EncodingOptions,
+                            rexW: Int,
+                            register0: Register,
+                            register1: Register) {
             val rexR = register0.rexBit
             val rexX = options.rexX
             val rexB = register1.rexBit
@@ -633,12 +775,20 @@ sealed class RexPrefix {
             }
         }
 
-        internal fun encodeMandatory(buffer: Buffer, options: EncodingOptions, rexW: Int, register0: GpRegister, register1: GpRegister8) {
+        internal fun encodeMandatory(buffer: Buffer,
+                                     options: EncodingOptions,
+                                     rexW: Int,
+                                     register0: GpRegister,
+                                     register1: GpRegister8) {
             RegRm.putRex(buffer, options, rexW, register0, register1)
         }
 
 
-        internal fun encodeMandatory(buffer: Buffer, options: EncodingOptions, rexW: Int, register: GpRegister, address: Address) {
+        internal fun encodeMandatory(buffer: Buffer,
+                                     options: EncodingOptions,
+                                     rexW: Int,
+                                     register: GpRegister,
+                                     address: Address) {
             RegRm.encodeMandatory(buffer, options, rexW, register, address)
         }
 

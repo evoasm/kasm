@@ -1,5 +1,6 @@
 package kasm
 
+import kasm.ext.alignUp
 import kotlin.math.max
 import kotlin.reflect.KProperty
 
@@ -45,11 +46,11 @@ open class Structure() {
         protected val buffer get() = structure.buffer
 
         fun address(): Long {
-            return buffer.address() + offset
+            return buffer.getAddress() + offset
         }
 
         fun address(vararg dimensions: Int): Long {
-            return buffer.address() + elementOffset(dimensions)
+            return buffer.getAddress() + elementOffset(dimensions)
         }
 
         fun get(): T {
@@ -270,7 +271,7 @@ open class Structure() {
         val fieldOffset = if (alias != null) {
             alias.offset + aliasOffset
         } else {
-            alignUp(offset, alignment)
+            offset.alignUp(alignment)
         }
 
         return action(fieldOffset).also {
@@ -326,15 +327,5 @@ open class Structure() {
             Vector512Field(this, dimensions, fieldOffset)
         }
     }
-
-
-    private fun alignDown(offset: Int, alignment: Int): Int {
-        return offset - (offset.rem(alignment))
-    }
-
-    private fun alignUp(offset: Int, alignment: Int): Int {
-        return alignDown(offset + alignment - 1, alignment)
-    }
-
 
 }

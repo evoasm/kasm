@@ -322,6 +322,15 @@ kasm_exec_asm1(void *mem, intptr_t arg1) {
   return result;
 }
 
+static intptr_t
+kasm_exec_asm2(void *mem, intptr_t arg1, intptr_t arg2) {
+  intptr_t (*func)(intptr_t, intptr_t);
+  intptr_t result = 0;
+  *(void **) (&func) = mem;
+  result = func(arg1, arg2);
+  return result;
+}
+
 #define KASM_EXEC_ASM_PRE \
   void *mem = (*env)->GetDirectBufferAddress(env, buf);\
   jlong result = -1;\
@@ -365,6 +374,12 @@ jlong Java_kasm_NativeBuffer_execute1(JNIEnv *env, jclass cls, jobject buf, jlon
   KASM_EXEC_ASM_POST
 }
 
+jlong Java_kasm_NativeBuffer_execute2(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2) {
+  KASM_EXEC_ASM_PRE
+    result = kasm_exec_asm2(mem, (intptr_t) arg1, (intptr_t) arg2);
+  KASM_EXEC_ASM_POST
+}
+
 void Java_kasm_NativeBuffer_release(JNIEnv *env, jclass cls, jobject buf, jboolean mmap) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
@@ -387,7 +402,7 @@ jbyteArray Java_kasm_NativeBuffer_toArray(JNIEnv *env, jclass cls, jobject buf) 
   return ary;
 }
 
-jlong Java_kasm_NativeBuffer_address(JNIEnv *env, jclass cls, jobject buf) {
+jlong Java_kasm_NativeBuffer_getAddress(JNIEnv *env, jclass cls, jobject buf) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   return (jlong) mem;
 }

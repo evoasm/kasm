@@ -2,38 +2,57 @@ package kasm.x64
 
 import kasm.Buffer
 import kasm.Structure
+import kasm.ext.alignUp
+import kasm.x64.GpRegister32.*
 
-class Assembler(override val buffer: Buffer): AbstractAssembler() {
+class Assembler(override val buffer: Buffer) : AbstractAssembler() {
 
     companion object {
-        val SYSV_CALLE_SAVED_REGISTERS = arrayOf(
+        val SYSV_CALLEE_SAVED_REGISTERS = arrayOf(
                 GpRegister64.RBP,
                 GpRegister64.RBX,
                 GpRegister64.R12,
                 GpRegister64.R13,
                 GpRegister64.R14,
                 GpRegister64.R15
-        )
+                                                 )
 
         private val SCRATCH_REGISTER1 = GpRegister64.RDI
         private val SCRATCH_REGISTER2 = GpRegister64.RSI
+
+        private val NOP2_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66)
+        private val NOP6_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66)
+        private val NOP9_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66)
+        private val NOP8_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._32)
+        private val NOP7_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._32)
+        private val NOP4_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._8)
+
+        private val NOP1 : Byte = 0x90.toByte()
+        private val NOP2 = byteArrayOf(0x66, 0x90.toByte())
+        private val NOP3 = byteArrayOf(0x0F, 0x1F, 0x00)
+        private val NOP4 = byteArrayOf(0x0F, 0x1F, 0x40, 0x00)
+        private val NOP5 = byteArrayOf(0x0F, 0x1F, 0x44, 0x00, 0x00)
+        private val NOP6 = byteArrayOf(0x66, 0x0F, 0x1F, 0x44, 0x00, 0x00)
+        private val NOP7 = byteArrayOf(0x0F, 0x1F, 0x80.toByte(), 0x00, 0x00, 0x00, 0x00)
+        private val NOP8 = byteArrayOf(0x0F, 0x1F, 0x84.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00)
+        private val NOP9 = byteArrayOf(0x66, 0x0F, 0x1F, 0x84.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00)
     }
 
     inline fun save(vararg registers: GpRegister64, action: Assembler.() -> Unit) {
-        for(register in registers) {
+        for (register in registers) {
             push(register)
         }
 
         action()
 
-        for(index in registers.lastIndex downTo 0) {
+        for (index in registers.lastIndex downTo 0) {
             pop(registers[index])
         }
     }
 
 
     fun mov(register: GpRegister64, field: Structure.LongField) {
-        val scratchRegister = if(register == SCRATCH_REGISTER1) {
+        val scratchRegister = if (register == SCRATCH_REGISTER1) {
             SCRATCH_REGISTER2
         } else {
             SCRATCH_REGISTER1
@@ -46,7 +65,7 @@ class Assembler(override val buffer: Buffer): AbstractAssembler() {
     }
 
     fun mov(field: Structure.LongField, register: GpRegister64) {
-        val scratchRegister = if(register == SCRATCH_REGISTER1) {
+        val scratchRegister = if (register == SCRATCH_REGISTER1) {
             SCRATCH_REGISTER2
         } else {
             SCRATCH_REGISTER1
@@ -70,9 +89,9 @@ class Assembler(override val buffer: Buffer): AbstractAssembler() {
             mov(SCRATCH_REGISTER1, field.address())
             movq(Address64(SCRATCH_REGISTER1), register)
         }
-   }
+    }
 
-   fun mov(register: XmmRegister, field: Structure.Vector128Field) {
+    fun mov(register: XmmRegister, field: Structure.Vector128Field) {
         save(SCRATCH_REGISTER1) {
             mov(SCRATCH_REGISTER1, field.address())
             movdqa(register, Address128(SCRATCH_REGISTER1))
@@ -147,6 +166,63 @@ class Assembler(override val buffer: Buffer): AbstractAssembler() {
         }
     }
 
+    fun align(alignment: Int) {
+        buffer.position().also {
+            nop(it.alignUp(alignment) - it)
+        }
+    }
+
+    fun nop(byteSize: Int) {
+        var remaining = byteSize
+        while (remaining > 0) {
+            when {
+                remaining >= 9 -> {
+                    buffer.putBytes(NOP9)
+                    remaining -= 9
+                }
+
+                remaining >= 8 -> {
+                    buffer.putBytes(NOP8)
+                    remaining -= 8
+                }
+
+                remaining >= 7 -> {
+                    buffer.putBytes(NOP7)
+                    remaining -= 7
+                }
+
+                remaining >= 6 -> {
+                    buffer.putBytes(NOP6)
+                    remaining -= 6
+                }
+
+                remaining >= 5 -> {
+                    buffer.putBytes(NOP5)
+                    remaining -= 5
+                }
+
+                remaining >= 4 -> {
+                    buffer.putBytes(NOP4)
+                    remaining -= 4
+                }
+
+                remaining >= 3 -> {
+                    buffer.putBytes(NOP3)
+                    remaining -= 3
+                }
+
+                remaining >= 2 -> {
+                    buffer.putBytes(NOP2)
+                    remaining -= 2
+                }
+
+                else           -> {
+                    buffer.putByte(NOP1)
+                    remaining--
+                }
+            }
+        }
+    }
 
 //
 //    fun mov(register: XmmRegister, field: Structure.Vector128Field) {
@@ -154,7 +230,7 @@ class Assembler(override val buffer: Buffer): AbstractAssembler() {
 //    }
 
     inline fun emitStackFrame(action: Assembler.() -> Unit) {
-        save(*SYSV_CALLE_SAVED_REGISTERS, action = action)
+        save(*SYSV_CALLEE_SAVED_REGISTERS, action = action)
         ret()
     }
 

@@ -32,7 +32,7 @@ internal class EncodingTest {
 
     @BeforeEach
     fun setup() {
-        buffer = NativeBuffer(1024, true)
+        buffer = Buffer(1024)
     }
 
     @Test

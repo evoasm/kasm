@@ -54,3 +54,11 @@ fun <T, C : MutableCollection<List<T>>> productsTo(destination: C, collections: 
 
 fun String.ifEmpty(value: String) = if(this.isEmpty()) value else this
 fun <T> T?.ifNull(ifNullValue: T, elseValue: T) = if(this == null) ifNullValue else elseValue
+
+fun Int.alignDown(alignment: Int): Int {
+    return this - (this.rem(alignment))
+}
+
+fun Int.alignUp(alignment: Int): Int {
+    return (this + alignment - 1).alignDown(alignment)
+}

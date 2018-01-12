@@ -54,7 +54,7 @@ public class Buffer {
     }
 
     private void putVector(int offset, Vector vector) {
-        put(vector.array(), offset);
+        putBytesAt(vector.array(), offset);
     }
 
     public void putVector64(int offset, Vector64 vector) {
@@ -73,8 +73,16 @@ public class Buffer {
         putVector(offset, vector);
     }
 
-    private void put(byte[] array, int offset) {
+    private void putBytesAt(byte[] array, int offset) {
         byteBuffer.position(offset);
+        byteBuffer.put(array);
+    }
+
+    public void putBytes(byte[] array, int offset, int length) {
+        byteBuffer.put(array, offset, length);
+    }
+
+    public void putBytes(byte[] array) {
         byteBuffer.put(array);
     }
 
