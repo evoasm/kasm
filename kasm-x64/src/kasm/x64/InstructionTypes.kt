@@ -967,7 +967,7 @@ abstract class Instruction: AbstractInstruction() {
       VcomisdXmmXmmm64,
       ComissXmmXmmm32,
       VcomissXmmXmmm32,
-      Cpuid,
+      CpuidEaxEbxEcxEdx,
       Crc32R32Rm8,
       Crc32R32Rm16,
       Crc32R32Rm32,

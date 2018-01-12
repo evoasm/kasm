@@ -21,18 +21,14 @@ class InstructionGenerator(generator: Generator,
 
 
     companion object {
-        val UNAMBIGUOUS_MNEMONICS = setOf("CPUID")
+        val UNAMBIGUOUS_MNEMONICS = setOf("CPUID", "RET")
     }
 
     var className: String
 
     init {
-        if (primaryMnemonic in UNAMBIGUOUS_MNEMONICS) {
-            className = primaryMnemonic.toLowerCase().capitalize()
-        } else {
-            val operands = operands.filterNot { it is FlagsRegisterOperand<*> }
-            className = primaryMnemonic.toLowerCase().capitalize() + operands.joinToString("") { it.identifierName }
-        }
+        val operands = operands.filterNot { it is FlagsRegisterOperand<*> }
+        className = primaryMnemonic.toLowerCase().capitalize() + operands.joinToString("") { it.identifierName }
     }
 
     fun getAssemblerFunctionName(): String {

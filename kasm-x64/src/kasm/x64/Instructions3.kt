@@ -2522,7 +2522,7 @@ object VcomissXmmXmmm32 : XmmXmmmInstruction(), VectorInstruction, AvxInstructio
     }
   }
 }
-object Cpuid : NullaryInstruction() {
+object CpuidEaxEbxEcxEdx : NullaryInstruction() {
   override fun encode(buffer: Buffer, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

@@ -731,7 +731,7 @@ abstract class AbstractAssembler: InstructionTracer {
     VcomissXmmXmmm32.encode(buffer, register1, register2, options, tracer = this)
   }
   fun cpuid(options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    Cpuid.encode(buffer, options, tracer = this)
+    CpuidEaxEbxEcxEdx.encode(buffer, options, tracer = this)
   }
   fun crc32(register1: GpRegister32, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Crc32R32Rm8.encode(buffer, register1, register2, options, tracer = this)
