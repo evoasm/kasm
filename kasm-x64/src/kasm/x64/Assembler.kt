@@ -3,31 +3,21 @@ package kasm.x64
 import kasm.Buffer
 import kasm.Structure
 import kasm.ext.alignUp
-import kasm.x64.GpRegister32.*
 
 class Assembler(override val buffer: Buffer) : AbstractAssembler() {
 
     companion object {
-        val SYSV_CALLEE_SAVED_REGISTERS = arrayOf(
+        val SYSV_CALLEE_SAVED_REGISTERS = listOf(
                 GpRegister64.RBP,
                 GpRegister64.RBX,
                 GpRegister64.R12,
                 GpRegister64.R13,
                 GpRegister64.R14,
-                GpRegister64.R15
-                                                 )
+                GpRegister64.R15)
 
-        private val SCRATCH_REGISTER1 = GpRegister64.RDI
-        private val SCRATCH_REGISTER2 = GpRegister64.RSI
+        val DEFAULT_SCRATCH_REGISTERS = listOf(GpRegister64.RDI, GpRegister64.RSI)
 
-        private val NOP2_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66)
-        private val NOP6_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66)
-        private val NOP9_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66)
-        private val NOP8_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._32)
-        private val NOP7_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._32)
-        private val NOP4_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._8)
-
-        private val NOP1 : Byte = 0x90.toByte()
+        private val NOP1: Byte = 0x90.toByte()
         private val NOP2 = byteArrayOf(0x66, 0x90.toByte())
         private val NOP3 = byteArrayOf(0x0F, 0x1F, 0x00)
         private val NOP4 = byteArrayOf(0x0F, 0x1F, 0x40, 0x00)
@@ -38,7 +28,29 @@ class Assembler(override val buffer: Buffer) : AbstractAssembler() {
         private val NOP9 = byteArrayOf(0x66, 0x0F, 0x1F, 0x84.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00)
     }
 
-    inline fun save(vararg registers: GpRegister64, action: Assembler.() -> Unit) {
+    fun ifEqual(ifBlock: Assembler.() -> Unit) {
+        jne(0xdeadbeef.toInt())
+        val offset1 = buffer.position()
+        ifBlock()
+        val offset2 = buffer.position()
+
+        buffer.putInt(offset1 - 4, offset2 - offset1)
+    }
+
+    fun ifEqual(ifBlock: Assembler.() -> Unit, elseBlock: Assembler.() -> Unit) {
+        je(0xdeadbeef.toInt())
+        val offset1 = buffer.position()
+        elseBlock()
+        jmp(0xdeadbeef.toInt())
+        val offset2 = buffer.position()
+        ifBlock()
+        val offset3 = buffer.position()
+
+        buffer.putInt(offset1 - 4, offset2 - offset1)
+        buffer.putInt(offset2 - 4, offset3 - offset2)
+    }
+
+    inline fun pushed(registers: List<GpRegister64>, action: Assembler.() -> Unit) {
         for (register in registers) {
             push(register)
         }
@@ -50,120 +62,114 @@ class Assembler(override val buffer: Buffer) : AbstractAssembler() {
         }
     }
 
+    inline fun pushed(vararg registers: GpRegister64, action: Assembler.() -> Unit) {
+        for (register in registers) {
+            push(register)
+        }
 
-    fun mov(register: GpRegister64, field: Structure.LongField) {
-        val scratchRegister = if (register == SCRATCH_REGISTER1) {
-            SCRATCH_REGISTER2
+        action()
+
+        for (index in registers.lastIndex downTo 0) {
+            pop(registers[index])
+        }
+    }
+
+    inline fun pushed(register: GpRegister64, action: Assembler.() -> Unit) {
+        push(register)
+        action()
+        pop(register)
+    }
+
+    var scratchRegisters = DEFAULT_SCRATCH_REGISTERS
+
+    fun mov(register: GpRegister64, field: Structure.LongField, vararg indices: Int) {
+        val scratchRegister = if (register == scratchRegisters[0]) {
+            scratchRegisters[1]
         } else {
-            SCRATCH_REGISTER1
+            scratchRegisters[0]
         }
-
-        save(scratchRegister) {
-            mov(scratchRegister, field.address())
-            mov(register, Address64(scratchRegister))
-        }
+        mov(scratchRegister, field.getAddress(*indices))
+        mov(register, Address64(scratchRegister))
     }
 
-    fun mov(field: Structure.LongField, register: GpRegister64) {
-        val scratchRegister = if (register == SCRATCH_REGISTER1) {
-            SCRATCH_REGISTER2
+    fun mov(field: Structure.LongField, vararg indices: Int, register: GpRegister64) {
+        mov(field, register, 0)
+    }
+
+    fun mov(field: Structure.LongField, register: GpRegister64, vararg indices: Int) {
+        val scratchRegister = if (register == scratchRegisters[0]) {
+            scratchRegisters[1]
         } else {
-            SCRATCH_REGISTER1
+            scratchRegisters[0]
         }
 
-        save(scratchRegister) {
-            mov(scratchRegister, field.address())
-            mov(Address64(scratchRegister), register)
-        }
+        mov(scratchRegister, field.getAddress(*indices))
+        mov(Address64(scratchRegister), register)
     }
 
-    fun mov(register: MmRegister, field: Structure.Vector64Field) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            movq(register, Address64(SCRATCH_REGISTER1))
-        }
+    fun mov(register: MmRegister, field: Structure.Vector64Field, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        movq(register, Address64(scratchRegisters.first()))
     }
 
-    fun mov(field: Structure.Vector64Field, register: MmRegister) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            movq(Address64(SCRATCH_REGISTER1), register)
-        }
+    fun mov(field: Structure.Vector64Field, register: MmRegister, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        movq(Address64(scratchRegisters.first()), register)
     }
 
-    fun mov(register: XmmRegister, field: Structure.Vector128Field) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            movdqa(register, Address128(SCRATCH_REGISTER1))
-        }
+    fun mov(register: XmmRegister, field: Structure.Vector128Field, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        movdqa(register, Address128(scratchRegisters.first()))
     }
 
-    fun mov(field: Structure.Vector128Field, register: XmmRegister) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            movdqa(Address128(SCRATCH_REGISTER1), register)
-        }
+    fun mov(field: Structure.Vector128Field, register: XmmRegister, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        movdqa(Address128(scratchRegisters.first()), register)
     }
 
-    fun mov(register: YmmRegister, field: Structure.Vector256Field) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            vmovdqa(register, Address256(SCRATCH_REGISTER1))
-        }
+    fun mov(register: YmmRegister, field: Structure.Vector256Field, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        vmovdqa(register, Address256(scratchRegisters.first()))
     }
 
-    fun mov(field: Structure.Vector256Field, register: YmmRegister) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            vmovdqa(Address256(SCRATCH_REGISTER1), register)
-        }
+    fun mov(field: Structure.Vector256Field, register: YmmRegister, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        vmovdqa(Address256(scratchRegisters.first()), register)
     }
 
-    fun mov(register: IpRegister, field: Structure.LongField) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            jmp(SCRATCH_REGISTER1)
-        }
+    fun mov(register: IpRegister, field: Structure.LongField, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        jmp(scratchRegisters.first())
     }
 
-    fun mov(field: Structure.LongField, register: IpRegister) {
-        save(SCRATCH_REGISTER1, SCRATCH_REGISTER2) {
-            mov(SCRATCH_REGISTER1, field.address())
-            lea(SCRATCH_REGISTER2, Address64(IpRegister.RIP))
-            mov(Address64(SCRATCH_REGISTER1), SCRATCH_REGISTER2)
-        }
+    fun mov(field: Structure.LongField, register: IpRegister, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        lea(scratchRegisters[2], Address64(IpRegister.RIP))
+        mov(Address64(scratchRegisters.first()), scratchRegisters[2])
     }
 
-    fun mov(field: Structure.LongField, register: RflagsRegister) {
-        save(SCRATCH_REGISTER1, SCRATCH_REGISTER2) {
-            pushfq()
-            pop(SCRATCH_REGISTER2)
-            mov(SCRATCH_REGISTER1, field.address())
-            mov(Address64(SCRATCH_REGISTER1), SCRATCH_REGISTER2)
-        }
+    fun mov(field: Structure.LongField, register: RflagsRegister, vararg indices: Int) {
+        pushfq()
+        pop(scratchRegisters[2])
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        mov(Address64(scratchRegisters.first()), scratchRegisters[2])
     }
 
-    fun mov(register: RflagsRegister, field: Structure.LongField) {
-        save(SCRATCH_REGISTER1, SCRATCH_REGISTER2) {
-            mov(SCRATCH_REGISTER1, field.address())
-            mov(SCRATCH_REGISTER2, Address64(SCRATCH_REGISTER1))
-            push(SCRATCH_REGISTER2)
-            popfq()
-        }
+    fun mov(register: RflagsRegister, field: Structure.LongField, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        mov(scratchRegisters[2], Address64(scratchRegisters.first()))
+        push(scratchRegisters[2])
+        popfq()
     }
 
-    fun mov(field: Structure.IntField, register: MxcsrRegister) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            stmxcsr(Address32(SCRATCH_REGISTER1))
-        }
+    fun mov(field: Structure.IntField, register: MxcsrRegister, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        stmxcsr(Address32(scratchRegisters.first()))
     }
 
-    fun mov(register: MxcsrRegister, field: Structure.IntField) {
-        save(SCRATCH_REGISTER1) {
-            mov(SCRATCH_REGISTER1, field.address())
-            ldmxcsr(Address32(SCRATCH_REGISTER1))
-        }
+    fun mov(register: MxcsrRegister, field: Structure.IntField, vararg indices: Int) {
+        mov(scratchRegisters.first(), field.getAddress(*indices))
+        ldmxcsr(Address32(scratchRegisters.first()))
     }
 
     fun align(alignment: Int) {
@@ -226,11 +232,11 @@ class Assembler(override val buffer: Buffer) : AbstractAssembler() {
 
 //
 //    fun mov(register: XmmRegister, field: Structure.Vector128Field) {
-//        mov(register, field.address())
+//        mov(register, field.getAddress(*indices))
 //    }
 
     inline fun emitStackFrame(action: Assembler.() -> Unit) {
-        save(*SYSV_CALLEE_SAVED_REGISTERS, action = action)
+        pushed(SYSV_CALLEE_SAVED_REGISTERS, action = action)
         ret()
     }
 

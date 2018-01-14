@@ -250,7 +250,7 @@ object CpuId {
                 cpuid()
 
                 outputRegisters.entries.forEachIndexed { flagIndex, (register, _) ->
-                    val address = fields.array.address(leafIndex, flagIndex)
+                    val address = fields.array.getAddress(leafIndex, flagIndex)
                     mov(GpRegister64.RDI, address)
                     mov(Address32(GpRegister64.RDI), register)
                 }

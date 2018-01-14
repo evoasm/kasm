@@ -7,7 +7,14 @@ import kasm.x64.MmRegister.*
 import kasm.x64.XmmRegister.*
 import kasm.x64.YmmRegister.*
 
-class CpuState(val includeRip: Boolean = false, val includeRsp: Boolean = false, val includeMxcsr: Boolean = false, val includeRflags: Boolean = false) {
+class CpuState(val includeRip: Boolean = false,
+               val includeRsp: Boolean = false,
+               val includeMxcsr: Boolean = false,
+               val includeRflags: Boolean = false) {
+
+    companion object {
+        private val SCRATCH_REGISTERS = listOf(R14, R15)
+    }
 
     class Fields : Structure() {
 
@@ -320,24 +327,7 @@ class CpuState(val includeRip: Boolean = false, val includeRsp: Boolean = false,
     fun emitRestore(assembler: Assembler) {
 
         assembler.apply {
-            mov(RAX, fields.rax)
-            mov(RCX, fields.rcx)
-            mov(RDX, fields.rdx)
-            mov(RBX, fields.rbx)
-            if (includeRsp) {
-                mov(RSP, fields.rsp)
-            }
-            mov(RBP, fields.rbp)
-            mov(RSI, fields.rsi)
-            mov(RDI, fields.rdi)
-            mov(R8, fields.r8)
-            mov(R9, fields.r9)
-            mov(R10, fields.r10)
-            mov(R11, fields.r11)
-            mov(R12, fields.r12)
-            mov(R13, fields.r13)
-            mov(R14, fields.r14)
-            mov(R15, fields.r15)
+            scratchRegisters = SCRATCH_REGISTERS
 
             mov(MM0, fields.mm0)
             mov(MM1, fields.mm1)
@@ -417,48 +407,73 @@ class CpuState(val includeRip: Boolean = false, val includeRsp: Boolean = false,
                 mov(XMM14, fields.xmm14)
                 mov(XMM15, fields.xmm15)
             }
-
-
             if (includeRip) mov(IpRegister.RIP, fields.rip)
             if (includeMxcsr) mov(MxcsrRegister.MXCSR, fields.mxcsr)
             if (includeRflags) mov(RflagsRegister.RFLAGS, fields.rflags)
+
+            mov(RAX, fields.rax)
+            mov(RCX, fields.rcx)
+            mov(RDX, fields.rdx)
+            mov(RBX, fields.rbx)
+            if (includeRsp) {
+                mov(RSP, fields.rsp)
+            }
+            mov(RBP, fields.rbp)
+            mov(RSI, fields.rsi)
+            mov(RDI, fields.rdi)
+            mov(R8, fields.r8)
+            mov(R9, fields.r9)
+            mov(R10, fields.r10)
+            mov(R11, fields.r11)
+            mov(R12, fields.r12)
+            mov(R13, fields.r13)
+            mov(R14, fields.r14)
+
+            pushed(R14) {
+                mov(R15, fields.r15)
+            }
         }
     }
 
     fun emitSave(assembler: Assembler) {
 
         assembler.apply {
-            println(fields.rax.offset)
-            mov(fields.rax, RAX)
-            mov(fields.rcx, RCX)
-            mov(fields.rdx, RDX)
-            mov(fields.rbx, RBX)
-            if (includeRsp) {
-                mov(fields.rsp, RSP)
+            pushed(R14) {
+                mov(fields.r15, R15)
             }
-            mov(fields.rbp, RBP)
-            mov(fields.rsi, RSI)
-            mov(fields.rdi, RDI)
-            mov(fields.r8, R8)
-            mov(fields.r9, R9)
-            mov(fields.r10, R10)
-            mov(fields.r11, R11)
-            mov(fields.r12, R12)
-            mov(fields.r13, R13)
-            mov(fields.r14, R14)
-            mov(fields.r15, R15)
+            pushed(R15) {
+                mov(fields.r14, R14)
+            }
+            pushed(R14, R15) {
+                mov(fields.r13, R13)
+                mov(fields.r12, R12)
+                mov(fields.r11, R11)
+                mov(fields.r10, R10)
+                mov(fields.r9, R9)
+                mov(fields.r8, R8)
+                mov(fields.rdi, RDI)
+                mov(fields.rsi, RSI)
+                mov(fields.rbp, RBP)
+                if (includeRsp) {
+                    // FIXME: we modified the stack, so what's the point of this?
+                    mov(fields.rsp, RSP)
+                }
+                mov(fields.rbx, RBX)
+                mov(fields.rdx, RDX)
+                mov(fields.rcx, RCX)
+                mov(fields.rax, RAX)
 
-            mov(fields.mm0, MM0)
-            mov(fields.mm1, MM1)
-            mov(fields.mm2, MM2)
-            mov(fields.mm3, MM3)
-            mov(fields.mm4, MM4)
-            mov(fields.mm5, MM5)
-            mov(fields.mm6, MM6)
-            mov(fields.mm7, MM7)
+                mov(fields.mm0, MM0)
+                mov(fields.mm1, MM1)
+                mov(fields.mm2, MM2)
+                mov(fields.mm3, MM3)
+                mov(fields.mm4, MM4)
+                mov(fields.mm5, MM5)
+                mov(fields.mm6, MM6)
+                mov(fields.mm7, MM7)
 
-            if (CpuId.supportsAvx512) {
-                TODO("Implement AVX512")
+                if (CpuId.supportsAvx512) {
+                    TODO("Implement AVX512")
 //                mov(fields.zmm0, ZMM0)
 //                mov(fields.zmm1, ZMM1)
 //                mov(fields.zmm2, ZMM2)
@@ -491,45 +506,46 @@ class CpuState(val includeRip: Boolean = false, val includeRsp: Boolean = false,
 //                mov(fields.zmm29, ZMM29)
 //                mov(fields.zmm30, ZMM30)
 //                mov(fields.zmm31, ZMM31)
-            } else if (CpuId.supportsAvx) {
-                mov(fields.ymm0, YMM0)
-                mov(fields.ymm1, YMM1)
-                mov(fields.ymm2, YMM2)
-                mov(fields.ymm3, YMM3)
-                mov(fields.ymm4, YMM4)
-                mov(fields.ymm5, YMM5)
-                mov(fields.ymm6, YMM6)
-                mov(fields.ymm7, YMM7)
-                mov(fields.ymm8, YMM8)
-                mov(fields.ymm9, YMM9)
-                mov(fields.ymm10, YMM10)
-                mov(fields.ymm11, YMM11)
-                mov(fields.ymm12, YMM12)
-                mov(fields.ymm13, YMM13)
-                mov(fields.ymm14, YMM14)
-                mov(fields.ymm15, YMM15)
-            } else {
-                mov(fields.xmm0, XMM0)
-                mov(fields.xmm1, XMM1)
-                mov(fields.xmm2, XMM2)
-                mov(fields.xmm3, XMM3)
-                mov(fields.xmm4, XMM4)
-                mov(fields.xmm5, XMM5)
-                mov(fields.xmm6, XMM6)
-                mov(fields.xmm7, XMM7)
-                mov(fields.xmm8, XMM8)
-                mov(fields.xmm9, XMM9)
-                mov(fields.xmm10, XMM10)
-                mov(fields.xmm11, XMM11)
-                mov(fields.xmm12, XMM12)
-                mov(fields.xmm13, XMM13)
-                mov(fields.xmm14, XMM14)
-                mov(fields.xmm15, XMM15)
-            }
+                } else if (CpuId.supportsAvx) {
+                    mov(fields.ymm0, YMM0)
+                    mov(fields.ymm1, YMM1)
+                    mov(fields.ymm2, YMM2)
+                    mov(fields.ymm3, YMM3)
+                    mov(fields.ymm4, YMM4)
+                    mov(fields.ymm5, YMM5)
+                    mov(fields.ymm6, YMM6)
+                    mov(fields.ymm7, YMM7)
+                    mov(fields.ymm8, YMM8)
+                    mov(fields.ymm9, YMM9)
+                    mov(fields.ymm10, YMM10)
+                    mov(fields.ymm11, YMM11)
+                    mov(fields.ymm12, YMM12)
+                    mov(fields.ymm13, YMM13)
+                    mov(fields.ymm14, YMM14)
+                    mov(fields.ymm15, YMM15)
+                } else {
+                    mov(fields.xmm0, XMM0)
+                    mov(fields.xmm1, XMM1)
+                    mov(fields.xmm2, XMM2)
+                    mov(fields.xmm3, XMM3)
+                    mov(fields.xmm4, XMM4)
+                    mov(fields.xmm5, XMM5)
+                    mov(fields.xmm6, XMM6)
+                    mov(fields.xmm7, XMM7)
+                    mov(fields.xmm8, XMM8)
+                    mov(fields.xmm9, XMM9)
+                    mov(fields.xmm10, XMM10)
+                    mov(fields.xmm11, XMM11)
+                    mov(fields.xmm12, XMM12)
+                    mov(fields.xmm13, XMM13)
+                    mov(fields.xmm14, XMM14)
+                    mov(fields.xmm15, XMM15)
+                }
 
-            if (includeRip) mov(fields.rip, IpRegister.RIP)
-            if (includeMxcsr) mov(fields.mxcsr, MxcsrRegister.MXCSR)
-            if (includeRflags) mov(fields.rflags, RflagsRegister.RFLAGS)
+                if (includeRip) mov(fields.rip, IpRegister.RIP)
+                if (includeMxcsr) mov(fields.mxcsr, MxcsrRegister.MXCSR)
+                if (includeRflags) mov(fields.rflags, RflagsRegister.RFLAGS)
+            }
         }
     }
 
@@ -543,7 +559,7 @@ class CpuState(val includeRip: Boolean = false, val includeRsp: Boolean = false,
         if (rcx != other.rcx) return false
         if (rdx != other.rdx) return false
         if (rbx != other.rbx) return false
-        if(includeRsp) if (rsp != other.rsp) return false
+        if (includeRsp) if (rsp != other.rsp) return false
         if (rbp != other.rbp) return false
         if (rsi != other.rsi) return false
         if (rdi != other.rdi) return false
@@ -648,7 +664,7 @@ class CpuState(val includeRip: Boolean = false, val includeRsp: Boolean = false,
         result *= 31 * rcx.toInt()
         result *= 31 * rdx.toInt()
         result *= 31 * rbx.toInt()
-        if(includeRsp) result *= 31 * rsp.toInt()
+        if (includeRsp) result *= 31 * rsp.toInt()
         result *= 31 * rbp.toInt()
         result *= 31 * rsi.toInt()
         result *= 31 * rdi.toInt()
@@ -740,9 +756,9 @@ class CpuState(val includeRip: Boolean = false, val includeRsp: Boolean = false,
             result *= 31 * xmm15.hashCode()
         }
 
-        if(includeRip) result *= 31 * rip.toInt()
-        if(includeMxcsr) result *= 31 * mxcsr
-        if(includeRflags) result *= 31 * rflags.toInt()
+        if (includeRip) result *= 31 * rip.toInt()
+        if (includeMxcsr) result *= 31 * mxcsr
+        if (includeRflags) result *= 31 * rflags.toInt()
 
         return result
     }

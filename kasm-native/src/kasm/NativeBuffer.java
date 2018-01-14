@@ -28,6 +28,7 @@ public class NativeBuffer extends Buffer {
     private static native long execute0(ByteBuffer byteBuffer) throws SignalException;
     private static native long execute1(ByteBuffer byteBuffer, long arg1) throws SignalException;
     private static native long execute2(ByteBuffer byteBuffer, long arg1, long arg2) throws SignalException;
+    private static native long execute6(ByteBuffer byteBuffer, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) throws SignalException;
 
     private static native long executeUnsafe(ByteBuffer byteBuffer);
     private static native void release(ByteBuffer byteBuffer, boolean mmap);
@@ -64,6 +65,16 @@ public class NativeBuffer extends Buffer {
 
         protect(byteBuffer, true);
         result = execute2(byteBuffer, arg1, arg2);
+        protect(byteBuffer, false);
+
+        return result;
+    }
+
+    public synchronized long execute(long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) throws Exception {
+        long result;
+
+        protect(byteBuffer, true);
+        result = execute6(byteBuffer, arg1, arg2, arg3, arg4, arg5, arg6);
         protect(byteBuffer, false);
 
         return result;

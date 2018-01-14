@@ -331,6 +331,15 @@ kasm_exec_asm2(void *mem, intptr_t arg1, intptr_t arg2) {
   return result;
 }
 
+static intptr_t
+kasm_exec_asm6(void *mem, intptr_t arg1, intptr_t arg2, intptr_t arg3, intptr_t arg4, intptr_t arg5, intptr_t arg6) {
+  intptr_t (*func)(intptr_t, intptr_t, intptr_t, intptr_t, intptr_t, intptr_t);
+  intptr_t result = 0;
+  *(void **) (&func) = mem;
+  result = func(arg1, arg2, arg3, arg4, arg5, arg6);
+  return result;
+}
+
 #define KASM_EXEC_ASM_PRE \
   void *mem = (*env)->GetDirectBufferAddress(env, buf);\
   jlong result = -1;\
@@ -377,6 +386,20 @@ jlong Java_kasm_NativeBuffer_execute1(JNIEnv *env, jclass cls, jobject buf, jlon
 jlong Java_kasm_NativeBuffer_execute2(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm2(mem, (intptr_t) arg1, (intptr_t) arg2);
+  KASM_EXEC_ASM_POST
+}
+
+jlong
+Java_kasm_NativeBuffer_execute6(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2, jlong arg3, jlong arg4,
+                                jlong arg5, jlong arg6) {
+  KASM_EXEC_ASM_PRE
+    result = kasm_exec_asm6(mem, (intptr_t) arg1,
+                            (intptr_t) arg2,
+                            (intptr_t) arg3,
+                            (intptr_t) arg4,
+                            (intptr_t) arg5,
+                            (intptr_t) arg6);
+
   KASM_EXEC_ASM_POST
 }
 

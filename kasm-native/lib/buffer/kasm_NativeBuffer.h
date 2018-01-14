@@ -57,6 +57,14 @@ JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_execute2
 
 /*
  * Class:     kasm_NativeBuffer
+ * Method:    execute6
+ * Signature: (Ljava/nio/ByteBuffer;J;J;J;J;J;J)J
+ */
+JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_execute6
+    (JNIEnv *, jclass, jobject, jlong, jlong, jlong, jlong, jlong, jlong);
+
+/*
+ * Class:     kasm_NativeBuffer
  * Method:    executeUnsafe
  * Signature: (Ljava/nio/ByteBuffer;)J
  */

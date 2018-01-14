@@ -14,9 +14,9 @@ open class Structure() {
 
         private val dimensionSizes: IntArray by lazy(LazyThreadSafetyMode.NONE) {
             IntArray(dimensions.size).also { dimensionSizes ->
-                dimensionSizes[0] = elementSize
-                for (i in 1 until dimensions.size) {
-                    dimensionSizes[i] = dimensionSizes[i - 1] * dimensions[i - 1]
+                dimensionSizes[dimensionSizes.lastIndex] = elementSize
+                for (i in dimensionSizes.lastIndex - 1 downTo 0) {
+                    dimensionSizes[i] = dimensionSizes[i + 1] * dimensions[i + 1]
                 }
             }
         }
@@ -41,41 +41,49 @@ open class Structure() {
                 return _size
             }
 
-        protected abstract fun get(offset: Int): T
-        protected abstract fun set(offset: Int, value: T)
+        protected abstract fun read(offset: Int): T
+        protected abstract fun write(offset: Int, value: T)
         protected val buffer get() = structure.buffer
 
-        fun address(): Long {
+        fun getAddress(): Long {
             return buffer.getAddress() + offset
         }
 
-        fun address(vararg dimensions: Int): Long {
-            return buffer.getAddress() + elementOffset(dimensions)
+        fun getAddress(vararg indices: Int): Long {
+            return buffer.getAddress() + getElementOffset(*indices)
         }
 
         fun get(): T {
-            return get(offset)
+            return read(offset)
         }
 
         fun set(value: T) {
-            set(offset, value)
+            write(offset, value)
         }
 
-        private fun elementOffset(dimensions: IntArray): Int {
-            if (dimensions.size != this.dimensions.size) {
-                throw IllegalArgumentException("field is of dimension ${this.dimensions.size} but only ${dimensions.size} indexes given")
+        fun getElementOffset(vararg indices: Int): Int {
+            if (indices.size != this.dimensions.size) {
+                throw IllegalArgumentException("field is of dimension ${this.dimensions.size} but only ${indices.size} indices given")
             }
 
             var relativeElementOffset = 0
-            for (dimensionIndex in dimensions.indices) {
-                relativeElementOffset += dimensions[dimensionIndex] * dimensionSizes[dimensionIndex]
+            for (dimensionIndex in indices.indices) {
+                relativeElementOffset += indices[dimensionIndex] * dimensionSizes[dimensionIndex]
             }
 
             return offset + relativeElementOffset
         }
 
+        fun getElementOffset(index: Int) : Int {
+            return dimensions[0] * elementSize
+        }
+
+        operator fun get(index: Int): T {
+          return read(getElementOffset(index))
+        }
+
         operator fun get(vararg dimensions: Int): T {
-            return get(elementOffset(dimensions))
+            return read(getElementOffset(*dimensions))
         }
 
         operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
@@ -88,21 +96,21 @@ open class Structure() {
     }
 
     class ByteField(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Byte>() {
-        override fun set(offset: Int, value: Byte) {
-            setByte(offset, value)
+        override fun write(offset: Int, value: Byte) {
+            writeByte(offset, value)
         }
 
-        private fun setByte(offset: Int, value: Byte) {
+        private fun writeByte(offset: Int, value: Byte) {
             buffer.putByte(offset, value)
         }
 
         override val elementSize = 1
 
-        override fun get(offset: Int): Byte {
-            return getByte(offset)
+        override fun read(offset: Int): Byte {
+            return readByte(offset)
         }
 
-        protected fun getByte(offset: Int): Byte {
+        protected fun readByte(offset: Int): Byte {
             return buffer.getByte(offset)
         }
     }
@@ -110,19 +118,19 @@ open class Structure() {
     class ShortField(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Short>() {
         override val elementSize = 2
 
-        override fun get(offset: Int): Short {
-            return getShort(offset)
+        override fun read(offset: Int): Short {
+            return readShort(offset)
         }
 
-        private fun getShort(offset: Int): Short {
+        private fun readShort(offset: Int): Short {
             return buffer.getShort(offset)
         }
 
-        override fun set(offset: Int, value: Short) {
-            setShort(offset, value)
+        override fun write(offset: Int, value: Short) {
+            writeShort(offset, value)
         }
 
-        protected fun setShort(offset: Int, value: Short) {
+        protected fun writeShort(offset: Int, value: Short) {
             buffer.putShort(offset, value)
         }
     }
@@ -130,19 +138,19 @@ open class Structure() {
     class IntField(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Int>() {
         override val elementSize = 4
 
-        override fun get(offset: Int): Int {
-            return getInt(offset)
+        override fun read(offset: Int): Int {
+            return readInt(offset)
         }
 
-        private fun getInt(offset: Int): Int {
+        private fun readInt(offset: Int): Int {
             return buffer.getInt(offset)
         }
 
-        override fun set(offset: Int, value: Int) {
-            setInt(offset, value)
+        override fun write(offset: Int, value: Int) {
+            writeInt(offset, value)
         }
 
-        protected fun setInt(offset: Int, value: Int) {
+        protected fun writeInt(offset: Int, value: Int) {
             buffer.putInt(offset, value)
         }
     }
@@ -150,19 +158,27 @@ open class Structure() {
     class LongField(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Long>() {
         override val elementSize = 8
 
-        override fun get(offset: Int): Long {
-            return getLong(offset)
+        override fun read(offset: Int): Long {
+            return readLong(offset)
         }
 
-        private fun getLong(offset: Int): Long {
+        fun getLong(index: Int) : Long {
+            return readLong(getElementOffset(index))
+        }
+
+        fun setLong(index: Int, value: Long) {
+            writeLong(getElementOffset(index), value)
+        }
+
+        private fun readLong(offset: Int): Long {
             return buffer.getLong(offset)
         }
 
-        override fun set(offset: Int, value: Long) {
-            setLong(offset, value)
+        override fun write(offset: Int, value: Long) {
+            writeLong(offset, value)
         }
 
-        protected fun setLong(offset: Int, value: Long) {
+        protected fun writeLong(offset: Int, value: Long) {
             buffer.putLong(offset, value)
         }
     }
@@ -171,19 +187,19 @@ open class Structure() {
     class Vector64Field(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Vector64>() {
         override val elementSize = VectorSize._64.byteSize
 
-        override fun get(offset: Int): Vector64 {
-            return getVector64(offset)
+        override fun read(offset: Int): Vector64 {
+            return readVector64(offset)
         }
 
-        fun getVector64(offset: Int): Vector64 {
+        private fun readVector64(offset: Int): Vector64 {
             return buffer.getVector64(offset)
         }
 
-        override fun set(offset: Int, value: Vector64) {
-            setVector64(offset, value)
+        override fun write(offset: Int, value: Vector64) {
+            writeVector64(offset, value)
         }
 
-        protected fun setVector64(offset: Int, value: Vector64) {
+        protected fun writeVector64(offset: Int, value: Vector64) {
             buffer.putVector64(offset, value)
         }
     }
@@ -191,19 +207,19 @@ open class Structure() {
     class Vector128Field(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Vector128>() {
         override val elementSize = VectorSize._128.byteSize
 
-        override fun get(offset: Int): Vector128 {
-            return getVector128(offset)
+        override fun read(offset: Int): Vector128 {
+            return readVector128(offset)
         }
 
-        fun getVector128(offset: Int): Vector128 {
+        private fun readVector128(offset: Int): Vector128 {
             return buffer.getVector128(offset)
         }
 
-        override fun set(offset: Int, value: Vector128) {
-            setVector128(offset, value)
+        override fun write(offset: Int, value: Vector128) {
+            writeVector128(offset, value)
         }
 
-        protected fun setVector128(offset: Int, value: Vector128) {
+        protected fun writeVector128(offset: Int, value: Vector128) {
             buffer.putVector128(offset, value)
         }
     }
@@ -211,19 +227,19 @@ open class Structure() {
     class Vector256Field(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Vector256>() {
         override val elementSize = VectorSize._256.byteSize
 
-        override fun get(offset: Int): Vector256 {
-            return getVector256(offset)
+        override fun read(offset: Int): Vector256 {
+            return readVector256(offset)
         }
 
-        fun getVector256(offset: Int): Vector256 {
+        private fun readVector256(offset: Int): Vector256 {
             return buffer.getVector256(offset)
         }
 
-        override fun set(offset: Int, value: Vector256) {
-            setVector256(offset, value)
+        override fun write(offset: Int, value: Vector256) {
+            writeVector256(offset, value)
         }
 
-        protected fun setVector256(offset: Int, value: Vector256) {
+        protected fun writeVector256(offset: Int, value: Vector256) {
             buffer.putVector256(offset, value)
         }
     }
@@ -231,19 +247,19 @@ open class Structure() {
     class Vector512Field(override val structure: Structure, override val dimensions: IntArray, override val offset: Int) : Field<Vector512>() {
         override val elementSize = VectorSize._512.byteSize
 
-        override fun get(offset: Int): Vector512 {
+        override fun read(offset: Int): Vector512 {
+            return readVector512(offset)
+        }
+
+        private fun readVector512(offset: Int): Vector512 {
             return buffer.getVector512(offset)
         }
 
-        fun getVector512(offset: Int): Vector512 {
-            return buffer.getVector512(offset)
+        override fun write(offset: Int, value: Vector512) {
+            writeVector512(offset, value)
         }
 
-        override fun set(offset: Int, value: Vector512) {
-            setVector512(offset, value)
-        }
-
-        protected fun setVector512(offset: Int, value: Vector512) {
+        protected fun writeVector512(offset: Int, value: Vector512) {
             buffer.putVector512(offset, value)
         }
     }
