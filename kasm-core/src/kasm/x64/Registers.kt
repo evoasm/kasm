@@ -135,7 +135,7 @@ enum class BitSize {
         override fun toInt() = 256
     };
 
-    abstract fun toInt() : Int
+    abstract fun toInt(): Int
     val byteSize get() = toInt() / 8
     abstract fun toBitRange(): BitRange;
 }
@@ -152,7 +152,7 @@ interface Register {
     val rexBit: Int
         get() = if (code < 8) 0 else 1
 
-    val name : String
+    val name: String
 }
 
 interface AddressRegister : Register
@@ -204,71 +204,87 @@ interface SubRegister<out S : Register, out T : Register> : Register {
     val topLevelRegister: T
 }
 
-enum class GpRegister64(override val code: Int) : GpRegister, AddressRegister {
-    RAX(0),
-    RCX(1),
-    RDX(2),
-    RBX(3),
-    RSP(4),
-    RBP(5),
-    RSI(6),
-    RDI(7),
-    R8(8),
-    R9(9),
-    R10(10),
-    R11(11),
-    R12(12),
-    R13(13),
-    R14(14),
-    R15(15);
+enum class GpRegister64(override val code: Int,
+                        val subRegister32: GpRegister32,
+                        val subRegister16: GpRegister16,
+                        val subRegister8: GpRegister8) : GpRegister, AddressRegister {
+    RAX(0, GpRegister32.EAX, GpRegister16.AX, GpRegister8.AL),
+    RCX(1, GpRegister32.ECX, GpRegister16.CX, GpRegister8.CL),
+    RDX(2, GpRegister32.EDX, GpRegister16.DX, GpRegister8.DL),
+    RBX(3, GpRegister32.EBX, GpRegister16.BX, GpRegister8.BL),
+    RSP(4, GpRegister32.ESP, GpRegister16.SP, GpRegister8.SPL),
+    RBP(5, GpRegister32.EBP, GpRegister16.BP, GpRegister8.BPL),
+    RSI(6, GpRegister32.ESI, GpRegister16.SI, GpRegister8.SIL),
+    RDI(7, GpRegister32.EDI, GpRegister16.DI, GpRegister8.DIL),
+    R8(8, GpRegister32.R8D, GpRegister16.R8W, GpRegister8.R8B),
+    R9(9, GpRegister32.R9D, GpRegister16.R9W, GpRegister8.R9B),
+    R10(10, GpRegister32.R10D, GpRegister16.R10W, GpRegister8.R10B),
+    R11(11, GpRegister32.R11D, GpRegister16.R11W, GpRegister8.R11B),
+    R12(12, GpRegister32.R12D, GpRegister16.R12W, GpRegister8.R12B),
+    R13(13, GpRegister32.R13D, GpRegister16.R13W, GpRegister8.R13B),
+    R14(14, GpRegister32.R14D, GpRegister16.R14W, GpRegister8.R14B),
+    R15(15, GpRegister32.R15D, GpRegister16.R15W, GpRegister8.R15B);
 
     override val type = RegisterType.GP64
 }
 
-enum class GpRegister32(override val code: Int, override val superRegister: GpRegister64, override val topLevelRegister: GpRegister64) : GpRegister, AddressRegister, SubRegister<GpRegister64, GpRegister64> {
-    EAX  (0, GpRegister64.RAX,GpRegister64.RAX),
-    ECX  (1, GpRegister64.RCX,GpRegister64.RCX),
-    EDX(  2, GpRegister64.RDX,GpRegister64.RDX),
-    EBX(  3, GpRegister64.RBX,GpRegister64.RBX),
-    ESP(  4, GpRegister64.RSP,GpRegister64.RSP),
-    EBP(  5, GpRegister64.RBP,GpRegister64.RBP),
-    ESI(  6, GpRegister64.RSI,GpRegister64.RSI),
-    EDI(  7, GpRegister64.RDI,GpRegister64.RDI),
-    R8D(  8, GpRegister64.R8 ,GpRegister64.R8 ),
-    R9D(  9, GpRegister64.R9 ,GpRegister64.R9 ),
-    R10D(10, GpRegister64.R10,GpRegister64.R10),
-    R11D(11, GpRegister64.R11,GpRegister64.R11),
-    R12D(12, GpRegister64.R12,GpRegister64.R12),
-    R13D(13, GpRegister64.R13,GpRegister64.R13),
-    R14D(14, GpRegister64.R14,GpRegister64.R14),
-    R15D(15, GpRegister64.R15,GpRegister64.R15);
+enum class GpRegister32(override val code: Int,
+                        override val superRegister: GpRegister64,
+                        override val topLevelRegister: GpRegister64,
+                        val subRegister16: GpRegister16,
+                        val subRegister8: GpRegister8) : GpRegister,
+                                                         AddressRegister,
+                                                         SubRegister<GpRegister64, GpRegister64> {
+    EAX(0, GpRegister64.RAX, GpRegister64.RAX, GpRegister16.AX, GpRegister8.AL),
+    ECX(1, GpRegister64.RCX, GpRegister64.RCX, GpRegister16.CX, GpRegister8.CL),
+    EDX(2, GpRegister64.RDX, GpRegister64.RDX, GpRegister16.DX, GpRegister8.DL),
+    EBX(3, GpRegister64.RBX, GpRegister64.RBX, GpRegister16.BX, GpRegister8.BL),
+    ESP(4, GpRegister64.RSP, GpRegister64.RSP, GpRegister16.SP, GpRegister8.SPL),
+    EBP(5, GpRegister64.RBP, GpRegister64.RBP, GpRegister16.BP, GpRegister8.BPL),
+    ESI(6, GpRegister64.RSI, GpRegister64.RSI, GpRegister16.SI, GpRegister8.SIL),
+    EDI(7, GpRegister64.RDI, GpRegister64.RDI, GpRegister16.DI, GpRegister8.DIL),
+    R8D(8, GpRegister64.R8, GpRegister64.R8, GpRegister16.R8W, GpRegister8.R8B),
+    R9D(9, GpRegister64.R9, GpRegister64.R9, GpRegister16.R9W, GpRegister8.R9B),
+    R10D(10, GpRegister64.R10, GpRegister64.R10, GpRegister16.R10W, GpRegister8.R10B),
+    R11D(11, GpRegister64.R11, GpRegister64.R11, GpRegister16.R11W, GpRegister8.R11B),
+    R12D(12, GpRegister64.R12, GpRegister64.R12, GpRegister16.R12W, GpRegister8.R12B),
+    R13D(13, GpRegister64.R13, GpRegister64.R13, GpRegister16.R13W, GpRegister8.R13B),
+    R14D(14, GpRegister64.R14, GpRegister64.R14, GpRegister16.R14W, GpRegister8.R14B),
+    R15D(15, GpRegister64.R15, GpRegister64.R15, GpRegister16.R15W, GpRegister8.R15B);
 
     override val type = RegisterType.GP32
 }
 
-enum class GpRegister16(override val code: Int, override val superRegister: GpRegister32, override val topLevelRegister: GpRegister64) : GpRegister, SubRegister<GpRegister32, GpRegister64> {
-    AX(   0, GpRegister32.EAX ,GpRegister64.RAX),
-    CX(   1, GpRegister32.ECX ,GpRegister64.RCX),
-    DX(   2, GpRegister32.EDX ,GpRegister64.RDX),
-    BX(   3, GpRegister32.EBX ,GpRegister64.RBX),
-    SP(   4, GpRegister32.ESP ,GpRegister64.RSP),
-    BP(   5, GpRegister32.EBP ,GpRegister64.RBP),
-    SI(   6, GpRegister32.ESI ,GpRegister64.RSI),
-    DI(   7, GpRegister32.EDI ,GpRegister64.RDI),
-    R8W(  8, GpRegister32.R8D ,GpRegister64.R8 ),
-    R9W(  9, GpRegister32.R9D ,GpRegister64.R9 ),
-    R10W(10, GpRegister32.R10D,GpRegister64.R10),
-    R11W(11, GpRegister32.R11D,GpRegister64.R11),
-    R12W(12, GpRegister32.R12D,GpRegister64.R12),
-    R13W(13, GpRegister32.R13D,GpRegister64.R13),
-    R14W(14, GpRegister32.R14D,GpRegister64.R14),
-    R15W(15, GpRegister32.R15D,GpRegister64.R15);
+enum class GpRegister16(override val code: Int,
+                        override val superRegister: GpRegister32,
+                        override val topLevelRegister: GpRegister64,
+                        val subRegister8: GpRegister8) : GpRegister, SubRegister<GpRegister32, GpRegister64> {
+    AX(0, GpRegister32.EAX, GpRegister64.RAX, GpRegister8.AL),
+    CX(1, GpRegister32.ECX, GpRegister64.RCX, GpRegister8.CL),
+    DX(2, GpRegister32.EDX, GpRegister64.RDX, GpRegister8.DL),
+    BX(3, GpRegister32.EBX, GpRegister64.RBX, GpRegister8.BL),
+    SP(4, GpRegister32.ESP, GpRegister64.RSP, GpRegister8.SPL),
+    BP(5, GpRegister32.EBP, GpRegister64.RBP, GpRegister8.BPL),
+    SI(6, GpRegister32.ESI, GpRegister64.RSI, GpRegister8.SIL),
+    DI(7, GpRegister32.EDI, GpRegister64.RDI, GpRegister8.DIL),
+    R8W(8, GpRegister32.R8D, GpRegister64.R8, GpRegister8.R8B),
+    R9W(9, GpRegister32.R9D, GpRegister64.R9, GpRegister8.R9B),
+    R10W(10, GpRegister32.R10D, GpRegister64.R10, GpRegister8.R10B),
+    R11W(11, GpRegister32.R11D, GpRegister64.R11, GpRegister8.R11B),
+    R12W(12, GpRegister32.R12D, GpRegister64.R12, GpRegister8.R12B),
+    R13W(13, GpRegister32.R13D, GpRegister64.R13, GpRegister8.R13B),
+    R14W(14, GpRegister32.R14D, GpRegister64.R14, GpRegister8.R14B),
+    R15W(15, GpRegister32.R15D, GpRegister64.R15, GpRegister8.R15B);
 
     override val type = RegisterType.GP16
 }
 
 
-enum class GpRegister8(override val code: Int, override val superRegister: GpRegister16, override val topLevelRegister: GpRegister64, val needsRex: Boolean = false, val forbidsRex: Boolean = false) : GpRegister, SubRegister<GpRegister16, GpRegister64> {
+enum class GpRegister8(override val code: Int,
+                       override val superRegister: GpRegister16,
+                       override val topLevelRegister: GpRegister64,
+                       val needsRex: Boolean = false,
+                       val forbidsRex: Boolean = false) : GpRegister, SubRegister<GpRegister16, GpRegister64> {
     AL(0, GpRegister16.AX, GpRegister64.RAX),
     AH(4, GpRegister16.AX, GpRegister64.RAX, forbidsRex = true),
     CL(1, GpRegister16.CX, GpRegister64.RCX),
@@ -308,7 +324,11 @@ enum class MmRegister(override val code: Int) : Register {
 }
 
 
-enum class XmmRegister(override val code: Int, override val superRegister: YmmRegister, override val topLevelRegister: ZmmRegister) : Register, VectorRegister, SubRegister<YmmRegister, ZmmRegister> {
+enum class XmmRegister(override val code: Int,
+                       override val superRegister: YmmRegister,
+                       override val topLevelRegister: ZmmRegister) : Register,
+                                                                     VectorRegister,
+                                                                     SubRegister<YmmRegister, ZmmRegister> {
     XMM0(0, YmmRegister.YMM0, ZmmRegister.ZMM0),
     XMM1(1, YmmRegister.YMM1, ZmmRegister.ZMM1),
     XMM2(2, YmmRegister.YMM2, ZmmRegister.ZMM2),
@@ -329,7 +349,11 @@ enum class XmmRegister(override val code: Int, override val superRegister: YmmRe
     override val type = RegisterType.XMM
 }
 
-enum class YmmRegister(override val code: Int, override val superRegister: ZmmRegister, override val topLevelRegister: ZmmRegister) : Register, VectorRegister, SubRegister<ZmmRegister, ZmmRegister> {
+enum class YmmRegister(override val code: Int,
+                       override val superRegister: ZmmRegister,
+                       override val topLevelRegister: ZmmRegister) : Register,
+                                                                     VectorRegister,
+                                                                     SubRegister<ZmmRegister, ZmmRegister> {
     YMM0(0, ZmmRegister.ZMM0, ZmmRegister.ZMM0),
     YMM1(1, ZmmRegister.ZMM1, ZmmRegister.ZMM1),
     YMM2(2, ZmmRegister.ZMM2, ZmmRegister.ZMM2),
@@ -554,7 +578,7 @@ enum class CpuFeature {
         val avx512Features = EnumSet.of(
                 AVX512F, AVX512DQ, AVX512IFMA, AVX512PF, AVX512ER,
                 AVX512CD, AVX512BW, AVX512VL, AVX512VBMI
-        )
+                                       )
     }
 }
 

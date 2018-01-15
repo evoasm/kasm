@@ -45,9 +45,7 @@ open class Structure() {
         protected abstract fun write(offset: Int, value: T)
         protected val buffer get() = structure.buffer
 
-        fun getAddress(): Long {
-            return buffer.getAddress() + offset
-        }
+        val address : Long get() = buffer.getAddress() + offset
 
         fun getAddress(vararg indices: Int): Long {
             return buffer.getAddress() + getElementOffset(*indices)

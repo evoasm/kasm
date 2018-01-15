@@ -28,6 +28,14 @@ class Assembler(override val buffer: Buffer) : AbstractAssembler() {
         private val NOP9 = byteArrayOf(0x66, 0x0F, 0x1F, 0x84.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00)
     }
 
+    class JumpSite(val buffer: Buffer) {
+        private val offset = buffer.position()
+
+        fun link(jumpTargetOffset: Int) {
+            buffer.putInt(jumpTargetOffset - 2, jumpTargetOffset - this.offset)
+        }
+    }
+
     fun ifEqual(ifBlock: Assembler.() -> Unit) {
         jne(0xdeadbeef.toInt())
         val offset1 = buffer.position()
@@ -48,6 +56,16 @@ class Assembler(override val buffer: Buffer) : AbstractAssembler() {
 
         buffer.putInt(offset1 - 4, offset2 - offset1)
         buffer.putInt(offset2 - 4, offset3 - offset2)
+    }
+
+    fun je(): JumpSite {
+        je(0xdeadbeef.toInt())
+        return JumpSite(buffer)
+    }
+
+    fun jmp(): JumpSite {
+        jmp(0xdeadbeef.toInt())
+        return JumpSite(buffer)
     }
 
     inline fun pushed(registers: List<GpRegister64>, action: Assembler.() -> Unit) {
