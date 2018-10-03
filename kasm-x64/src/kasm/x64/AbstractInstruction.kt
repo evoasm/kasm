@@ -1,9 +1,9 @@
 package kasm.x64
 
-import kasm.Buffer
+import java.nio.ByteBuffer
 
 abstract class AbstractInstruction {
-    abstract fun encode(buffer: Buffer,
+    abstract fun encode(buffer: ByteBuffer,
                         model: InstructionModel,
                         options: EncodingOptions = EncodingOptions.DEFAULT,
                         tracer: InstructionTracer? = null)

@@ -244,81 +244,81 @@ class CpuState(val includeRip: Boolean = false,
     var r14d by fields.r14d
     var r15d by fields.r15d
 
-    var mm0 by fields.mm0
-    var mm1 by fields.mm1
-    var mm2 by fields.mm2
-    var mm3 by fields.mm3
-    var mm4 by fields.mm4
-    var mm5 by fields.mm5
-    var mm6 by fields.mm6
-    var mm7 by fields.mm7
+    val mm0 = fields.mm0
+    val mm1 = fields.mm1
+    val mm2 = fields.mm2
+    val mm3 = fields.mm3
+    val mm4 = fields.mm4
+    val mm5 = fields.mm5
+    val mm6 = fields.mm6
+    val mm7 = fields.mm7
 
-    var zmm0 by fields.zmm0
-    var zmm1 by fields.zmm1
-    var zmm2 by fields.zmm2
-    var zmm3 by fields.zmm3
-    var zmm4 by fields.zmm4
-    var zmm5 by fields.zmm5
-    var zmm6 by fields.zmm6
-    var zmm7 by fields.zmm7
-    var zmm8 by fields.zmm8
-    var zmm9 by fields.zmm9
-    var zmm10 by fields.zmm10
-    var zmm11 by fields.zmm11
-    var zmm12 by fields.zmm12
-    var zmm13 by fields.zmm13
-    var zmm14 by fields.zmm14
-    var zmm15 by fields.zmm15
-    var zmm16 by fields.zmm16
-    var zmm17 by fields.zmm17
-    var zmm18 by fields.zmm18
-    var zmm19 by fields.zmm19
-    var zmm20 by fields.zmm20
-    var zmm21 by fields.zmm21
-    var zmm22 by fields.zmm22
-    var zmm23 by fields.zmm23
-    var zmm24 by fields.zmm24
-    var zmm25 by fields.zmm25
-    var zmm26 by fields.zmm26
-    var zmm27 by fields.zmm27
-    var zmm28 by fields.zmm28
-    var zmm29 by fields.zmm29
-    var zmm30 by fields.zmm30
-    var zmm31 by fields.zmm31
+    val zmm0 = fields.zmm0
+    val zmm1 = fields.zmm1
+    val zmm2 = fields.zmm2
+    val zmm3 = fields.zmm3
+    val zmm4 = fields.zmm4
+    val zmm5 = fields.zmm5
+    val zmm6 = fields.zmm6
+    val zmm7 = fields.zmm7
+    val zmm8 = fields.zmm8
+    val zmm9 = fields.zmm9
+    val zmm10 = fields.zmm10
+    val zmm11 = fields.zmm11
+    val zmm12 = fields.zmm12
+    val zmm13 = fields.zmm13
+    val zmm14 = fields.zmm14
+    val zmm15 = fields.zmm15
+    val zmm16 = fields.zmm16
+    val zmm17 = fields.zmm17
+    val zmm18 = fields.zmm18
+    val zmm19 = fields.zmm19
+    val zmm20 = fields.zmm20
+    val zmm21 = fields.zmm21
+    val zmm22 = fields.zmm22
+    val zmm23 = fields.zmm23
+    val zmm24 = fields.zmm24
+    val zmm25 = fields.zmm25
+    val zmm26 = fields.zmm26
+    val zmm27 = fields.zmm27
+    val zmm28 = fields.zmm28
+    val zmm29 = fields.zmm29
+    val zmm30 = fields.zmm30
+    val zmm31 = fields.zmm31
 
-    var xmm0 by fields.xmm0
-    var xmm1 by fields.xmm1
-    var xmm2 by fields.xmm2
-    var xmm3 by fields.xmm3
-    var xmm4 by fields.xmm4
-    var xmm5 by fields.xmm5
-    var xmm6 by fields.xmm6
-    var xmm7 by fields.xmm7
-    var xmm8 by fields.xmm8
-    var xmm9 by fields.xmm9
-    var xmm10 by fields.xmm10
-    var xmm11 by fields.xmm11
-    var xmm12 by fields.xmm12
-    var xmm13 by fields.xmm13
-    var xmm14 by fields.xmm14
-    var xmm15 by fields.xmm15
+    val xmm0 = fields.xmm0
+    val xmm1 = fields.xmm1
+    val xmm2 = fields.xmm2
+    val xmm3 = fields.xmm3
+    val xmm4 = fields.xmm4
+    val xmm5 = fields.xmm5
+    val xmm6 = fields.xmm6
+    val xmm7 = fields.xmm7
+    val xmm8 = fields.xmm8
+    val xmm9 = fields.xmm9
+    val xmm10 = fields.xmm10
+    val xmm11 = fields.xmm11
+    val xmm12 = fields.xmm12
+    val xmm13 = fields.xmm13
+    val xmm14 = fields.xmm14
+    val xmm15 = fields.xmm15
 
-    var ymm0 by fields.ymm0
-    var ymm1 by fields.ymm1
-    var ymm2 by fields.ymm2
-    var ymm3 by fields.ymm3
-    var ymm4 by fields.ymm4
-    var ymm5 by fields.ymm5
-    var ymm6 by fields.ymm6
-    var ymm7 by fields.ymm7
-    var ymm8 by fields.ymm8
-    var ymm9 by fields.ymm9
-    var ymm10 by fields.ymm10
-    var ymm11 by fields.ymm11
-    var ymm12 by fields.ymm12
-    var ymm13 by fields.ymm13
-    var ymm14 by fields.ymm14
-    var ymm15 by fields.ymm15
+    val ymm0 = fields.ymm0
+    val ymm1 = fields.ymm1
+    val ymm2 = fields.ymm2
+    val ymm3 = fields.ymm3
+    val ymm4 = fields.ymm4
+    val ymm5 = fields.ymm5
+    val ymm6 = fields.ymm6
+    val ymm7 = fields.ymm7
+    val ymm8 = fields.ymm8
+    val ymm9 = fields.ymm9
+    val ymm10 = fields.ymm10
+    val ymm11 = fields.ymm11
+    val ymm12 = fields.ymm12
+    val ymm13 = fields.ymm13
+    val ymm14 = fields.ymm14
+    val ymm15 = fields.ymm15
 
     var rflags by fields.rflags
     var rip by fields.rip
@@ -327,224 +327,227 @@ class CpuState(val includeRip: Boolean = false,
     fun emitRestore(assembler: Assembler) {
 
         assembler.apply {
-            scratchRegisters = SCRATCH_REGISTERS
 
-            mov(MM0, fields.mm0)
-            mov(MM1, fields.mm1)
-            mov(MM2, fields.mm2)
-            mov(MM3, fields.mm3)
-            mov(MM4, fields.mm4)
-            mov(MM5, fields.mm5)
-            mov(MM6, fields.mm6)
-            mov(MM7, fields.mm7)
 
-            if (CpuId.supportsAvx512) {
-                TODO("Implement AVX512")
-//                mov(ZMM0, fields.zmm0)
-//                mov(ZMM1, fields.zmm1)
-//                mov(ZMM2, fields.zmm2)
-//                mov(ZMM3, fields.zmm3)
-//                mov(ZMM4, fields.zmm4)
-//                mov(ZMM5, fields.zmm5)
-//                mov(ZMM6, fields.zmm6)
-//                mov(ZMM7, fields.zmm7)
-//                mov(ZMM8, fields.zmm8)
-//                mov(ZMM9, fields.zmm9)
-//                mov(ZMM10, fields.zmm10)
-//                mov(ZMM11, fields.zmm11)
-//                mov(ZMM12, fields.zmm12)
-//                mov(ZMM13, fields.zmm13)
-//                mov(ZMM14, fields.zmm14)
-//                mov(ZMM15, fields.zmm15)
-//                mov(ZMM16, fields.zmm16)
-//                mov(ZMM17, fields.zmm17)
-//                mov(ZMM18, fields.zmm18)
-//                mov(ZMM19, fields.zmm19)
-//                mov(ZMM20, fields.zmm20)
-//                mov(ZMM21, fields.zmm21)
-//                mov(ZMM22, fields.zmm22)
-//                mov(ZMM23, fields.zmm23)
-//                mov(ZMM24, fields.zmm24)
-//                mov(ZMM25, fields.zmm25)
-//                mov(ZMM26, fields.zmm26)
-//                mov(ZMM27, fields.zmm27)
-//                mov(ZMM28, fields.zmm28)
-//                mov(ZMM29, fields.zmm29)
-//                mov(ZMM30, fields.zmm30)
-//                mov(ZMM31, fields.zmm31)
-            } else if (CpuId.supportsAvx) {
-                mov(YMM0, fields.ymm0)
-                mov(YMM1, fields.ymm1)
-                mov(YMM2, fields.ymm2)
-                mov(YMM3, fields.ymm3)
-                mov(YMM4, fields.ymm4)
-                mov(YMM5, fields.ymm5)
-                mov(YMM6, fields.ymm6)
-                mov(YMM7, fields.ymm7)
-                mov(YMM8, fields.ymm8)
-                mov(YMM9, fields.ymm9)
-                mov(YMM10, fields.ymm10)
-                mov(YMM11, fields.ymm11)
-                mov(YMM12, fields.ymm12)
-                mov(YMM13, fields.ymm13)
-                mov(YMM14, fields.ymm14)
-                mov(YMM15, fields.ymm15)
-            } else {
-                mov(XMM0, fields.xmm0)
-                mov(XMM1, fields.xmm1)
-                mov(XMM2, fields.xmm2)
-                mov(XMM3, fields.xmm3)
-                mov(XMM4, fields.xmm4)
-                mov(XMM5, fields.xmm5)
-                mov(XMM6, fields.xmm6)
-                mov(XMM7, fields.xmm7)
-                mov(XMM8, fields.xmm8)
-                mov(XMM9, fields.xmm9)
-                mov(XMM10, fields.xmm10)
-                mov(XMM11, fields.xmm11)
-                mov(XMM12, fields.xmm12)
-                mov(XMM13, fields.xmm13)
-                mov(XMM14, fields.xmm14)
-                mov(XMM15, fields.xmm15)
+                load(fields.mm0.address, MM0, R14)
+                load(fields.mm1.address, MM1, R14)
+                load(fields.mm2.address, MM2, R14)
+                load(fields.mm3.address, MM3, R14)
+                load(fields.mm4.address, MM4, R14)
+                load(fields.mm5.address, MM5, R14)
+                load(fields.mm6.address, MM6, R14)
+                load(fields.mm7.address, MM7, R14)
+
+                if (CpuId.supportsAvx512) {
+                    TODO("Implement AVX512")
+//                load(fields.zmm0.address, ZMM0)
+//                load(fields.zmm1.address, ZMM1)
+//                load(fields.zmm2.address, ZMM2)
+//                load(fields.zmm3.address, ZMM3)
+//                load(fields.zmm4.address, ZMM4)
+//                load(fields.zmm5.address, ZMM5)
+//                load(fields.zmm6.address, ZMM6)
+//                load(fields.zmm7.address, ZMM7)
+//                load(fields.zmm8.address, ZMM8)
+//                load(fields.zmm9.address, ZMM9)
+//                load(fields.zmm10.address, ZMM10)
+//                load(fields.zmm11.address, ZMM11)
+//                load(fields.zmm12.address, ZMM12)
+//                load(fields.zmm13.address, ZMM13)
+//                load(fields.zmm14.address, ZMM14)
+//                load(fields.zmm15.address, ZMM15)
+//                load(fields.zmm16.address, ZMM16)
+//                load(fields.zmm17.address, ZMM17)
+//                load(fields.zmm18.address, ZMM18)
+//                load(fields.zmm19.address, ZMM19)
+//                load(fields.zmm20.address, ZMM20)
+//                load(fields.zmm21.address, ZMM21)
+//                load(fields.zmm22.address, ZMM22)
+//                load(fields.zmm23.address, ZMM23)
+//                load(fields.zmm24.address, ZMM24)
+//                load(fields.zmm25.address, ZMM25)
+//                load(fields.zmm26.address, ZMM26)
+//                load(fields.zmm27.address, ZMM27)
+//                load(fields.zmm28.address, ZMM28)
+//                load(fields.zmm29.address, ZMM29)
+//                load(fields.zmm30.address, ZMM30)
+//                load(fields.zmm31.address, ZMM31)
+                } else if (CpuId.supportsAvx) {
+                    load(fields.ymm0.address, YMM0, R14)
+                    load(fields.ymm1.address, YMM1, R14)
+                    load(fields.ymm2.address, YMM2, R14)
+                    load(fields.ymm3.address, YMM3, R14)
+                    load(fields.ymm4.address, YMM4, R14)
+                    load(fields.ymm5.address, YMM5, R14)
+                    load(fields.ymm6.address, YMM6, R14)
+                    load(fields.ymm7.address, YMM7, R14)
+                    load(fields.ymm8.address, YMM8, R14)
+                    load(fields.ymm9.address, YMM9, R14)
+                    load(fields.ymm10.address, YMM10, R14)
+                    load(fields.ymm11.address, YMM11, R14)
+                    load(fields.ymm12.address, YMM12, R14)
+                    load(fields.ymm13.address, YMM13, R14)
+                    load(fields.ymm14.address, YMM14, R14)
+                    load(fields.ymm15.address, YMM15, R14)
+                } else {
+                    load(fields.xmm0.address, XMM0, R14)
+                    load(fields.xmm1.address, XMM1, R14)
+                    load(fields.xmm2.address, XMM2, R14)
+                    load(fields.xmm3.address, XMM3, R14)
+                    load(fields.xmm4.address, XMM4, R14)
+                    load(fields.xmm5.address, XMM5, R14)
+                    load(fields.xmm6.address, XMM6, R14)
+                    load(fields.xmm7.address, XMM7, R14)
+                    load(fields.xmm8.address, XMM8, R14)
+                    load(fields.xmm9.address, XMM9, R14)
+                    load(fields.xmm10.address, XMM10, R14)
+                    load(fields.xmm11.address, XMM11, R14)
+                    load(fields.xmm12.address, XMM12, R14)
+                    load(fields.xmm13.address, XMM13, R14)
+                    load(fields.xmm14.address, XMM14, R14)
+                    load(fields.xmm15.address, XMM15, R14)
+                }
+
+                if (includeMxcsr) load(fields.mxcsr.address, MxcsrRegister.MXCSR, R14)
+                if (includeRflags) load(fields.rflags.address, RflagsRegister.RFLAGS, R14, R15)
+
+                load(fields.rax.address, RAX, R14)
+                load(fields.rcx.address, RCX, R14)
+                load(fields.rdx.address, RDX, R14)
+                load(fields.rbx.address, RBX, R14)
+                if (includeRsp) {
+                    load(fields.rsp.address, RSP, R14)
+                }
+                load(fields.rbp.address, RBP, R14)
+                load(fields.rsi.address, RSI, R14)
+                load(fields.rdi.address, RDI, R14)
+                load(fields.r8.address, R8, R14)
+                load(fields.r9.address, R9, R14)
+                load(fields.r10.address, R10, R14)
+                load(fields.r11.address, R11, R14)
+                load(fields.r12.address, R12, R14)
+                load(fields.r13.address, R13, R14)
+
+                load(fields.r14.address, R14, R15)
+
+                pushed(R14) {
+                    load(fields.r15.address, R15, R14)
+                }
+
+                if (includeRip) load(fields.rip.address, IpRegister.RIP)
             }
-            if (includeRip) mov(IpRegister.RIP, fields.rip)
-            if (includeMxcsr) mov(MxcsrRegister.MXCSR, fields.mxcsr)
-            if (includeRflags) mov(RflagsRegister.RFLAGS, fields.rflags)
-
-            mov(RAX, fields.rax)
-            mov(RCX, fields.rcx)
-            mov(RDX, fields.rdx)
-            mov(RBX, fields.rbx)
-            if (includeRsp) {
-                mov(RSP, fields.rsp)
-            }
-            mov(RBP, fields.rbp)
-            mov(RSI, fields.rsi)
-            mov(RDI, fields.rdi)
-            mov(R8, fields.r8)
-            mov(R9, fields.r9)
-            mov(R10, fields.r10)
-            mov(R11, fields.r11)
-            mov(R12, fields.r12)
-            mov(R13, fields.r13)
-            mov(R14, fields.r14)
-
-            pushed(R14) {
-                mov(R15, fields.r15)
-            }
-        }
     }
 
     fun emitSave(assembler: Assembler) {
 
         assembler.apply {
             pushed(R14) {
-                mov(fields.r15, R15)
+                store(fields.r15.address, R15, R14)
             }
             pushed(R15) {
-                mov(fields.r14, R14)
+                store(fields.r14.address, R14, R15)
             }
             pushed(R14, R15) {
-                mov(fields.r13, R13)
-                mov(fields.r12, R12)
-                mov(fields.r11, R11)
-                mov(fields.r10, R10)
-                mov(fields.r9, R9)
-                mov(fields.r8, R8)
-                mov(fields.rdi, RDI)
-                mov(fields.rsi, RSI)
-                mov(fields.rbp, RBP)
+                store(fields.r13.address, R13, R14)
+                store(fields.r12.address, R12, R14)
+                store(fields.r11.address, R11, R14)
+                store(fields.r10.address, R10, R14)
+                store(fields.r9.address, R9, R14)
+                store(fields.r8.address, R8, R14)
+                store(fields.rdi.address, RDI, R14)
+                store(fields.rsi.address, RSI, R14)
+                store(fields.rbp.address, RBP, R14)
                 if (includeRsp) {
-                    // FIXME: we modified the stack, so what's the point of this?
-                    mov(fields.rsp, RSP)
+                    // FIXME: we modified the stack.address, so what's the point of this?
+                    store(fields.rsp.address, RSP, R14)
                 }
-                mov(fields.rbx, RBX)
-                mov(fields.rdx, RDX)
-                mov(fields.rcx, RCX)
-                mov(fields.rax, RAX)
+                store(fields.rbx.address, RBX, R14)
+                store(fields.rdx.address, RDX, R14)
+                store(fields.rcx.address, RCX, R14)
+                store(fields.rax.address, RAX, R14)
 
-                mov(fields.mm0, MM0)
-                mov(fields.mm1, MM1)
-                mov(fields.mm2, MM2)
-                mov(fields.mm3, MM3)
-                mov(fields.mm4, MM4)
-                mov(fields.mm5, MM5)
-                mov(fields.mm6, MM6)
-                mov(fields.mm7, MM7)
+                store(fields.mm0.address, MM0, R14)
+                store(fields.mm1.address, MM1, R14)
+                store(fields.mm2.address, MM2, R14)
+                store(fields.mm3.address, MM3, R14)
+                store(fields.mm4.address, MM4, R14)
+                store(fields.mm5.address, MM5, R14)
+                store(fields.mm6.address, MM6, R14)
+                store(fields.mm7.address, MM7, R14)
 
                 if (CpuId.supportsAvx512) {
                     TODO("Implement AVX512")
-//                mov(fields.zmm0, ZMM0)
-//                mov(fields.zmm1, ZMM1)
-//                mov(fields.zmm2, ZMM2)
-//                mov(fields.zmm3, ZMM3)
-//                mov(fields.zmm4, ZMM4)
-//                mov(fields.zmm5, ZMM5)
-//                mov(fields.zmm6, ZMM6)
-//                mov(fields.zmm7, ZMM7)
-//                mov(fields.zmm8, ZMM8)
-//                mov(fields.zmm9, ZMM9)
-//                mov(fields.zmm10, ZMM10)
-//                mov(fields.zmm11, ZMM11)
-//                mov(fields.zmm12, ZMM12)
-//                mov(fields.zmm13, ZMM13)
-//                mov(fields.zmm14, ZMM14)
-//                mov(fields.zmm15, ZMM15)
-//                mov(fields.zmm16, ZMM16)
-//                mov(fields.zmm17, ZMM17)
-//                mov(fields.zmm18, ZMM18)
-//                mov(fields.zmm19, ZMM19)
-//                mov(fields.zmm20, ZMM20)
-//                mov(fields.zmm21, ZMM21)
-//                mov(fields.zmm22, ZMM22)
-//                mov(fields.zmm23, ZMM23)
-//                mov(fields.zmm24, ZMM24)
-//                mov(fields.zmm25, ZMM25)
-//                mov(fields.zmm26, ZMM26)
-//                mov(fields.zmm27, ZMM27)
-//                mov(fields.zmm28, ZMM28)
-//                mov(fields.zmm29, ZMM29)
-//                mov(fields.zmm30, ZMM30)
-//                mov(fields.zmm31, ZMM31)
+//                store(fields.zmm0.address, ZMM0)
+//                store(fields.zmm1.address, ZMM1)
+//                store(fields.zmm2.address, ZMM2)
+//                store(fields.zmm3.address, ZMM3)
+//                store(fields.zmm4.address, ZMM4)
+//                store(fields.zmm5.address, ZMM5)
+//                store(fields.zmm6.address, ZMM6)
+//                store(fields.zmm7.address, ZMM7)
+//                store(fields.zmm8.address, ZMM8)
+//                store(fields.zmm9.address, ZMM9)
+//                store(fields.zmm10.address, ZMM10)
+//                store(fields.zmm11.address, ZMM11)
+//                store(fields.zmm12.address, ZMM12)
+//                store(fields.zmm13.address, ZMM13)
+//                store(fields.zmm14.address, ZMM14)
+//                store(fields.zmm15.address, ZMM15)
+//                store(fields.zmm16.address, ZMM16)
+//                store(fields.zmm17.address, ZMM17)
+//                store(fields.zmm18.address, ZMM18)
+//                store(fields.zmm19.address, ZMM19)
+//                store(fields.zmm20.address, ZMM20)
+//                store(fields.zmm21.address, ZMM21)
+//                store(fields.zmm22.address, ZMM22)
+//                store(fields.zmm23.address, ZMM23)
+//                store(fields.zmm24.address, ZMM24)
+//                store(fields.zmm25.address, ZMM25)
+//                store(fields.zmm26.address, ZMM26)
+//                store(fields.zmm27.address, ZMM27)
+//                store(fields.zmm28.address, ZMM28)
+//                store(fields.zmm29.address, ZMM29)
+//                store(fields.zmm30.address, ZMM30)
+//                store(fields.zmm31.address, ZMM31)
                 } else if (CpuId.supportsAvx) {
-                    mov(fields.ymm0, YMM0)
-                    mov(fields.ymm1, YMM1)
-                    mov(fields.ymm2, YMM2)
-                    mov(fields.ymm3, YMM3)
-                    mov(fields.ymm4, YMM4)
-                    mov(fields.ymm5, YMM5)
-                    mov(fields.ymm6, YMM6)
-                    mov(fields.ymm7, YMM7)
-                    mov(fields.ymm8, YMM8)
-                    mov(fields.ymm9, YMM9)
-                    mov(fields.ymm10, YMM10)
-                    mov(fields.ymm11, YMM11)
-                    mov(fields.ymm12, YMM12)
-                    mov(fields.ymm13, YMM13)
-                    mov(fields.ymm14, YMM14)
-                    mov(fields.ymm15, YMM15)
+                    store(fields.ymm0.address, YMM0, R14)
+                    store(fields.ymm1.address, YMM1, R14)
+                    store(fields.ymm2.address, YMM2, R14)
+                    store(fields.ymm3.address, YMM3, R14)
+                    store(fields.ymm4.address, YMM4, R14)
+                    store(fields.ymm5.address, YMM5, R14)
+                    store(fields.ymm6.address, YMM6, R14)
+                    store(fields.ymm7.address, YMM7, R14)
+                    store(fields.ymm8.address, YMM8, R14)
+                    store(fields.ymm9.address, YMM9, R14)
+                    store(fields.ymm10.address, YMM10, R14)
+                    store(fields.ymm11.address, YMM11, R14)
+                    store(fields.ymm12.address, YMM12, R14)
+                    store(fields.ymm13.address, YMM13, R14)
+                    store(fields.ymm14.address, YMM14, R14)
+                    store(fields.ymm15.address, YMM15, R14)
                 } else {
-                    mov(fields.xmm0, XMM0)
-                    mov(fields.xmm1, XMM1)
-                    mov(fields.xmm2, XMM2)
-                    mov(fields.xmm3, XMM3)
-                    mov(fields.xmm4, XMM4)
-                    mov(fields.xmm5, XMM5)
-                    mov(fields.xmm6, XMM6)
-                    mov(fields.xmm7, XMM7)
-                    mov(fields.xmm8, XMM8)
-                    mov(fields.xmm9, XMM9)
-                    mov(fields.xmm10, XMM10)
-                    mov(fields.xmm11, XMM11)
-                    mov(fields.xmm12, XMM12)
-                    mov(fields.xmm13, XMM13)
-                    mov(fields.xmm14, XMM14)
-                    mov(fields.xmm15, XMM15)
+                    store(fields.xmm0.address, XMM0, R14)
+                    store(fields.xmm1.address, XMM1, R14)
+                    store(fields.xmm2.address, XMM2, R14)
+                    store(fields.xmm3.address, XMM3, R14)
+                    store(fields.xmm4.address, XMM4, R14)
+                    store(fields.xmm5.address, XMM5, R14)
+                    store(fields.xmm6.address, XMM6, R14)
+                    store(fields.xmm7.address, XMM7, R14)
+                    store(fields.xmm8.address, XMM8, R14)
+                    store(fields.xmm9.address, XMM9, R14)
+                    store(fields.xmm10.address, XMM10, R14)
+                    store(fields.xmm11.address, XMM11, R14)
+                    store(fields.xmm12.address, XMM12, R14)
+                    store(fields.xmm13.address, XMM13, R14)
+                    store(fields.xmm14.address, XMM14, R14)
+                    store(fields.xmm15.address, XMM15, R14)
                 }
 
-                if (includeRip) mov(fields.rip, IpRegister.RIP)
-                if (includeMxcsr) mov(fields.mxcsr, MxcsrRegister.MXCSR)
-                if (includeRflags) mov(fields.rflags, RflagsRegister.RFLAGS)
+                if (includeRip) store(fields.rip.address, IpRegister.RIP, R14, R15)
+                if (includeMxcsr) store(fields.mxcsr.address, MxcsrRegister.MXCSR, R15)
+                if (includeRflags) store(fields.rflags.address, RflagsRegister.RFLAGS, R14, R15)
             }
         }
     }

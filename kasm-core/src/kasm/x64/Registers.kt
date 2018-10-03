@@ -204,107 +204,370 @@ interface SubRegister<out S : Register, out T : Register> : Register {
     val topLevelRegister: T
 }
 
-enum class GpRegister64(override val code: Int,
-                        val subRegister32: GpRegister32,
-                        val subRegister16: GpRegister16,
-                        val subRegister8: GpRegister8) : GpRegister, AddressRegister {
-    RAX(0, GpRegister32.EAX, GpRegister16.AX, GpRegister8.AL),
-    RCX(1, GpRegister32.ECX, GpRegister16.CX, GpRegister8.CL),
-    RDX(2, GpRegister32.EDX, GpRegister16.DX, GpRegister8.DL),
-    RBX(3, GpRegister32.EBX, GpRegister16.BX, GpRegister8.BL),
-    RSP(4, GpRegister32.ESP, GpRegister16.SP, GpRegister8.SPL),
-    RBP(5, GpRegister32.EBP, GpRegister16.BP, GpRegister8.BPL),
-    RSI(6, GpRegister32.ESI, GpRegister16.SI, GpRegister8.SIL),
-    RDI(7, GpRegister32.EDI, GpRegister16.DI, GpRegister8.DIL),
-    R8(8, GpRegister32.R8D, GpRegister16.R8W, GpRegister8.R8B),
-    R9(9, GpRegister32.R9D, GpRegister16.R9W, GpRegister8.R9B),
-    R10(10, GpRegister32.R10D, GpRegister16.R10W, GpRegister8.R10B),
-    R11(11, GpRegister32.R11D, GpRegister16.R11W, GpRegister8.R11B),
-    R12(12, GpRegister32.R12D, GpRegister16.R12W, GpRegister8.R12B),
-    R13(13, GpRegister32.R13D, GpRegister16.R13W, GpRegister8.R13B),
-    R14(14, GpRegister32.R14D, GpRegister16.R14W, GpRegister8.R14B),
-    R15(15, GpRegister32.R15D, GpRegister16.R15W, GpRegister8.R15B);
+enum class GpRegister64(override val code: Int) : GpRegister, AddressRegister {
+
+    RAX(0) {
+        override val subRegister32 get() = GpRegister32.EAX
+        override val subRegister16 get() = GpRegister16.AX
+        override val subRegister8 get() = GpRegister8.AL
+    },
+    RCX(1) {
+        override val subRegister32 get() = GpRegister32.ECX
+        override val subRegister16 get() = GpRegister16.CX
+        override val subRegister8 get() = GpRegister8.CL
+    },
+    RDX(2) {
+        override val subRegister32 get() = GpRegister32.EDX
+        override val subRegister16 get() = GpRegister16.DX
+        override val subRegister8 get() = GpRegister8.DL
+    },
+    RBX(3) {
+        override val subRegister32 get() = GpRegister32.EBX
+        override val subRegister16 get() = GpRegister16.BX
+        override val subRegister8 get() = GpRegister8.BL
+    },
+    RSP(4) {
+        override val subRegister32 get() = GpRegister32.ESP
+        override val subRegister16 get() = GpRegister16.SP
+        override val subRegister8 get() = GpRegister8.SPL
+    },
+    RBP(5) {
+        override val subRegister32 get() = GpRegister32.EBP
+        override val subRegister16 get() = GpRegister16.BP
+        override val subRegister8 get() = GpRegister8.BPL
+    },
+    RSI(6) {
+        override val subRegister32 get() = GpRegister32.ESI
+        override val subRegister16 get() = GpRegister16.SI
+        override val subRegister8 get() = GpRegister8.SIL
+    },
+    RDI(7) {
+        override val subRegister32 get() = GpRegister32.EDI
+        override val subRegister16 get() = GpRegister16.DI
+        override val subRegister8 get() = GpRegister8.DIL
+    },
+    R8(8) {
+        override val subRegister32 get() = GpRegister32.R8D
+        override val subRegister16 get() = GpRegister16.R8W
+        override val subRegister8 get() = GpRegister8.R8B
+    },
+    R9(9) {
+        override val subRegister32 get() = GpRegister32.R9D
+        override val subRegister16 get() = GpRegister16.R9W
+        override val subRegister8 get() = GpRegister8.R9B
+    },
+    R10(10) {
+        override val subRegister32 get() = GpRegister32.R10D
+        override val subRegister16 get() = GpRegister16.R10W
+        override val subRegister8 get() = GpRegister8.R10B
+    },
+    R11(11) {
+        override val subRegister32 get() = GpRegister32.R11D
+        override val subRegister16 get() = GpRegister16.R11W
+        override val subRegister8 get() = GpRegister8.R11B
+    },
+    R12(12) {
+        override val subRegister32 get() = GpRegister32.R12D
+        override val subRegister16 get() = GpRegister16.R12W
+        override val subRegister8 get() = GpRegister8.R12B
+    },
+    R13(13) {
+        override val subRegister32 get() = GpRegister32.R13D
+        override val subRegister16 get() = GpRegister16.R13W
+        override val subRegister8 get() = GpRegister8.R13B
+    },
+    R14(14) {
+        override val subRegister32 get() = GpRegister32.R14D
+        override val subRegister16 get() = GpRegister16.R14W
+        override val subRegister8 get() = GpRegister8.R14B
+    },
+    R15(15) {
+        override val subRegister32 get() = GpRegister32.R15D
+        override val subRegister16 get() = GpRegister16.R15W
+        override val subRegister8 get() = GpRegister8.R15B
+    };
 
     override val type = RegisterType.GP64
+    abstract val subRegister32: GpRegister32
+    abstract val subRegister16: GpRegister16
+    abstract val subRegister8: GpRegister8
 }
 
-enum class GpRegister32(override val code: Int,
-                        override val superRegister: GpRegister64,
-                        override val topLevelRegister: GpRegister64,
-                        val subRegister16: GpRegister16,
-                        val subRegister8: GpRegister8) : GpRegister,
-                                                         AddressRegister,
-                                                         SubRegister<GpRegister64, GpRegister64> {
-    EAX(0, GpRegister64.RAX, GpRegister64.RAX, GpRegister16.AX, GpRegister8.AL),
-    ECX(1, GpRegister64.RCX, GpRegister64.RCX, GpRegister16.CX, GpRegister8.CL),
-    EDX(2, GpRegister64.RDX, GpRegister64.RDX, GpRegister16.DX, GpRegister8.DL),
-    EBX(3, GpRegister64.RBX, GpRegister64.RBX, GpRegister16.BX, GpRegister8.BL),
-    ESP(4, GpRegister64.RSP, GpRegister64.RSP, GpRegister16.SP, GpRegister8.SPL),
-    EBP(5, GpRegister64.RBP, GpRegister64.RBP, GpRegister16.BP, GpRegister8.BPL),
-    ESI(6, GpRegister64.RSI, GpRegister64.RSI, GpRegister16.SI, GpRegister8.SIL),
-    EDI(7, GpRegister64.RDI, GpRegister64.RDI, GpRegister16.DI, GpRegister8.DIL),
-    R8D(8, GpRegister64.R8, GpRegister64.R8, GpRegister16.R8W, GpRegister8.R8B),
-    R9D(9, GpRegister64.R9, GpRegister64.R9, GpRegister16.R9W, GpRegister8.R9B),
-    R10D(10, GpRegister64.R10, GpRegister64.R10, GpRegister16.R10W, GpRegister8.R10B),
-    R11D(11, GpRegister64.R11, GpRegister64.R11, GpRegister16.R11W, GpRegister8.R11B),
-    R12D(12, GpRegister64.R12, GpRegister64.R12, GpRegister16.R12W, GpRegister8.R12B),
-    R13D(13, GpRegister64.R13, GpRegister64.R13, GpRegister16.R13W, GpRegister8.R13B),
-    R14D(14, GpRegister64.R14, GpRegister64.R14, GpRegister16.R14W, GpRegister8.R14B),
-    R15D(15, GpRegister64.R15, GpRegister64.R15, GpRegister16.R15W, GpRegister8.R15B);
+enum class GpRegister32(override val code: Int) : GpRegister,
+        AddressRegister,
+        SubRegister<GpRegister64, GpRegister64> {
+    EAX(0) {
+        override val superRegister get() = GpRegister64.RAX
+        override val topLevelRegister get() = GpRegister64.RAX
+        override val subRegister16 get() = GpRegister16.AX
+        override val subRegister8 get() = GpRegister8.AL
+    },
+    ECX(1) {
+        override val superRegister get() = GpRegister64.RCX
+        override val topLevelRegister get() = GpRegister64.RCX
+        override val subRegister16 get() = GpRegister16.CX
+        override val subRegister8 get() = GpRegister8.CL
+    },
+    EDX(2) {
+        override val superRegister get() = GpRegister64.RDX
+        override val topLevelRegister get() = GpRegister64.RDX
+        override val subRegister16 get() = GpRegister16.DX
+        override val subRegister8 get() = GpRegister8.DL
+    },
+    EBX(3) {
+        override val superRegister get() = GpRegister64.RBX
+        override val topLevelRegister get() = GpRegister64.RBX
+        override val subRegister16 get() = GpRegister16.BX
+        override val subRegister8 get() = GpRegister8.BL
+    },
+    ESP(4) {
+        override val superRegister get() = GpRegister64.RSP
+        override val topLevelRegister get() = GpRegister64.RSP
+        override val subRegister16 get() = GpRegister16.SP
+        override val subRegister8 get() = GpRegister8.SPL
+    },
+    EBP(5) {
+        override val superRegister get() = GpRegister64.RBP
+        override val topLevelRegister get() = GpRegister64.RBP
+        override val subRegister16 get() = GpRegister16.BP
+        override val subRegister8 get() = GpRegister8.BPL
+    },
+    ESI(6) {
+        override val superRegister get() = GpRegister64.RSI
+        override val topLevelRegister get() = GpRegister64.RSI
+        override val subRegister16 get() = GpRegister16.SI
+        override val subRegister8 get() = GpRegister8.SIL
+    },
+    EDI(7) {
+        override val superRegister get() = GpRegister64.RDI
+        override val topLevelRegister get() = GpRegister64.RDI
+        override val subRegister16 get() = GpRegister16.DI
+        override val subRegister8 get() = GpRegister8.DIL
+    },
+    R8D(8) {
+        override val superRegister get() = GpRegister64.R8
+        override val topLevelRegister get() = GpRegister64.R8
+        override val subRegister16 get() = GpRegister16.R8W
+        override val subRegister8 get() = GpRegister8.R8B
+    },
+    R9D(9) {
+        override val superRegister get() = GpRegister64.R9
+        override val topLevelRegister get() = GpRegister64.R9
+        override val subRegister16 get() = GpRegister16.R9W
+        override val subRegister8 get() = GpRegister8.R9B
+    },
+    R10D(10) {
+        override val superRegister get() = GpRegister64.R10
+        override val topLevelRegister get() = GpRegister64.R10
+        override val subRegister16 get() = GpRegister16.R10W
+        override val subRegister8 get() = GpRegister8.R10B
+    },
+    R11D(11) {
+        override val superRegister get() = GpRegister64.R11
+        override val topLevelRegister get() = GpRegister64.R11
+        override val subRegister16 get() = GpRegister16.R11W
+        override val subRegister8 get() = GpRegister8.R11B
+    },
+    R12D(12) {
+        override val superRegister get() = GpRegister64.R12
+        override val topLevelRegister get() = GpRegister64.R12
+        override val subRegister16 get() = GpRegister16.R12W
+        override val subRegister8 get() = GpRegister8.R12B
+    },
+    R13D(13) {
+        override val superRegister get() = GpRegister64.R13
+        override val topLevelRegister get() = GpRegister64.R13
+        override val subRegister16 get() = GpRegister16.R13W
+        override val subRegister8 get() = GpRegister8.R13B
+    },
+    R14D(14) {
+        override val superRegister get() = GpRegister64.R14
+        override val topLevelRegister get() = GpRegister64.R14
+        override val subRegister16 get() = GpRegister16.R14W
+        override val subRegister8 get() = GpRegister8.R14B
+    },
+    R15D(15) {
+        override val superRegister get() = GpRegister64.R15
+        override val topLevelRegister get() = GpRegister64.R15
+        override val subRegister16 get() = GpRegister16.R15W
+        override val subRegister8 get() = GpRegister8.R15B
+    };
 
     override val type = RegisterType.GP32
+    abstract val subRegister16: GpRegister16
+    abstract val subRegister8: GpRegister8
 }
 
-enum class GpRegister16(override val code: Int,
-                        override val superRegister: GpRegister32,
-                        override val topLevelRegister: GpRegister64,
-                        val subRegister8: GpRegister8) : GpRegister, SubRegister<GpRegister32, GpRegister64> {
-    AX(0, GpRegister32.EAX, GpRegister64.RAX, GpRegister8.AL),
-    CX(1, GpRegister32.ECX, GpRegister64.RCX, GpRegister8.CL),
-    DX(2, GpRegister32.EDX, GpRegister64.RDX, GpRegister8.DL),
-    BX(3, GpRegister32.EBX, GpRegister64.RBX, GpRegister8.BL),
-    SP(4, GpRegister32.ESP, GpRegister64.RSP, GpRegister8.SPL),
-    BP(5, GpRegister32.EBP, GpRegister64.RBP, GpRegister8.BPL),
-    SI(6, GpRegister32.ESI, GpRegister64.RSI, GpRegister8.SIL),
-    DI(7, GpRegister32.EDI, GpRegister64.RDI, GpRegister8.DIL),
-    R8W(8, GpRegister32.R8D, GpRegister64.R8, GpRegister8.R8B),
-    R9W(9, GpRegister32.R9D, GpRegister64.R9, GpRegister8.R9B),
-    R10W(10, GpRegister32.R10D, GpRegister64.R10, GpRegister8.R10B),
-    R11W(11, GpRegister32.R11D, GpRegister64.R11, GpRegister8.R11B),
-    R12W(12, GpRegister32.R12D, GpRegister64.R12, GpRegister8.R12B),
-    R13W(13, GpRegister32.R13D, GpRegister64.R13, GpRegister8.R13B),
-    R14W(14, GpRegister32.R14D, GpRegister64.R14, GpRegister8.R14B),
-    R15W(15, GpRegister32.R15D, GpRegister64.R15, GpRegister8.R15B);
+enum class GpRegister16(override val code: Int) : GpRegister, SubRegister<GpRegister32, GpRegister64> {
+    AX(0) {
+        override val superRegister get() = GpRegister32.EAX
+        override val topLevelRegister get() = GpRegister64.RAX
+        override val subRegister8 get() = GpRegister8.AL
+    },
+    CX(1) {
+        override val superRegister get() = GpRegister32.ECX
+        override val topLevelRegister get() = GpRegister64.RCX
+        override val subRegister8 get() = GpRegister8.CL
+    },
+    DX(2) {
+        override val superRegister get() = GpRegister32.EDX
+        override val topLevelRegister get() = GpRegister64.RDX
+        override val subRegister8 get() = GpRegister8.DL
+    },
+    BX(3) {
+        override val superRegister get() = GpRegister32.EBX
+        override val topLevelRegister get() = GpRegister64.RBX
+        override val subRegister8 get() = GpRegister8.BL
+    },
+    SP(4) {
+        override val superRegister get() = GpRegister32.ESP
+        override val topLevelRegister get() = GpRegister64.RSP
+        override val subRegister8 get() = GpRegister8.SPL
+    },
+    BP(5) {
+        override val superRegister get() = GpRegister32.EBP
+        override val topLevelRegister get() = GpRegister64.RBP
+        override val subRegister8 get() = GpRegister8.BPL
+    },
+    SI(6) {
+        override val superRegister get() = GpRegister32.ESI
+        override val topLevelRegister get() = GpRegister64.RSI
+        override val subRegister8 get() = GpRegister8.SIL
+    },
+    DI(7) {
+        override val superRegister get() = GpRegister32.EDI
+        override val topLevelRegister get() = GpRegister64.RDI
+        override val subRegister8 get() = GpRegister8.DIL
+    },
+    R8W(8) {
+        override val superRegister get() = GpRegister32.R8D
+        override val topLevelRegister get() = GpRegister64.R8
+        override val subRegister8 get() = GpRegister8.R8B
+    },
+    R9W(9) {
+        override val superRegister get() = GpRegister32.R9D
+        override val topLevelRegister get() = GpRegister64.R9
+        override val subRegister8 get() = GpRegister8.R9B
+    },
+    R10W(10) {
+        override val superRegister get() = GpRegister32.R10D
+        override val topLevelRegister get() = GpRegister64.R10
+        override val subRegister8 get() = GpRegister8.R10B
+    },
+    R11W(11) {
+        override val superRegister get() = GpRegister32.R11D
+        override val topLevelRegister get() = GpRegister64.R11
+        override val subRegister8 get() = GpRegister8.R11B
+    },
+    R12W(12) {
+        override val superRegister get() = GpRegister32.R12D
+        override val topLevelRegister get() = GpRegister64.R12
+        override val subRegister8 get() = GpRegister8.R12B
+    },
+    R13W(13) {
+        override val superRegister get() = GpRegister32.R13D
+        override val topLevelRegister get() = GpRegister64.R13
+        override val subRegister8 get() = GpRegister8.R13B
+    },
+    R14W(14) {
+        override val superRegister get() = GpRegister32.R14D
+        override val topLevelRegister get() = GpRegister64.R14
+        override val subRegister8 get() = GpRegister8.R14B
+    },
+    R15W(15) {
+        override val superRegister get() = GpRegister32.R15D
+        override val topLevelRegister get() = GpRegister64.R15
+        override val subRegister8 get() = GpRegister8.R15B
+    };
 
     override val type = RegisterType.GP16
+    abstract val subRegister8: GpRegister8
 }
 
 
 enum class GpRegister8(override val code: Int,
-                       override val superRegister: GpRegister16,
-                       override val topLevelRegister: GpRegister64,
                        val needsRex: Boolean = false,
                        val forbidsRex: Boolean = false) : GpRegister, SubRegister<GpRegister16, GpRegister64> {
-    AL(0, GpRegister16.AX, GpRegister64.RAX),
-    AH(4, GpRegister16.AX, GpRegister64.RAX, forbidsRex = true),
-    CL(1, GpRegister16.CX, GpRegister64.RCX),
-    CH(5, GpRegister16.CX, GpRegister64.RCX, forbidsRex = true),
-    DL(2, GpRegister16.DX, GpRegister64.RDX),
-    DH(6, GpRegister16.DX, GpRegister64.RDX, forbidsRex = true),
-    BL(3, GpRegister16.BX, GpRegister64.RBX),
-    BH(7, GpRegister16.BX, GpRegister64.RBX, forbidsRex = true),
-    SPL(4, GpRegister16.BX, GpRegister64.RBX, needsRex = true),
-    BPL(5, GpRegister16.SP, GpRegister64.RSP, needsRex = true),
-    SIL(6, GpRegister16.SI, GpRegister64.RSI, needsRex = true),
-    DIL(7, GpRegister16.DI, GpRegister64.RDI, needsRex = true),
-    R8B(8, GpRegister16.R8W, GpRegister64.R8),
-    R9B(9, GpRegister16.R9W, GpRegister64.R9),
-    R10B(10, GpRegister16.R10W, GpRegister64.R10),
-    R11B(11, GpRegister16.R11W, GpRegister64.R11),
-    R12B(12, GpRegister16.R12W, GpRegister64.R12),
-    R13B(13, GpRegister16.R13W, GpRegister64.R13),
-    R14B(14, GpRegister16.R14W, GpRegister64.R14),
-    R15B(15, GpRegister16.R15W, GpRegister64.R15);
+    AL(0) {
+        override val superRegister get() = GpRegister16.AX
+        override val topLevelRegister get() = GpRegister64.RAX
+    },
+    AH(4, forbidsRex = true) {
+        override val superRegister get() = GpRegister16.AX
+        override val topLevelRegister get() = GpRegister64.RAX
+    },
+    CL(1) {
+        override val superRegister get() = GpRegister16.CX
+        override val topLevelRegister get() = GpRegister64.RCX
+    },
+    CH(5, forbidsRex = true) {
+        override val superRegister get() = GpRegister16.CX
+        override val topLevelRegister get() = GpRegister64.RCX
+    },
+    DL(2) {
+        override val superRegister get() = GpRegister16.DX
+        override val topLevelRegister get() = GpRegister64.RDX
+    },
+    DH(6, forbidsRex = true) {
+        override val superRegister get() = GpRegister16.DX
+        override val topLevelRegister get() = GpRegister64.RDX
+    },
+    BL(3) {
+        override val superRegister get() = GpRegister16.BX
+        override val topLevelRegister get() = GpRegister64.RBX
+    },
+    BH(7, forbidsRex = true) {
+        override val superRegister get() = GpRegister16.BX
+        override val topLevelRegister get() = GpRegister64.RBX
+    },
+    SPL(4, needsRex = true) {
+        override val superRegister get() = GpRegister16.BX
+        override val topLevelRegister get() = GpRegister64.RBX
+    },
+    BPL(5, needsRex = true) {
+        override val superRegister get() = GpRegister16.SP
+        override val topLevelRegister get() = GpRegister64.RSP
+    },
+    SIL(6, needsRex = true) {
+        override val superRegister get() = GpRegister16.SI
+        override val topLevelRegister get() = GpRegister64.RSI
+    },
+    DIL(7, needsRex = true) {
+        override val superRegister get() = GpRegister16.DI
+        override val topLevelRegister get() = GpRegister64.RDI
+    },
+    R8B(8) {
+        override val superRegister get() = GpRegister16.R8W
+        override val topLevelRegister get() = GpRegister64.R8
+    },
+    R9B(9) {
+        override val superRegister get() = GpRegister16.R9W
+        override val topLevelRegister get() = GpRegister64.R9
+    },
+    R10B(10) {
+        override val superRegister get() = GpRegister16.R10W
+        override val topLevelRegister get() = GpRegister64.R10
+    },
+    R11B(11) {
+        override val superRegister get() = GpRegister16.R11W
+        override val topLevelRegister get() = GpRegister64.R11
+    },
+    R12B(12) {
+        override val superRegister get() = GpRegister16.R12W
+        override val topLevelRegister get() = GpRegister64.R12
+    },
+    R13B(13) {
+        override val superRegister get() = GpRegister16.R13W
+        override val topLevelRegister get() = GpRegister64.R13
+    },
+    R14B(14) {
+        override val superRegister get() = GpRegister16.R14W
+        override val topLevelRegister get() = GpRegister64.R14
+    },
+    R15B(15) {
+        override val superRegister get() = GpRegister16.R15W
+        override val topLevelRegister get() = GpRegister64.R15
+    };
 
     override val type = RegisterType.GP8
 
@@ -327,8 +590,8 @@ enum class MmRegister(override val code: Int) : Register {
 enum class XmmRegister(override val code: Int,
                        override val superRegister: YmmRegister,
                        override val topLevelRegister: ZmmRegister) : Register,
-                                                                     VectorRegister,
-                                                                     SubRegister<YmmRegister, ZmmRegister> {
+        VectorRegister,
+        SubRegister<YmmRegister, ZmmRegister> {
     XMM0(0, YmmRegister.YMM0, ZmmRegister.ZMM0),
     XMM1(1, YmmRegister.YMM1, ZmmRegister.ZMM1),
     XMM2(2, YmmRegister.YMM2, ZmmRegister.ZMM2),
@@ -352,8 +615,8 @@ enum class XmmRegister(override val code: Int,
 enum class YmmRegister(override val code: Int,
                        override val superRegister: ZmmRegister,
                        override val topLevelRegister: ZmmRegister) : Register,
-                                                                     VectorRegister,
-                                                                     SubRegister<ZmmRegister, ZmmRegister> {
+        VectorRegister,
+        SubRegister<ZmmRegister, ZmmRegister> {
     YMM0(0, ZmmRegister.ZMM0, ZmmRegister.ZMM0),
     YMM1(1, ZmmRegister.ZMM1, ZmmRegister.ZMM1),
     YMM2(2, ZmmRegister.ZMM2, ZmmRegister.ZMM2),
@@ -572,8 +835,24 @@ enum class CpuFeature {
     PERFCTR_NB,
     DBX,
     PERFTSC,
-    PCX_L2I;
+    PCX_L2I,
+    UMIP,
+    PKU,
+    OSPKE,
+    AVX512VBMI2,
+    GFNI,
+    VAES,
+    VPCLMULQDQ,
+    AVX512VNNI,
+    AVX512BITALG,
+    AVX512VPOPCNTDQ,
+    MAWAU,
+    RDPID,
+    SGX_LC,
+    AVX512_4VNNIW,
+    AVX512_4FMAPS,
 
+    ;
     companion object {
         val avx512Features = EnumSet.of(
                 AVX512F, AVX512DQ, AVX512IFMA, AVX512PF, AVX512ER,

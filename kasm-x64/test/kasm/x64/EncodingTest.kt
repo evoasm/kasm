@@ -1,7 +1,6 @@
 package kasm.x64
 
-import kasm.Buffer
-import kasm.NativeBuffer
+import kasm.ByteBuffers
 import org.junit.jupiter.api.Test
 import kotlin.test.*
 
@@ -12,8 +11,10 @@ import kasm.x64.GpRegister64.*
 import kasm.x64.XmmRegister.*
 import kasm.x64.YmmRegister.*
 
+import kasm.ext.toArray
 
 import org.junit.jupiter.api.BeforeEach
+import java.nio.ByteBuffer
 
 internal class EncodingTest {
 
@@ -28,11 +29,11 @@ internal class EncodingTest {
 
     private fun disassemble(code: ByteArray) = Disassembler.disassemble(code)[0].joinToString(" ")
 
-    private lateinit var buffer: Buffer
+    private lateinit var buffer: ByteBuffer
 
     @BeforeEach
     fun setup() {
-        buffer = Buffer(1024)
+        buffer = ByteBuffers.allocateLittleEndian(1024)
     }
 
     @Test

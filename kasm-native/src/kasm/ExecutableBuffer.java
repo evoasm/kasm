@@ -1,28 +1,54 @@
 package kasm;
 
+import java.lang.ref.Cleaner;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
-public class NativeBuffer extends Buffer {
-    private final boolean mmap;
+public class ExecutableBuffer  {
+    private static final Cleaner cleaner;
 
     static {
         System.loadLibrary("kasm_buffer");
+
+        /*FIXME: not sure about keeping this in a static context */
+        cleaner = Cleaner.create();
     }
 
-    private boolean writable;
+    private final ByteBuffer byteBuffer;
 
-    public NativeBuffer(long capacity, boolean mmap) {
-        super(allocate(capacity, mmap));
-        this.mmap = mmap;
-        this.writable = true;
+    private static class Deallocator implements Runnable {
+        private final int capacity;
+        private final long address;
+
+        public Deallocator(long address, int capacity) {
+            this.address = address;
+            this.capacity = capacity;
+        }
+
+        public void run() {
+            release(address, capacity);
+        }
     }
 
-    @Override
+    public ByteBuffer getByteBuffer() {
+        return byteBuffer;
+    }
+
+    public String toByteString() {
+        return ByteBuffers.toByteString(byteBuffer);
+    }
+
+    public ExecutableBuffer(long capacity) {
+        this.byteBuffer = allocate(capacity);
+        this.byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        cleaner.register(byteBuffer, new Deallocator(getAddress(byteBuffer), byteBuffer.capacity()));
+    }
+
     public byte[] toArray() {
         return toArray(byteBuffer);
     }
 
-    private static native ByteBuffer allocate(long capacity, boolean mmap);
+    private static native ByteBuffer allocate(long capacity);
     public static native byte[] toArray(ByteBuffer byteBuffer);
     private static native void protect(ByteBuffer byteBuffer, boolean executable);
     private static native long execute0(ByteBuffer byteBuffer) throws SignalException;
@@ -31,14 +57,8 @@ public class NativeBuffer extends Buffer {
     private static native long execute6(ByteBuffer byteBuffer, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) throws SignalException;
 
     private static native long executeUnsafe(ByteBuffer byteBuffer);
-    private static native void release(ByteBuffer byteBuffer, boolean mmap);
-    private static native long getAddress(ByteBuffer byteBuffer);
-
-    @Override
-    protected void finalize() throws Throwable {
-        release(byteBuffer, mmap);
-        super.finalize();
-    }
+    private static native void release(long address, int capacity);
+    protected static native long getAddress(ByteBuffer byteBuffer);
 
     public synchronized long execute() throws Exception {
         long result;

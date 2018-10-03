@@ -50,7 +50,7 @@ class Generator {
             writeInstructionTypes(writer)
         }
 
-        instructionGenerators.chunked(100).forEachIndexed { index, list ->
+        instructionGenerators.chunked(30).forEachIndexed { index, list ->
             getOutputFile("Instructions${index + 1}.kt").printWriter().use {
                 val writer = CodeWriter(it)
                 writePackageAndImports(writer)
@@ -104,7 +104,7 @@ class Generator {
     private fun writePackageAndImports(writer: CodeWriter) {
         writer.println("package kasm.x64")
         writer.println()
-        writer.println("import kasm.Buffer")
+        writer.println("import java.nio.ByteBuffer")
         writer.println()
     }
 
@@ -187,7 +187,7 @@ class AssemblerGenerator(val instructionGenerators: List<InstructionGenerator>) 
 
     fun write(writer: CodeWriter) {
         writer.writeBlock("abstract class AbstractAssembler: InstructionTracer") {
-            writer.println("abstract val buffer: Buffer")
+            writer.println("abstract val buffer: ByteBuffer")
             write(writer, false)
             write(writer, true)
         }

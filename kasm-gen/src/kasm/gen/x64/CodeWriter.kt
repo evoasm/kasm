@@ -163,7 +163,7 @@ class CodeWriter(val printWriter: PrintWriter) : Appendable by printWriter {
         val NO_FUNCTION_MODIFIERS = EnumSet.noneOf(FunctionModifier::class.java)
 
         @JvmField
-        val BUFFER_PARAMETER = "buffer" to "Buffer"
+        val BUFFER_PARAMETER = "buffer" to "ByteBuffer"
     }
 
     fun writeCall(functionName: String, parameters: List<String>) {

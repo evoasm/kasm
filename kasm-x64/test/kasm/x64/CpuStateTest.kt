@@ -6,12 +6,13 @@ import java.util.concurrent.ThreadLocalRandom
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 import kotlin.test.*
+import kasm.ext.toByteString
 
 internal class CpuStateTest {
 
     @Test
     fun save() {
-        val buffer = NativeBuffer(1024, true)
+        val buffer = ExecutableBuffer(1024)
 
         val cpuState = CpuState()
 
@@ -36,7 +37,7 @@ internal class CpuStateTest {
 
     @Test
     fun saveRestore() {
-        val buffer = NativeBuffer(1024 * 2, true)
+        val buffer = ExecutableBuffer(1024 * 2)
 
         val cpuState1 = CpuState()
 
@@ -47,13 +48,11 @@ internal class CpuStateTest {
             it.getDelegate(cpuState1).let {
                 when(it) {
                     is Structure.LongField -> it.set(random.nextLong())
-                    is Structure.Vector64Field -> it.set(Vector64().also{it[0] = random.nextLong()})
-                    is Structure.Vector256Field -> it.set(Vector256().also {
-                        it[0] = random.nextLong()
-                        it[1] = random.nextLong()
-                        it[2] = random.nextLong()
-                        it[3] = random.nextLong()
-                    })
+                    is Structure.VectorField -> {
+                        val array = ByteArray(it.elementSize)
+                        random.nextBytes(array)
+                        it.set(array)
+                    }
                 }
             }
         }

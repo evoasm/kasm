@@ -1,14 +1,15 @@
 package kasm.x64
 
-import kasm.NativeBuffer
+import kasm.ExecutableBuffer
 import kasm.Structure
 import java.util.*
 
 object CpuId {
 
-    val supportsAvx512 get() = CpuFeature.avx512Features.any {
-        it in features
-    }
+    val supportsAvx512
+        get() = CpuFeature.avx512Features.any {
+            it in features
+        }
 
     val supportsAvx get() = CpuFeature.AVX in features
 
@@ -47,7 +48,7 @@ object CpuId {
                             CpuFeature.TM,
                             CpuFeature.IA64,
                             CpuFeature.PBE
-                    ),
+                                              ),
                     GpRegister32.ECX to listOf(
                             CpuFeature.SSE3,
                             CpuFeature.PCLMULQDQ,
@@ -81,8 +82,8 @@ object CpuId {
                             CpuFeature.F16C,
                             CpuFeature.RDRAND,
                             CpuFeature.HYPERVISOR
-                    )
-            ),
+                                              )
+                                      ),
 
             listOf(0x7, 0x0) to mapOf(
                     GpRegister32.EBX to listOf(
@@ -118,12 +119,47 @@ object CpuId {
                             CpuFeature.SHA,
                             CpuFeature.AVX512BW,
                             CpuFeature.AVX512VL
-                    ),
+                                              ),
                     GpRegister32.ECX to listOf(
                             CpuFeature.PREFETCHWT1,
                             CpuFeature.AVX512VBMI,
+                            CpuFeature.UMIP,
+                            CpuFeature.PKU,
+                            CpuFeature.OSPKE,
+                            CpuFeature.RESERVED,
+                            CpuFeature.AVX512VBMI2,
+                            CpuFeature.RESERVED,
+                            CpuFeature.GFNI,
+                            CpuFeature.VAES,
+                            CpuFeature.VPCLMULQDQ,
+                            CpuFeature.AVX512VNNI,
+                            CpuFeature.AVX512BITALG,
+                            CpuFeature.RESERVED,
+                            CpuFeature.AVX512VPOPCNTDQ,
                             CpuFeature.RESERVED,
                             CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RDPID,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.SGX_LC,
+                            CpuFeature.RESERVED
+                   ),
+
+                    GpRegister32.EDX to listOf(
+                            CpuFeature.RESERVED,
+                            CpuFeature.RESERVED,
+                            CpuFeature.AVX512_4VNNIW,
+                            CpuFeature.AVX512_4FMAPS,
                             CpuFeature.RESERVED,
                             CpuFeature.RESERVED,
                             CpuFeature.RESERVED,
@@ -152,8 +188,8 @@ object CpuId {
                             CpuFeature.RESERVED,
                             CpuFeature.RESERVED,
                             CpuFeature.RESERVED
-                    )
-            ),
+                                              )
+                                     ),
             listOf(-0x7fffffff, null) to mapOf(
                     GpRegister32.EDX to listOf(
                             CpuFeature.FPU,
@@ -188,7 +224,7 @@ object CpuId {
                             CpuFeature.LM,
                             CpuFeature._3DNOWEXT,
                             CpuFeature._3DNOW
-                    ),
+                                              ),
                     GpRegister32.ECX to listOf(
                             CpuFeature.LAHF_LM,
                             CpuFeature.CMP_LEGACY,
@@ -222,12 +258,12 @@ object CpuId {
                             CpuFeature.RESERVED,
                             CpuFeature.RESERVED,
                             CpuFeature.RESERVED
-                    )
-            )
-    )
+                                              )
+                                              )
+                                 )
 
     class Fields : Structure() {
-        val array = intField(CPUID_MAP.size, 32)
+        val array = intField(CPUID_MAP.size, 4)
     }
 
     val fields = Fields()
@@ -236,7 +272,7 @@ object CpuId {
 //    }
 
     val features by lazy {
-        val buffer = NativeBuffer(1024, true)
+        val buffer = ExecutableBuffer(1024)
         Assembler(buffer).emitStackFrame {
             CPUID_MAP.entries.forEachIndexed { leafIndex, (registerValues, outputRegisters) ->
                 val (eaxValue, ecxValue) = registerValues
@@ -246,7 +282,6 @@ object CpuId {
                     mov(GpRegister32.ECX, it)
                 }
 
-                // FIXME: add naming exception here, don't like this
                 cpuid()
 
                 outputRegisters.entries.forEachIndexed { flagIndex, (register, _) ->
@@ -265,7 +300,7 @@ object CpuId {
                 val value = fields.array[leafIndex, flagIndex]
 
                 flags.forEachIndexed { index, flag ->
-                    if(value.and(1.shl(index)) != 0) {
+                    if (value.and(1.shl(index)) != 0) {
                         enumSet.add(flag)
                     } else {
 //                        println("Missing support for $flag")

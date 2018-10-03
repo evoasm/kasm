@@ -1,9 +1,9 @@
 package kasm.x64
 
-import kasm.Buffer
+import java.nio.ByteBuffer
 
 abstract class AbstractAssembler: InstructionTracer {
-  abstract val buffer: Buffer
+  abstract val buffer: ByteBuffer
   fun adcAl(immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     AdcAlImm8.encode(buffer, immediate, options, tracer = this)
   }

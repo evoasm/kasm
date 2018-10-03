@@ -2,6 +2,156 @@ package kasm
 
 import java.nio.*
 
+fun ByteBuffer.getVector64(offset: Int) : ByteArray {
+    val array = ByteArray(8)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun ShortBuffer.getVector64(offset: Int) : ShortArray {
+    val array = ShortArray(4)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun IntBuffer.getVector64(offset: Int) : IntArray {
+    val array = IntArray(2)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun LongBuffer.getVector64(offset: Int) : LongArray {
+    val array = LongArray(1)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun FloatBuffer.getVector64(offset: Int) : FloatArray {
+    val array = FloatArray(2)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun DoubleBuffer.getVector64(offset: Int) : DoubleArray {
+    val array = DoubleArray(1)
+    this.get(array, offset, array.size)
+    return array
+}
+
+
+
+fun ByteBuffer.getVector128(offset: Int) : ByteArray {
+    val array = ByteArray(16)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun ShortBuffer.getVector128(offset: Int) : ShortArray {
+    val array = ShortArray(8)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun IntBuffer.getVector128(offset: Int) : IntArray {
+    val array = IntArray(4)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun LongBuffer.getVector128(offset: Int) : LongArray {
+    val array = LongArray(2)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun FloatBuffer.getVector128(offset: Int) : FloatArray {
+    val array = FloatArray(4)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun DoubleBuffer.getVector128(offset: Int) : DoubleArray {
+    val array = DoubleArray(2)
+    this.get(array, offset, array.size)
+    return array
+}
+
+
+
+
+fun ByteBuffer.getVector256(offset: Int) : ByteArray {
+    val array = ByteArray(32)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun ShortBuffer.getVector256(offset: Int) : ShortArray {
+    val array = ShortArray(16)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun IntBuffer.getVector256(offset: Int) : IntArray {
+    val array = IntArray(8)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun LongBuffer.getVector256(offset: Int) : LongArray {
+    val array = LongArray(4)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun FloatBuffer.getVector256(offset: Int) : FloatArray {
+    val array = FloatArray(8)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun DoubleBuffer.getVector256(offset: Int) : DoubleArray {
+    val array = DoubleArray(4)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun ByteBuffer.getVector512(offset: Int) : ByteArray {
+    val array = ByteArray(64)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun ShortBuffer.getVector512(offset: Int) : ShortArray {
+    val array = ShortArray(32)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun IntBuffer.getVector512(offset: Int) : IntArray {
+    val array = IntArray(16)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun LongBuffer.getVector512(offset: Int) : LongArray {
+    val array = LongArray(8)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun FloatBuffer.getVector512(offset: Int) : FloatArray {
+    val array = FloatArray(16)
+    this.get(array, offset, array.size)
+    return array
+}
+
+fun DoubleBuffer.getVector512(offset: Int) : DoubleArray {
+    val array = DoubleArray(8)
+    this.get(array, offset, array.size)
+    return array
+}
+
+
 
 enum class VectorSize(val bitSize: Int) {
     _64(64),

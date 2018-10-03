@@ -1,6 +1,6 @@
 package kasm.x64
 
-import kasm.Buffer
+import java.nio.ByteBuffer
 
 enum class DisplacementSize {
     AUTO {
@@ -52,8 +52,8 @@ sealed class LegacyPrefix(val prefixGroup: LegacyPrefixGroup, byte: Int) {
 
     val byte : Byte = byte.toByte()
 
-    fun encode(buffer: Buffer) {
-        buffer.putByte(byte)
+    fun encode(buffer: ByteBuffer) {
+        buffer.put(byte)
     }
 
     sealed class Group1(byte: Int) : LegacyPrefix(LegacyPrefixGroup._1, byte) {

@@ -1,6 +1,7 @@
 package kasm.x64
 
-import kasm.Buffer
+import kasm.ByteBuffers
+import kasm.ext.toArray
 import org.junit.jupiter.api.Test
 import kasm.x64.GpRegister32.*
 import org.junit.jupiter.api.Assertions.*
@@ -19,8 +20,8 @@ internal class AssemblerTest {
 
     @Test
     fun nop() {
-        val buffer1 = Buffer(1024)
-        val buffer2 = Buffer(1024)
+        val buffer1 = ByteBuffers.allocateLittleEndian(1024)
+        val buffer2 = ByteBuffers.allocateLittleEndian(1024)
 
         val assembler1 = Assembler(buffer1)
         val assembler2 = Assembler(buffer2)

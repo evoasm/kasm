@@ -229,7 +229,14 @@ class InstructionGenerator(generator: Generator,
         if (this is SubRegister<*, *>) {
             return this.topLevelRegister.qualifiedName()
         }
-        return this.javaClass.name + "." + this.name
+
+        val className = if(this.javaClass.superclass != Enum::class.java) {
+            this.javaClass.superclass.name
+        } else {
+            this.javaClass.name
+        }
+
+        return className + "." + this.name
     }
 
     private fun Enum<*>.qualifiedName(): String {

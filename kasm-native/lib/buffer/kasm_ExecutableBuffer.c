@@ -1,9 +1,9 @@
-#include "kasm_NativeBuffer.h"
+#include "kasm_ExecutableBuffer.h"
 
 #include <stdbool.h>
 
 #if defined(__linux__) || defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
-#define KASM_UNIX
+#  define KASM_UNIX
 #endif
 
 #if defined(_WIN32)
@@ -11,14 +11,12 @@
 #endif
 
 #ifdef KASM_UNIX
-
 #  include <unistd.h>
 #  include <sys/mman.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
-
+#  include <stdlib.h>
+#  include <string.h>
+#  include <errno.h>
+#  include <stdint.h>
 #  if !defined(MAP_ANONYMOUS) && defined(MAP_ANON)
 #    define MAP_ANONYMOUS MAP_ANON
 #  endif
@@ -114,15 +112,21 @@ error:
   return false;
 }
 
+static long kasm_page_size = -1;
 
 static void *
-kasm_mmap(JNIEnv *env, size_t size, void *p) {
+kasm_mmap_(void *mmap_hint, size_t size, int flags) {
+  return mmap(mmap_hint, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE | flags, -1, 0);
+}
+
+static void *
+kasm_mmap(JNIEnv *env, size_t size) {
   /* Note that mmap considers the pointer passed soley as a hint address
    * and returns a valid address (possibly at a different address) in any case.
    * VirtualAlloc, on the other hand, will return NULL if the address is
    * not available
    */
-  void *mem;
+  void *mem = MAP_FAILED;
 
 #if defined(_WIN32)
   retry:
@@ -136,7 +140,40 @@ kasm_mmap(JNIEnv *env, size_t size, void *p) {
       }
       return mem;
 #elif defined(_POSIX_VERSION)
-  mem = mmap(p, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+#  if defined(__linux__)
+  mem = kasm_mmap_(NULL, size, MAP_32BIT);
+  /* retry without 32bit constraint */
+  if(mem == MAP_FAILED) {
+    mem = kasm_mmap_(NULL, size, 0);
+  }
+#  else
+#  define KASM_MMAP_SCAN_START 0x0
+#  define KASM_MMAP_SCAN_END INT32_MAX
+#  define KASM_MMAP_SCAN_STEP kasm_page_size
+  /* FIXME: be more clever here */
+  if(kasm_page_size < 0) kasm_page_size = sysconf(_SC_PAGE_SIZE);
+  static intptr_t kasm_mmap_hint = KASM_MMAP_SCAN_START;
+  while(kasm_mmap_hint < KASM_MMAP_SCAN_END) {
+    mem = kasm_mmap_((void *) kasm_mmap_hint, size, 0);
+    //fprintf(stderr, "PROBING %p\n", (void *)kasm_mmap_hint);
+    /* must be within 2GB */
+    if(mem == MAP_FAILED) {
+      kasm_mmap_hint += KASM_MMAP_SCAN_STEP;
+      continue;
+    } else if(((intptr_t)mem + (ssize_t)size) < INT32_MAX) {
+      break;
+    } else {
+      munmap(mem, size);
+      mem = MAP_FAILED;
+      kasm_mmap_hint += KASM_MMAP_SCAN_STEP;
+    }
+  }
+
+  if(mem == MAP_FAILED) {
+    mem = kasm_mmap_(NULL, size, 0);
+  }
+
+#  endif
   if(mem == MAP_FAILED) {
     goto error;
   }
@@ -167,47 +204,15 @@ kasm_munmap(JNIEnv *env, void *p, size_t size) {
   return ret;
 }
 
+jobject Java_kasm_ExecutableBuffer_allocate(JNIEnv *env, jclass cls, jlong capa) {
 
-static void *kasm_malloc_attr
-kasm_aligned_alloc(JNIEnv *env, size_t align, size_t size) {
-  void *ptr;
-
-#if defined(__APPLE__)
-  int error_code = posix_memalign(&ptr, align, size);
-  if(evoasm_unlikely(error_code)) {
-#else
-#  if defined(_WIN32)
-  ptr = _aligned_malloc(size, align);
-#  else
-  ptr = aligned_alloc(align, size);
-#  endif
-  if(kasm_unlikely(!ptr)) {
-    int error_code = errno;
-#endif
-
-    kasm_throw(env, KASM_OUT_OF_MEMORY_ERROR, "Allocating %zu bytes failed: %s", size, strerror(error_code));
-    return NULL;
-  }
-
-  memset(ptr, 0, size);
-  return ptr;
-}
-
-jobject Java_kasm_NativeBuffer_allocate(JNIEnv *env, jclass cls, jlong capa, jboolean mmap) {
-
-  void *mem;
-  if(mmap) {
-    mem = kasm_mmap(env, (size_t) capa, NULL);
-  } else {
-    mem = kasm_aligned_alloc(env, 64, (size_t) capa);
-  }
-
+  void *mem = kasm_mmap(env, (size_t) capa);
   jobject buf = (*env)->NewDirectByteBuffer(env, mem, capa);
 
   return buf;
 }
 
-void Java_kasm_NativeBuffer_protect(JNIEnv *env, jclass cls, jobject buf, jboolean exec) {
+void Java_kasm_ExecutableBuffer_protect(JNIEnv *env, jclass cls, jobject buf, jboolean exec) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
   kasm_mprot(env, mem, (size_t) capa, exec);
@@ -297,7 +302,7 @@ kasm_sig_install() {
 }
 
 void
-Java_kasm_NativeBuffer_register(JNIEnv *env, jclass cls) {
+Java_kasm_ExecutableBuffer_register(JNIEnv *env, jclass cls) {
 }
 
 #else
@@ -371,26 +376,26 @@ kasm_exec_asm6(void *mem, intptr_t arg1, intptr_t arg2, intptr_t arg3, intptr_t 
   }\
   return (jlong) result;
 
-jlong Java_kasm_NativeBuffer_execute0(JNIEnv *env, jclass cls, jobject buf) {
+jlong Java_kasm_ExecutableBuffer_execute0(JNIEnv *env, jclass cls, jobject buf) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm0(mem);
   KASM_EXEC_ASM_POST
 }
 
-jlong Java_kasm_NativeBuffer_execute1(JNIEnv *env, jclass cls, jobject buf, jlong arg1) {
+jlong Java_kasm_ExecutableBuffer_execute1(JNIEnv *env, jclass cls, jobject buf, jlong arg1) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm1(mem, (intptr_t) arg1);
   KASM_EXEC_ASM_POST
 }
 
-jlong Java_kasm_NativeBuffer_execute2(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2) {
+jlong Java_kasm_ExecutableBuffer_execute2(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm2(mem, (intptr_t) arg1, (intptr_t) arg2);
   KASM_EXEC_ASM_POST
 }
 
 jlong
-Java_kasm_NativeBuffer_execute6(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2, jlong arg3, jlong arg4,
+Java_kasm_ExecutableBuffer_execute6(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2, jlong arg3, jlong arg4,
                                 jlong arg5, jlong arg6) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm6(mem, (intptr_t) arg1,
@@ -403,18 +408,12 @@ Java_kasm_NativeBuffer_execute6(JNIEnv *env, jclass cls, jobject buf, jlong arg1
   KASM_EXEC_ASM_POST
 }
 
-void Java_kasm_NativeBuffer_release(JNIEnv *env, jclass cls, jobject buf, jboolean mmap) {
-  void *mem = (*env)->GetDirectBufferAddress(env, buf);
-  jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
-
-  if(mmap) {
-    kasm_munmap(env, mem, (size_t) capa);
-  } else {
-    free(mem);
-  }
+void Java_kasm_ExecutableBuffer_release(JNIEnv *env, jclass cls, jlong addr, jint capa) {
+  void *mem = (void *) addr;
+  kasm_munmap(env, mem, (size_t) capa);
 }
 
-jbyteArray Java_kasm_NativeBuffer_toArray(JNIEnv *env, jclass cls, jobject buf) {
+jbyteArray Java_kasm_ExecutableBuffer_toArray(JNIEnv *env, jclass cls, jobject buf) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
 
@@ -425,7 +424,8 @@ jbyteArray Java_kasm_NativeBuffer_toArray(JNIEnv *env, jclass cls, jobject buf) 
   return ary;
 }
 
-jlong Java_kasm_NativeBuffer_getAddress(JNIEnv *env, jclass cls, jobject buf) {
+jlong Java_kasm_ExecutableBuffer_getAddress(JNIEnv *env, jclass cls, jobject buf) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   return (jlong) mem;
 }
+
