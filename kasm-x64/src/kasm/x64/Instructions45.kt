@@ -13,7 +13,7 @@ object ScasdEsiEdiEdiEax : NullaryInstruction() {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.GpRegister64.RSI, true, BitRange._0_31)
     tracer.traceRead(kasm.x64.GpRegister64.RDI, true, BitRange._0_31)
-    tracer.traceRead(Address32(kasm.x64.GpRegister64.RDI, null))
+    tracer.traceRead(AddressExpression32(kasm.x64.GpRegister64.RDI, null))
     tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_31)
     tracer.traceWrite(kasm.x64.GpRegister64.RSI, true, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.GpRegister64.RDI, true, BitRange._0_63, true)
@@ -40,7 +40,7 @@ object ScasqRsiRdiRdiRax : NullaryInstruction() {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.GpRegister64.RSI, true, BitRange._0_63)
     tracer.traceRead(kasm.x64.GpRegister64.RDI, true, BitRange._0_63)
-    tracer.traceRead(Address64(kasm.x64.GpRegister64.RDI, null))
+    tracer.traceRead(AddressExpression64(kasm.x64.GpRegister64.RDI, null))
     tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_63)
     tracer.traceWrite(kasm.x64.GpRegister64.RSI, true, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.GpRegister64.RDI, true, BitRange._0_63, true)
@@ -71,22 +71,22 @@ object SetaRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x97)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.ZF)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -108,21 +108,21 @@ object SetaeRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x93)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -144,21 +144,21 @@ object SetbRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x92)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -181,22 +181,22 @@ object SetbeRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x96)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.ZF)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -218,21 +218,21 @@ object SeteRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x94)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -254,21 +254,21 @@ object SetgRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x9F)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -291,22 +291,22 @@ object SetgeRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x9D)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -329,22 +329,22 @@ object SetngeRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x9C)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -368,23 +368,23 @@ object SetleRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x9E)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -406,21 +406,21 @@ object SetneRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x95)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -442,21 +442,21 @@ object SetnoRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x91)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -478,21 +478,21 @@ object SetpoRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x9B)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.PF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -514,21 +514,21 @@ object SetnsRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x99)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -550,21 +550,21 @@ object SetoRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x90)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -586,21 +586,21 @@ object SetpRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x9A)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -622,21 +622,21 @@ object SetsRm8 : R8m8Instruction() {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm8.encode(buffer, options, address)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x98)
-    ModRmSib.encode(buffer, options, address)
+    ModRmSib.encode(buffer, options, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, false, true), options, tracer)
     }
     else {
@@ -677,25 +677,25 @@ object Sha1rnds4XmmXmmm128Imm8 : XmmXmmmImm8Instruction(), VectorInstruction, Sh
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address, immediate)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x3A, 0xCC)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
     Encoding.encodeImmediate8(buffer, immediate)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128, immediate: Byte)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SHA)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, true), model.getAddress128(1, true, false), model.getByteImmediate(2), options, tracer)
     }
     else {
@@ -719,23 +719,23 @@ object Sha1nexteXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, ShaInstruc
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xC8)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SHA)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, true), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -759,23 +759,23 @@ object Sha1msg1XmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, ShaInstruct
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xC9)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SHA)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, true), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -799,23 +799,23 @@ object Sha1msg2XmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, ShaInstruct
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xCA)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SHA)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, true), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -840,24 +840,24 @@ object Sha256rnds2XmmXmmm128Xmm0 : XmmXmmmInstruction(), VectorInstruction, ShaI
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xCB)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SHA)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.ZmmRegister.ZMM0, true, BitRange._0_127)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, true), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -881,23 +881,23 @@ object Sha256msg1XmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, ShaInstru
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xCC)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SHA)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, true), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -921,23 +921,23 @@ object Sha256msg2XmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, ShaInstru
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xCD)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SHA)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, true), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -968,20 +968,20 @@ object ShldRm16R16Imm8 : R16mR16Imm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address16, register: GpRegister16, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register, immediate)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0xA4)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
     Encoding.encodeImmediate8(buffer, immediate)
   }
-  override fun trace(tracer: InstructionTracer, address: Address16, register: GpRegister16, immediate: Byte)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_15)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.traceWrite(kasm.x64.Rflag.OF, false)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
     tracer.traceWrite(kasm.x64.Rflag.ZF, false)
@@ -991,7 +991,7 @@ object ShldRm16R16Imm8 : R16mR16Imm8Instruction() {
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress16(0, true, true), model.getGpRegister16(1, true, false), model.getByteImmediate(2), options, tracer)
     }
     else {
@@ -1021,19 +1021,19 @@ object ShldRm16R16Cl : R16mR16Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address16, register: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0xA5)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address16, register: GpRegister16)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.GpRegister64.RCX, true, BitRange._0_7)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.traceWrite(kasm.x64.Rflag.OF, false)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
     tracer.traceWrite(kasm.x64.Rflag.ZF, false)
@@ -1043,7 +1043,7 @@ object ShldRm16R16Cl : R16mR16Instruction() {
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress16(0, true, true), model.getGpRegister16(1, true, false), options, tracer)
     }
     else {
@@ -1074,20 +1074,20 @@ object ShldRm32R32Imm8 : R32mR32Imm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address32, register: GpRegister32, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register, immediate)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: GpRegister32, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, address)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0xA4)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
     Encoding.encodeImmediate8(buffer, immediate)
   }
-  override fun trace(tracer: InstructionTracer, address: Address32, register: GpRegister32, immediate: Byte)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_31)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.traceWrite(kasm.x64.Rflag.OF, false)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
     tracer.traceWrite(kasm.x64.Rflag.ZF, false)
@@ -1097,7 +1097,7 @@ object ShldRm32R32Imm8 : R32mR32Imm8Instruction() {
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress32(0, true, true), model.getGpRegister32(1, true, false), model.getByteImmediate(2), options, tracer)
     }
     else {
@@ -1128,20 +1128,20 @@ object ShldRm64R64Imm8 : R64mR64Imm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address64, register: GpRegister64, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register, immediate)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: GpRegister64, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register, address)
+    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0xA4)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
     Encoding.encodeImmediate8(buffer, immediate)
   }
-  override fun trace(tracer: InstructionTracer, address: Address64, register: GpRegister64, immediate: Byte)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: GpRegister64, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(register, false, BitRange._0_63)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.traceWrite(kasm.x64.Rflag.OF, false)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
     tracer.traceWrite(kasm.x64.Rflag.ZF, false)
@@ -1151,7 +1151,7 @@ object ShldRm64R64Imm8 : R64mR64Imm8Instruction() {
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress64(0, true, true), model.getGpRegister64(1, true, false), model.getByteImmediate(2), options, tracer)
     }
     else {

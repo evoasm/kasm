@@ -10,10 +10,10 @@ internal class StructureTest {
     }
 
     @Test
-    fun getElementOffset() {
+    fun getRelativeElementOffset() {
         val structure = TestStructure()
         assertEquals(8, structure.a.elementSize)
         assertEquals(2 * 20 * 30 * structure.a.elementSize + 3 * 30 * structure.a.elementSize + 4 * structure.a.elementSize,
-                     structure.a.getElementOffset(2, 3, 4))
+                     structure.a.getRelativeElementOffset(2, 3, 4))
     }
 }

@@ -1,6 +1,7 @@
 package kasm.x64
 
 import kasm.ByteBuffers
+import kasm.toArray
 import org.junit.jupiter.api.Test
 import kotlin.test.*
 
@@ -10,8 +11,6 @@ import kasm.x64.GpRegister32.*
 import kasm.x64.GpRegister64.*
 import kasm.x64.XmmRegister.*
 import kasm.x64.YmmRegister.*
-
-import kasm.ext.toArray
 
 import org.junit.jupiter.api.BeforeEach
 import java.nio.ByteBuffer
@@ -248,84 +247,84 @@ internal class EncodingTest {
 
     @Test
     fun baseOnly() {
-        AddR64Rm64.encode(buffer, RAX, Address64(RBX))
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBX))
         assertDisassemblesTo("add rax, qword ptr [rbx]", buffer.toArray())
 
         buffer.clear()
-        AddRm64R64.encode(buffer, Address64(RBX), RAX)
+        AddRm64R64.encode(buffer, AddressExpression64(RBX), RAX)
         assertDisassemblesTo("add qword ptr [rbx], rax", buffer.toArray())
 
 
         buffer.clear()
-        AddR64Rm64.encode(buffer, R11, Address64(R12))
+        AddR64Rm64.encode(buffer, R11, AddressExpression64(R12))
         assertDisassemblesTo("add r11, qword ptr [r12]", buffer.toArray())
 
         buffer.clear()
-        AddRm64R64.encode(buffer, Address64(R12), R11)
+        AddRm64R64.encode(buffer, AddressExpression64(R12), R11)
         assertDisassemblesTo("add qword ptr [r12], r11", buffer.toArray())
 
 
         buffer.clear()
-        AddR32Rm32.encode(buffer, EAX, Address32(EBX))
+        AddR32Rm32.encode(buffer, EAX, AddressExpression32(EBX))
         assertDisassemblesTo("add eax, dword ptr [rbx]", buffer.toArray())
 
         buffer.clear()
-        AddRm32R32.encode(buffer, Address32(EBX), EAX)
+        AddRm32R32.encode(buffer, AddressExpression32(EBX), EAX)
         assertDisassemblesTo("add dword ptr [rbx], eax", buffer.toArray())
 
 
         buffer.clear()
-        AddR16Rm16.encode(buffer, AX, Address16(RBX))
+        AddR16Rm16.encode(buffer, AX, AddressExpression16(RBX))
         assertDisassemblesTo("add ax, word ptr [rbx]", buffer.toArray())
 
         buffer.clear()
-        AddRm16R16.encode(buffer, Address16(RBX), AX)
+        AddRm16R16.encode(buffer, AddressExpression16(RBX), AX)
         assertDisassemblesTo("add word ptr [rbx], ax", buffer.toArray())
     }
 
     @Test
     fun indexOnly() {
-        AddR64Rm64.encode(buffer, RAX, Address64(null, RBX, Scale._1))
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(null, RBX, Scale._1))
         // Ambiguous output from capstone
         assertDisassemblesTo("add rax, qword ptr [rbx]", buffer.toArray())
 
         buffer.clear()
-        AddR64Rm64.encode(buffer, RAX, Address64(null, RBX, Scale._4))
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(null, RBX, Scale._4))
         assertDisassemblesTo("add rax, qword ptr [rbx*4]", buffer.toArray())
 
         buffer.clear()
-        AddR64Rm64.encode(buffer, RAX, Address64(null, RBX, Scale._8))
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(null, RBX, Scale._8))
         assertDisassemblesTo("add rax, qword ptr [rbx*8]", buffer.toArray())
 
         buffer.clear()
-        AddRm64R64.encode(buffer, Address64(null, RBX, Scale._4), RAX)
+        AddRm64R64.encode(buffer, AddressExpression64(null, RBX, Scale._4), RAX)
         assertDisassemblesTo("add qword ptr [rbx*4], rax", buffer.toArray())
 
 
         buffer.clear()
-        AddR64Rm64.encode(buffer, R11, Address64(null, R12, Scale._2))
+        AddR64Rm64.encode(buffer, R11, AddressExpression64(null, R12, Scale._2))
         assertDisassemblesTo("add r11, qword ptr [r12*2]", buffer.toArray())
 
         buffer.clear()
-        AddRm64R64.encode(buffer, Address64(null, R12, Scale._4, 0x10), R11)
+        AddRm64R64.encode(buffer, AddressExpression64(null, R12, Scale._4, 0x10), R11)
         assertDisassemblesTo("add qword ptr [r12*4 + 0x10], r11", buffer.toArray())
 
 
         buffer.clear()
-        AddR32Rm32.encode(buffer, EAX, Address32(null, EBX, Scale._2))
+        AddR32Rm32.encode(buffer, EAX, AddressExpression32(null, EBX, Scale._2))
         assertDisassemblesTo("add eax, dword ptr [rbx*2]", buffer.toArray())
 
         buffer.clear()
-        AddRm32R32.encode(buffer, Address32(null, EBX, Scale._4), EAX)
+        AddRm32R32.encode(buffer, AddressExpression32(null, EBX, Scale._4), EAX)
         assertDisassemblesTo("add dword ptr [rbx*4], eax", buffer.toArray())
 
 
         buffer.clear()
-        AddR16Rm16.encode(buffer, AX, Address16(null, RBX, Scale._8, 0x100))
+        AddR16Rm16.encode(buffer, AX, AddressExpression16(null, RBX, Scale._8, 0x100))
         assertDisassemblesTo("add ax, word ptr [rbx*8 + 0x100]", buffer.toArray())
 
         buffer.clear()
-        AddRm16R16.encode(buffer, Address16(null, RBX, Scale._4), AX)
+        AddRm16R16.encode(buffer, AddressExpression16(null, RBX, Scale._4), AX)
         assertDisassemblesTo("add word ptr [rbx*4], ax", buffer.toArray())
     }
 
@@ -333,19 +332,19 @@ internal class EncodingTest {
     fun baseIndexScale() {
 
         buffer.clear()
-        AddR64Rm64.encode(buffer, RAX, Address64(RBX, RCX, Scale._4))
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBX, RCX, Scale._4))
         assertDisassemblesTo("add rax, qword ptr [rbx + rcx*4]", buffer.toArray())
 
         buffer.clear()
-        AddRm64R64.encode(buffer, Address64(RBX, RCX, Scale._4), RAX)
+        AddRm64R64.encode(buffer, AddressExpression64(RBX, RCX, Scale._4), RAX)
         assertDisassemblesTo("add qword ptr [rbx + rcx*4], rax", buffer.toArray())
 
         buffer.clear()
-        AddR64Rm64.encode(buffer, RAX, Address64(RBX, RCX, Scale._2))
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBX, RCX, Scale._2))
         assertDisassemblesTo("add rax, qword ptr [rbx + rcx*2]", buffer.toArray())
 
         buffer.clear()
-        AddR64Rm64.encode(buffer, RAX, Address64(RBX, RCX, Scale._8))
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBX, RCX, Scale._8))
         assertDisassemblesTo("add rax, qword ptr [rbx + rcx*8]", buffer.toArray())
     }
 
@@ -355,11 +354,11 @@ internal class EncodingTest {
         listOf(RSP to true, R12 to true, R11 to false).forEach { (base, equal) ->
 
             buffer.clear()
-            AddR64Rm64.encode(buffer, R10, Address64(base), options = EncodingOptions.DEFAULT.copy(forceSib = true))
+            AddR64Rm64.encode(buffer, R10, AddressExpression64(base), options = EncodingOptions.DEFAULT.copy(forceSib = true))
             val withForcedSib = buffer.toArray()
 
             buffer.clear()
-            AddR64Rm64.encode(buffer, R10, Address64(base), options = EncodingOptions.DEFAULT.copy(forceSib = false))
+            AddR64Rm64.encode(buffer, R10, AddressExpression64(base), options = EncodingOptions.DEFAULT.copy(forceSib = false))
             val withoutForcedSib = buffer.toArray()
 
             assert(equal == withoutForcedSib.contentEquals(withForcedSib))
@@ -373,13 +372,13 @@ internal class EncodingTest {
     fun displacementSize() {
         // Force 32-bit displacement
         buffer.clear()
-        AddR64Rm64.encode(buffer, R10, Address64(R11, 0x10))
+        AddR64Rm64.encode(buffer, R10, AddressExpression64(R11, 0x10))
         val withAutoDisplacement = buffer.toArray()
 
         buffer.clear()
         AddR64Rm64.encode(buffer,
                           R10,
-                          Address64(R11, 0x10),
+                          AddressExpression64(R11, 0x10),
                           options = EncodingOptions.DEFAULT.copy(displacementSize = DisplacementSize._32))
         val with32BitDisplacement = buffer.toArray()
 
@@ -391,20 +390,20 @@ internal class EncodingTest {
     @Test
     fun legacyPrefixes() {
         AddRm64R64.encode(buffer,
-                          Address64(RAX),
+                          AddressExpression64(RAX),
                           RBX,
                           options = EncodingOptions.DEFAULT.copy(legacyPrefix1 = LegacyPrefix.Group1.Lock))
         assertDisassemblesTo("lock add qword ptr [rax], rbx", buffer.toArray())
 
         buffer.clear()
         IncRm64.encode(buffer,
-                       Address64(R10),
+                       AddressExpression64(R10),
                        options = EncodingOptions.DEFAULT.copy(legacyPrefix1 = LegacyPrefix.Group1.Lock))
         assertDisassemblesTo("lock inc qword ptr [r10]", buffer.toArray())
 
         buffer.clear()
         AddRm64R64.encode(buffer,
-                          Address64(RAX),
+                          AddressExpression64(RAX),
                           RBX,
                           options = EncodingOptions.DEFAULT.copy(legacyPrefix1 = LegacyPrefix.Group1.Lock,
                                                                  legacyPrefix2 = LegacyPrefix.Group2.Es))
@@ -412,7 +411,7 @@ internal class EncodingTest {
 
         buffer.clear()
         AddRm64R64.encode(buffer,
-                          Address64(RAX),
+                          AddressExpression64(RAX),
                           RBX,
                           options = EncodingOptions.DEFAULT.copy(legacyPrefix1 = LegacyPrefix.Group1.Lock,
                                                                  legacyPrefix2 = LegacyPrefix.Group2.Es,
@@ -433,21 +432,21 @@ internal class EncodingTest {
     fun addressSize() {
         buffer.clear()
         AddRm64R64.encode(buffer,
-                          Address64(RAX),
+                          AddressExpression64(RAX),
                           RBX,
                           options = EncodingOptions.DEFAULT.copy(addressSize = AddressSize._32))
         assertDisassemblesTo("add dword ptr [eax], rbx", buffer.toArray());
 
         buffer.clear()
         AddRm64R64.encode(buffer,
-                          Address64(RAX),
+                          AddressExpression64(RAX),
                           RBX,
                           options = EncodingOptions.DEFAULT.copy(addressSize = AddressSize._64))
         assertDisassemblesTo("add qword ptr [rax], rbx", buffer.toArray());
 
         buffer.clear()
         AddRm32R32.encode(buffer,
-                          Address32(EAX),
+                          AddressExpression32(EAX),
                           EBX,
                           options = EncodingOptions.DEFAULT.copy(addressSize = AddressSize._32))
         assertDisassemblesTo("add dword ptr [eax], ebx", buffer.toArray());
@@ -518,11 +517,11 @@ internal class EncodingTest {
         assertDisassemblesTo("add rax, 0xa", buffer.toArray())
 
         buffer.clear()
-        AddRm64Imm8.encode(buffer, Address64(RAX), 0xA)
+        AddRm64Imm8.encode(buffer, AddressExpression64(RAX), 0xA)
         assertDisassemblesTo("add qword ptr [rax], 0xa", buffer.toArray())
 
         buffer.clear()
-        AddRm64Imm8.encode(buffer, Address64(RAX), -0xA)
+        AddRm64Imm8.encode(buffer, AddressExpression64(RAX), -0xA)
         assertDisassemblesTo("add qword ptr [rax], -0xa", buffer.toArray())
     }
 
@@ -582,31 +581,31 @@ internal class EncodingTest {
     fun vsib() {
 
         buffer.clear()
-        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM0, VectorAddress(RAX, XMM1, Scale._2), XMM2)
+        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM0, VectorAddressExpression(RAX, XMM1, Scale._2), XMM2)
         assertDisassemblesTo("vpgatherdd xmm0, dword ptr [rax + xmm1*2], xmm2", buffer.toArray())
 
         buffer.clear()
-        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM0, VectorAddress(RAX, XMM1), XMM2)
+        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM0, VectorAddressExpression(RAX, XMM1), XMM2)
         assertDisassemblesTo("vpgatherdd xmm0, dword ptr [rax + xmm1], xmm2", buffer.toArray())
 
         buffer.clear()
-        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddress(RAX, XMM1), XMM2)
+        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddressExpression(RAX, XMM1), XMM2)
         assertDisassemblesTo("vpgatherdd xmm12, dword ptr [rax + xmm1], xmm2", buffer.toArray())
 
         buffer.clear()
-        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddress(R12, XMM1), XMM2)
+        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddressExpression(R12, XMM1), XMM2)
         assertDisassemblesTo("vpgatherdd xmm12, dword ptr [r12 + xmm1], xmm2", buffer.toArray())
 
         buffer.clear()
-        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddress(R12, XMM1, Scale._8), XMM2)
+        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddressExpression(R12, XMM1, Scale._8), XMM2)
         assertDisassemblesTo("vpgatherdd xmm12, dword ptr [r12 + xmm1*8], xmm2", buffer.toArray())
 
         buffer.clear()
-        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddress(RDI, XMM1, Scale._8), XMM2)
+        VpgatherddXmmVm32x32Xmm.encode(buffer, XMM12, VectorAddressExpression(RDI, XMM1, Scale._8), XMM2)
         assertDisassemblesTo("vpgatherdd xmm12, dword ptr [rdi + xmm1*8], xmm2", buffer.toArray())
 
         buffer.clear()
-        VpgatherddYmmVm32y32Ymm.encode(buffer, YMM12, VectorAddress(RDI, YMM1, Scale._8), YMM2)
+        VpgatherddYmmVm32y32Ymm.encode(buffer, YMM12, VectorAddressExpression(RDI, YMM1, Scale._8), YMM2)
         assertDisassemblesTo("vpgatherdd ymm12, dword ptr [rdi + ymm1*8], ymm2", buffer.toArray())
     }
 

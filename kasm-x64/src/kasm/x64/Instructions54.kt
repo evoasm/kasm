@@ -19,24 +19,24 @@ object VpermilpsYmmYmmm256Imm8 : YmmYmmmImm8Instruction(), VectorInstruction, Av
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: YmmRegister, address: Address256, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address, immediate)
+  override fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, 0, 3, 1, 1, register, address)
+    VexPrefix.RegRm.encode(buffer, options, 0, 3, 1, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x04)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
     Encoding.encodeImmediate8(buffer, immediate)
   }
-  override fun trace(tracer: InstructionTracer, register: YmmRegister, address: Address256, immediate: Byte)  {
+  override fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getAddress256(1, true, false), model.getByteImmediate(2), options, tracer)
     }
     else {
@@ -61,24 +61,24 @@ object VpermpdYmmYmmm256Imm8 : YmmYmmmImm8Instruction(), VectorInstruction, Avx2
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: YmmRegister, address: Address256, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address, immediate)
+  override fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, 1, 3, 1, 1, register, address)
+    VexPrefix.RegRm.encode(buffer, options, 1, 3, 1, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x01)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
     Encoding.encodeImmediate8(buffer, immediate)
   }
-  override fun trace(tracer: InstructionTracer, register: YmmRegister, address: Address256, immediate: Byte)  {
+  override fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getAddress256(1, true, false), model.getByteImmediate(2), options, tracer)
     }
     else {
@@ -102,23 +102,23 @@ object VpermpsYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x16)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), model.getAddress256(2, true, false), options, tracer)
     }
     else {
@@ -143,24 +143,24 @@ object VpermqYmmYmmm256Imm8 : YmmYmmmImm8Instruction(), VectorInstruction, Avx2I
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: YmmRegister, address: Address256, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address, immediate)
+  override fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, 1, 3, 1, 1, register, address)
+    VexPrefix.RegRm.encode(buffer, options, 1, 3, 1, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x00)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
     Encoding.encodeImmediate8(buffer, immediate)
   }
-  override fun trace(tracer: InstructionTracer, register: YmmRegister, address: Address256, immediate: Byte)  {
+  override fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getAddress256(1, true, false), model.getByteImmediate(2), options, tracer)
     }
     else {
@@ -169,18 +169,18 @@ object VpermqYmmYmmm256Imm8 : YmmYmmmImm8Instruction(), VectorInstruction, Avx2I
   }
 }
 object VpmaskmovdXmmXmmM128 : XmmXmmM128Instruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x8C)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
@@ -189,18 +189,18 @@ object VpmaskmovdXmmXmmM128 : XmmXmmM128Instruction(), VectorInstruction, MoveIn
   }
 }
 object VpmaskmovdYmmYmmM256 : YmmYmmM256Instruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x8C)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
@@ -209,18 +209,18 @@ object VpmaskmovdYmmYmmM256 : YmmYmmM256Instruction(), VectorInstruction, MoveIn
   }
 }
 object VpmaskmovqXmmXmmM128 : XmmXmmM128Instruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x8C)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
@@ -229,18 +229,18 @@ object VpmaskmovqXmmXmmM128 : XmmXmmM128Instruction(), VectorInstruction, MoveIn
   }
 }
 object VpmaskmovqYmmYmmM256 : YmmYmmM256Instruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x8C)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
@@ -249,19 +249,19 @@ object VpmaskmovqYmmYmmM256 : YmmYmmM256Instruction(), VectorInstruction, MoveIn
   }
 }
 object VpmaskmovdM128XmmXmm : M128XmmXmmInstruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, address: Address128, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register1, register2)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register2, address, register1)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register2, addressExpression, register1)
     Encoding.encodeOpcode(buffer, 0x8E)
-    ModRmSib.encode(buffer, options, register2, address)
+    ModRmSib.encode(buffer, options, register2, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address128, register1: XmmRegister, register2: XmmRegister)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1.topLevelRegister, false, BitRange._0_127)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -269,19 +269,19 @@ object VpmaskmovdM128XmmXmm : M128XmmXmmInstruction(), VectorInstruction, MoveIn
   }
 }
 object VpmaskmovdM256YmmYmm : M256YmmYmmInstruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, address: Address256, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register1, register2)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression256, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register2, address, register1)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register2, addressExpression, register1)
     Encoding.encodeOpcode(buffer, 0x8E)
-    ModRmSib.encode(buffer, options, register2, address)
+    ModRmSib.encode(buffer, options, register2, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address256, register1: YmmRegister, register2: YmmRegister)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression256, register1: YmmRegister, register2: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1.topLevelRegister, false, BitRange._0_255)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -289,19 +289,19 @@ object VpmaskmovdM256YmmYmm : M256YmmYmmInstruction(), VectorInstruction, MoveIn
   }
 }
 object VpmaskmovqM128XmmXmm : M128XmmXmmInstruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, address: Address128, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register1, register2)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register2, address, register1)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register2, addressExpression, register1)
     Encoding.encodeOpcode(buffer, 0x8E)
-    ModRmSib.encode(buffer, options, register2, address)
+    ModRmSib.encode(buffer, options, register2, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address128, register1: XmmRegister, register2: XmmRegister)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1.topLevelRegister, false, BitRange._0_127)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -309,19 +309,19 @@ object VpmaskmovqM128XmmXmm : M128XmmXmmInstruction(), VectorInstruction, MoveIn
   }
 }
 object VpmaskmovqM256YmmYmm : M256YmmYmmInstruction(), VectorInstruction, MoveInstruction, Avx2Instruction {
-  override fun encode(buffer: ByteBuffer, address: Address256, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register1, register2)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression256, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register2, address, register1)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register2, addressExpression, register1)
     Encoding.encodeOpcode(buffer, 0x8E)
-    ModRmSib.encode(buffer, options, register2, address)
+    ModRmSib.encode(buffer, options, register2, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address256, register1: YmmRegister, register2: YmmRegister)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression256, register1: YmmRegister, register2: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1.topLevelRegister, false, BitRange._0_255)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -344,23 +344,23 @@ object VpsllvdXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x47)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), model.getAddress128(2, true, false), options, tracer)
     }
     else {
@@ -384,23 +384,23 @@ object VpsllvqXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x47)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), model.getAddress128(2, true, false), options, tracer)
     }
     else {
@@ -424,23 +424,23 @@ object VpsllvdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x47)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), model.getAddress256(2, true, false), options, tracer)
     }
     else {
@@ -464,23 +464,23 @@ object VpsllvqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x47)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), model.getAddress256(2, true, false), options, tracer)
     }
     else {
@@ -504,23 +504,23 @@ object VpsravdXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x46)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), model.getAddress128(2, true, false), options, tracer)
     }
     else {
@@ -544,23 +544,23 @@ object VpsravdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x46)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), model.getAddress256(2, true, false), options, tracer)
     }
     else {
@@ -584,23 +584,23 @@ object VpsrlvdXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 0, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x45)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), model.getAddress128(2, true, false), options, tracer)
     }
     else {
@@ -624,23 +624,23 @@ object VpsrlvqXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 0, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x45)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), model.getAddress128(2, true, false), options, tracer)
     }
     else {
@@ -664,23 +664,23 @@ object VpsrlvdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 0, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x45)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), model.getAddress256(2, true, false), options, tracer)
     }
     else {
@@ -704,23 +704,23 @@ object VpsrlvqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, address)
+  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register1, address, register2)
+    VexPrefix.RegRmVex.encode(buffer, options, 1, 2, 1, 1, register1, addressExpression, register2)
     Encoding.encodeOpcode(buffer, 0x45)
-    ModRmSib.encode(buffer, options, register1, address)
+    ModRmSib.encode(buffer, options, register1, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), model.getAddress256(2, true, false), options, tracer)
     }
     else {
@@ -751,18 +751,18 @@ object VtestpsXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, 0, 2, 0, 1, register, address)
+    VexPrefix.RegRm.encode(buffer, options, 0, 2, 0, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0E)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.PF)
     tracer.traceWrite(kasm.x64.Rflag.OF, true)
@@ -774,7 +774,7 @@ object VtestpsXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, false), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -805,18 +805,18 @@ object VtestpsYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, 0, 2, 1, 1, register, address)
+    VexPrefix.RegRm.encode(buffer, options, 0, 2, 1, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0E)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.PF)
     tracer.traceWrite(kasm.x64.Rflag.OF, true)
@@ -828,7 +828,7 @@ object VtestpsYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, true, false), model.getAddress256(1, true, false), options, tracer)
     }
     else {
@@ -859,18 +859,18 @@ object VtestpdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, address: Address128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, 0, 2, 0, 1, register, address)
+    VexPrefix.RegRm.encode(buffer, options, 0, 2, 0, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, address: Address128)  {
+  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.PF)
     tracer.traceWrite(kasm.x64.Rflag.OF, true)
@@ -882,7 +882,7 @@ object VtestpdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getXmmRegister(0, true, false), model.getAddress128(1, true, false), options, tracer)
     }
     else {
@@ -913,18 +913,18 @@ object VtestpdYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: YmmRegister, address: Address256, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, address)
+  override fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, 0, 2, 1, 1, register, address)
+    VexPrefix.RegRm.encode(buffer, options, 0, 2, 1, 1, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: YmmRegister, address: Address256)  {
+  override fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.PF)
     tracer.traceWrite(kasm.x64.Rflag.OF, true)
@@ -936,7 +936,7 @@ object VtestpdYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, AvxInstructi
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getYmmRegister(0, true, false), model.getAddress256(1, true, false), options, tracer)
     }
     else {
@@ -1016,18 +1016,18 @@ object XaddRm8R8 : R8m8R88Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, address: Address8, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, address, register)
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm8.encode(buffer, options, register, address)
+    RexPrefix.RegRm8.encode(buffer, options, register, addressExpression)
     Encoding.encodeOpcode(buffer, 0x0F, 0xC0)
-    ModRmSib.encode(buffer, options, register, address)
+    ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, address: Address8, register: GpRegister8)  {
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, register: GpRegister8)  {
     tracer.beginTracing()
-    tracer.traceRead(address)
+    tracer.traceRead(addressExpression)
     tracer.traceRead(register.topLevelRegister, false, BitRange._0_7)
-    tracer.traceWrite(address)
+    tracer.traceWrite(addressExpression)
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_7, true)
     tracer.traceWrite(kasm.x64.Rflag.OF, false)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
@@ -1038,7 +1038,7 @@ object XaddRm8R8 : R8m8R88Instruction() {
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useAddress()) {
+    if(model.useSibd()) {
       encode(buffer, model.getAddress8(0, true, true), model.getGpRegister8(1, true, true), options, tracer)
     }
     else {

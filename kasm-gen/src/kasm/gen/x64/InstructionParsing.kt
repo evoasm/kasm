@@ -120,7 +120,7 @@ class InstructionGenerator(generator: Generator,
                                                  encodingOptionsParameter,
                                                  tracerParameter)
                     } else {
-                        writer.writeBlock("if(model.useAddress())") {
+                        writer.writeBlock("if(model.useSibd())") {
                             writeEncodeCallWithModel(writer,
                                                      true,
                                                      bufferParameter,
@@ -293,7 +293,7 @@ class InstructionGenerator(generator: Generator,
         val name = when (operand) {
             is ImplicitImmediateOperand      -> operand.value.toString() + "L"
             is ImplicitRegisterOperand       -> operand.register.qualifiedName()
-            is ImplicitMemoryOperand         -> "Address${operand.size.toInt()}(${operand.baseRegister.qualifiedName()}, ${operand.indexRegister?.qualifiedName() ?: "null"})"
+            is ImplicitMemoryOperand         -> "AddressExpression${operand.size.toInt()}(${operand.baseRegister.qualifiedName()}, ${operand.indexRegister?.qualifiedName() ?: "null"})"
             is ExplicitImmediateOperand      -> parameter!!.name + if (operand.size != BitSize._64) ".toLong()" else ""
             is ExplicitRegisterOperand       -> parameter!!.name + if (operand.type.isSubRegisterType) ".topLevelRegister" else ""
             is ExplicitMemoryRegisterOperand -> parameter!!.name + if (!memory && operand.type.isSubRegisterType) ".topLevelRegister" else ""
@@ -433,7 +433,7 @@ class InstructionGenerator(generator: Generator,
 
             regex.find(opcode)?.let {
                 val iOperand = immOperand!!
-                val functionName = "Encoding.encodeImmediate" + iOperand.size!!.toInt()
+                val functionName = "Encoding.encodeImmediate" + iOperand.size.toInt()
                 val parameters = listOf("buffer")
                 val operands = listOf(iOperand)
                 writer.writeEncodeCall(functionName, parameters, operands, memory)
@@ -493,7 +493,7 @@ class InstructionInterfaceGenerator(val operands: List<ExplicitOperand>) {
 
         operands.mapNotNull { operand ->
             val size = if (operand.size == BitSize._8 || operand is ExplicitImmediateOperand) {
-                operand.size?.toInt().toString()
+                operand.size.toInt().toString()
             } else {
                 ""
             }

@@ -169,9 +169,54 @@ class CpuState(val includeRip: Boolean = false,
         val rip = longField()
         val mxcsr = intField()
 
+        init {
+//            check(zmm0.address.value % 32UL == 0UL)
+        }
+
+        override fun toString(): String {
+            return """Fields(rax=${rax.get()}, rcx=${rcx.get()}, rdx=${rdx.get()}, rbx=${rbx.get()}, rsp=${rsp.get()}, rbp=${rbp.get()},
+                      rsi=${rsi.get()}, rdi=${rdi.get()}, r8=${r8.get()}, r9=${r9.get()}, r10=${r10.get()}, r11=${r11.get()}, r12=${r12.get()},
+                      r13=${r13.get()}, r14=${r14.get()}, r15=${r15.get()}, al=${al.get()}, ah=${ah.get()}, cl=${cl.get()}, ch=${ch.get()},
+                      dl=${dl.get()}, dh=${dh.get()}, bl=${bl.get()}, bh=${bh.get()}, spl=${spl.get()}, bpl=${bpl.get()}, sil=${sil.get()}, dil=${dil.get()},
+                      r8b=${r8b.get()}, r9b=${r9b.get()}, r10b=${r10b.get()}, r11b=${r11b.get()}, r12b=${r12b.get()}, r13b=${r13b.get()},
+                      r14b=${r14b.get()}, ax=${ax.get()}, cx=${cx.get()}, dx=${dx.get()}, bx=${bx.get()}, sp=${sp.get()}, bp=${bp.get()},
+                      si=${si.get()}, di=${di.get()}, r8w=${r8w.get()}, r9w=${r9w.get()}, r10w=${r10w.get()}, r11w=${r11w.get()}, r12w=${r12w.get()},
+                      r13w=${r13w.get()}, r14w=${r14w.get()}, r15w=${r15w.get()}, eax=${eax.get()}, ecx=${ecx.get()}, edx=${edx.get()}, ebx=${ebx.get()},
+                      esp=${esp.get()}, ebp=${ebp.get()}, esi=${esi.get()}, edi=${edi.get()}, r8d=${r8d.get()}, r9d=${r9d.get()}, r10d=${r10d.get()},
+                      r11d=${r11d.get()}, r12d=${r12d.get()}, r13d=${r13d.get()}, r14d=${r14d.get()}, r15d=${r15d.get()}, mm0=${mm0.getLongArray().contentToString()},
+                      mm1=${mm1.getLongArray().contentToString()}, mm2=${mm2.getLongArray().contentToString()}, mm3=${mm3.getLongArray().contentToString()},
+                      mm4=${mm4.getLongArray().contentToString()}, mm5=${mm5.getLongArray().contentToString()}, mm6=${mm6.getLongArray().contentToString()},
+                      mm7=${mm7.getLongArray().contentToString()}, zmm0=${zmm0.getLongArray().contentToString()}, zmm1=${zmm1.getLongArray().contentToString()},
+                      zmm2=${zmm2.getLongArray().contentToString()}, zmm3=${zmm3.getLongArray().contentToString()}, zmm4=${zmm4.getLongArray().contentToString()},
+                      zmm5=${zmm5.getLongArray().contentToString()}, zmm6=${zmm6.getLongArray().contentToString()}, zmm7=${zmm7.getLongArray().contentToString()},
+                      zmm8=${zmm8.getLongArray().contentToString()}, zmm9=${zmm9.getLongArray().contentToString()}, zmm10=${zmm10.getLongArray().contentToString()},
+                      zmm11=${zmm11.getLongArray().contentToString()}, zmm12=${zmm12.getLongArray().contentToString()}, zmm13=${zmm13.getLongArray().contentToString()},
+                      zmm14=${zmm14.getLongArray().contentToString()}, zmm15=${zmm15.getLongArray().contentToString()}, zmm16=${zmm16.getLongArray().contentToString()},
+                      zmm17=${zmm17.getLongArray().contentToString()}, zmm18=${zmm18.getLongArray().contentToString()}, zmm19=${zmm19.getLongArray().contentToString()},
+                      zmm20=${zmm20.getLongArray().contentToString()}, zmm21=${zmm21.getLongArray().contentToString()}, zmm22=${zmm22.getLongArray().contentToString()},
+                      zmm23=${zmm23.getLongArray().contentToString()}, zmm24=${zmm24.getLongArray().contentToString()}, zmm25=${zmm25.getLongArray().contentToString()},
+                      zmm26=${zmm26.getLongArray().contentToString()}, zmm27=${zmm27.getLongArray().contentToString()}, zmm28=${zmm28.getLongArray().contentToString()},
+                      zmm29=${zmm29.getLongArray().contentToString()}, zmm30=${zmm30.getLongArray().contentToString()}, zmm31=${zmm31.getLongArray().contentToString()},
+                      xmm0=${xmm0.getLongArray().contentToString()}, xmm1=${xmm1.getLongArray().contentToString()}, xmm2=${xmm2.getLongArray().contentToString()},
+                      xmm3=${xmm3.getLongArray().contentToString()}, xmm4=${xmm4.getLongArray().contentToString()}, xmm5=${xmm5.getLongArray().contentToString()},
+                      xmm6=${xmm6.getLongArray().contentToString()}, xmm7=${xmm7.getLongArray().contentToString()}, xmm8=${xmm8.getLongArray().contentToString()},
+                      xmm9=${xmm9.getLongArray().contentToString()}, xmm10=${xmm10.getLongArray().contentToString()}, xmm11=${xmm11.getLongArray().contentToString()},
+                      xmm12=${xmm12.getLongArray().contentToString()}, xmm13=${xmm13.getLongArray().contentToString()}, xmm14=${xmm14.getLongArray().contentToString()},
+                      xmm15=${xmm15.getLongArray().contentToString()}, ymm0=${ymm0.getLongArray().contentToString()}, ymm1=${ymm1.getLongArray().contentToString()},
+                      ymm2=${ymm2.getLongArray().contentToString()}, ymm3=${ymm3.getLongArray().contentToString()}, ymm4=${ymm4.getLongArray().contentToString()},
+                      ymm5=${ymm5.getLongArray().contentToString()}, ymm6=${ymm6.getLongArray().contentToString()}, ymm7=${ymm7.getLongArray().contentToString()},
+                      ymm8=${ymm8.getLongArray().contentToString()}, ymm9=${ymm9.getLongArray().contentToString()}, ymm10=${ymm10.getLongArray().contentToString()},
+                      ymm11=${ymm11.getLongArray().contentToString()}, ymm12=${ymm12.getLongArray().contentToString()}, ymm13=${ymm13.getLongArray().contentToString()},
+                      ymm14=${ymm14.getLongArray().contentToString()}, ymm15=${ymm15.getLongArray().contentToString()}, rflags=${rflags.get()}, rip=${rip.get()},
+                      mxcsr=${mxcsr.get()})""".trimIndent()
+
+        }
+
+
     }
 
-    private val fields = Fields()
+
+    public val fields = Fields()
 
     var rax by fields.rax
     var rcx by fields.rcx
@@ -558,103 +603,103 @@ class CpuState(val includeRip: Boolean = false,
 
         other as CpuState
 
-        if (rax != other.rax) return false
-        if (rcx != other.rcx) return false
-        if (rdx != other.rdx) return false
-        if (rbx != other.rbx) return false
-        if (includeRsp) if (rsp != other.rsp) return false
-        if (rbp != other.rbp) return false
-        if (rsi != other.rsi) return false
-        if (rdi != other.rdi) return false
-        if (r8 != other.r8) return false
-        if (r9 != other.r9) return false
-        if (r10 != other.r10) return false
-        if (r11 != other.r11) return false
-        if (r12 != other.r12) return false
-        if (r13 != other.r13) return false
-        if (r14 != other.r14) return false
-        if (r15 != other.r15) return false
+        if (!fields.rax.contentEquals(other.fields.rax)) return false
+        if (!fields.rcx.contentEquals(other.fields.rcx)) return false
+        if (!fields.rdx.contentEquals(other.fields.rdx)) return false
+        if (!fields.rbx.contentEquals(other.fields.rbx)) return false
+        if (includeRsp) if (!fields.rsp.contentEquals(other.fields.rsp)) return false
+        if (!fields.rbp.contentEquals(other.fields.rbp)) return false
+        if (!fields.rsi.contentEquals(other.fields.rsi)) return false
+        if (!fields.rdi.contentEquals(other.fields.rdi)) return false
+        if (!fields.r8.contentEquals(other.fields.r8)) return false
+        if (!fields.r9.contentEquals(other.fields.r9)) return false
+        if (!fields.r10.contentEquals(other.fields.r10)) return false
+        if (!fields.r11.contentEquals(other.fields.r11)) return false
+        if (!fields.r12.contentEquals(other.fields.r12)) return false
+        if (!fields.r13.contentEquals(other.fields.r13)) return false
+        if (!fields.r14.contentEquals(other.fields.r14)) return false
+        if (!fields.r15.contentEquals(other.fields.r15)) return false
 
-        if (mm0 != other.mm0) return false
-        if (mm1 != other.mm1) return false
-        if (mm2 != other.mm2) return false
-        if (mm3 != other.mm3) return false
-        if (mm4 != other.mm4) return false
-        if (mm5 != other.mm5) return false
-        if (mm6 != other.mm6) return false
-        if (mm7 != other.mm7) return false
+        if (!fields.mm0.contentEquals(other.fields.mm0)) return false
+        if (!fields.mm1.contentEquals(other.fields.mm1)) return false
+        if (!fields.mm2.contentEquals(other.fields.mm2)) return false
+        if (!fields.mm3.contentEquals(other.fields.mm3)) return false
+        if (!fields.mm4.contentEquals(other.fields.mm4)) return false
+        if (!fields.mm5.contentEquals(other.fields.mm5)) return false
+        if (!fields.mm6.contentEquals(other.fields.mm6)) return false
+        if (!fields.mm7.contentEquals(other.fields.mm7)) return false
 
         if (CpuId.supportsAvx512) {
-            if (zmm0 != other.zmm0) return false
-            if (zmm1 != other.zmm1) return false
-            if (zmm2 != other.zmm2) return false
-            if (zmm3 != other.zmm3) return false
-            if (zmm4 != other.zmm4) return false
-            if (zmm5 != other.zmm5) return false
-            if (zmm6 != other.zmm6) return false
-            if (zmm7 != other.zmm7) return false
-            if (zmm8 != other.zmm8) return false
-            if (zmm9 != other.zmm9) return false
-            if (zmm10 != other.zmm10) return false
-            if (zmm11 != other.zmm11) return false
-            if (zmm12 != other.zmm12) return false
-            if (zmm13 != other.zmm13) return false
-            if (zmm14 != other.zmm14) return false
-            if (zmm15 != other.zmm15) return false
-            if (zmm16 != other.zmm16) return false
-            if (zmm17 != other.zmm17) return false
-            if (zmm18 != other.zmm18) return false
-            if (zmm19 != other.zmm19) return false
-            if (zmm20 != other.zmm20) return false
-            if (zmm21 != other.zmm21) return false
-            if (zmm22 != other.zmm22) return false
-            if (zmm23 != other.zmm23) return false
-            if (zmm24 != other.zmm24) return false
-            if (zmm25 != other.zmm25) return false
-            if (zmm26 != other.zmm26) return false
-            if (zmm27 != other.zmm27) return false
-            if (zmm28 != other.zmm28) return false
-            if (zmm29 != other.zmm29) return false
-            if (zmm30 != other.zmm30) return false
-            if (zmm31 != other.zmm31) return false
+            if (!fields.zmm0.contentEquals(other.fields.zmm0)) return false
+            if (!fields.zmm1.contentEquals(other.fields.zmm1)) return false
+            if (!fields.zmm2.contentEquals(other.fields.zmm2)) return false
+            if (!fields.zmm3.contentEquals(other.fields.zmm3)) return false
+            if (!fields.zmm4.contentEquals(other.fields.zmm4)) return false
+            if (!fields.zmm5.contentEquals(other.fields.zmm5)) return false
+            if (!fields.zmm6.contentEquals(other.fields.zmm6)) return false
+            if (!fields.zmm7.contentEquals(other.fields.zmm7)) return false
+            if (!fields.zmm8.contentEquals(other.fields.zmm8)) return false
+            if (!fields.zmm9.contentEquals(other.fields.zmm9)) return false
+            if (!fields.zmm10.contentEquals(other.fields.zmm10)) return false
+            if (!fields.zmm11.contentEquals(other.fields.zmm11)) return false
+            if (!fields.zmm12.contentEquals(other.fields.zmm12)) return false
+            if (!fields.zmm13.contentEquals(other.fields.zmm13)) return false
+            if (!fields.zmm14.contentEquals(other.fields.zmm14)) return false
+            if (!fields.zmm15.contentEquals(other.fields.zmm15)) return false
+            if (!fields.zmm16.contentEquals(other.fields.zmm16)) return false
+            if (!fields.zmm17.contentEquals(other.fields.zmm17)) return false
+            if (!fields.zmm18.contentEquals(other.fields.zmm18)) return false
+            if (!fields.zmm19.contentEquals(other.fields.zmm19)) return false
+            if (!fields.zmm20.contentEquals(other.fields.zmm20)) return false
+            if (!fields.zmm21.contentEquals(other.fields.zmm21)) return false
+            if (!fields.zmm22.contentEquals(other.fields.zmm22)) return false
+            if (!fields.zmm23.contentEquals(other.fields.zmm23)) return false
+            if (!fields.zmm24.contentEquals(other.fields.zmm24)) return false
+            if (!fields.zmm25.contentEquals(other.fields.zmm25)) return false
+            if (!fields.zmm26.contentEquals(other.fields.zmm26)) return false
+            if (!fields.zmm27.contentEquals(other.fields.zmm27)) return false
+            if (!fields.zmm28.contentEquals(other.fields.zmm28)) return false
+            if (!fields.zmm29.contentEquals(other.fields.zmm29)) return false
+            if (!fields.zmm30.contentEquals(other.fields.zmm30)) return false
+            if (!fields.zmm31.contentEquals(other.fields.zmm31)) return false
         } else if (CpuId.supportsAvx) {
-            if (ymm0 != other.ymm0) return false
-            if (ymm1 != other.ymm1) return false
-            if (ymm2 != other.ymm2) return false
-            if (ymm3 != other.ymm3) return false
-            if (ymm4 != other.ymm4) return false
-            if (ymm5 != other.ymm5) return false
-            if (ymm6 != other.ymm6) return false
-            if (ymm7 != other.ymm7) return false
-            if (ymm8 != other.ymm8) return false
-            if (ymm9 != other.ymm9) return false
-            if (ymm10 != other.ymm10) return false
-            if (ymm11 != other.ymm11) return false
-            if (ymm12 != other.ymm12) return false
-            if (ymm13 != other.ymm13) return false
-            if (ymm14 != other.ymm14) return false
-            if (ymm15 != other.ymm15) return false
+            if (!fields.ymm0.contentEquals(other.fields.ymm0)) return false
+            if (!fields.ymm1.contentEquals(other.fields.ymm1)) return false
+            if (!fields.ymm2.contentEquals(other.fields.ymm2)) return false
+            if (!fields.ymm3.contentEquals(other.fields.ymm3)) return false
+            if (!fields.ymm4.contentEquals(other.fields.ymm4)) return false
+            if (!fields.ymm5.contentEquals(other.fields.ymm5)) return false
+            if (!fields.ymm6.contentEquals(other.fields.ymm6)) return false
+            if (!fields.ymm7.contentEquals(other.fields.ymm7)) return false
+            if (!fields.ymm8.contentEquals(other.fields.ymm8)) return false
+            if (!fields.ymm9.contentEquals(other.fields.ymm9)) return false
+            if (!fields.ymm10.contentEquals(other.fields.ymm10)) return false
+            if (!fields.ymm11.contentEquals(other.fields.ymm11)) return false
+            if (!fields.ymm12.contentEquals(other.fields.ymm12)) return false
+            if (!fields.ymm13.contentEquals(other.fields.ymm13)) return false
+            if (!fields.ymm14.contentEquals(other.fields.ymm14)) return false
+            if (!fields.ymm15.contentEquals(other.fields.ymm15)) return false
         } else {
-            if (xmm0 != other.xmm0) return false
-            if (xmm1 != other.xmm1) return false
-            if (xmm2 != other.xmm2) return false
-            if (xmm3 != other.xmm3) return false
-            if (xmm4 != other.xmm4) return false
-            if (xmm5 != other.xmm5) return false
-            if (xmm6 != other.xmm6) return false
-            if (xmm7 != other.xmm7) return false
-            if (xmm8 != other.xmm8) return false
-            if (xmm9 != other.xmm9) return false
-            if (xmm10 != other.xmm10) return false
-            if (xmm11 != other.xmm11) return false
-            if (xmm12 != other.xmm12) return false
-            if (xmm13 != other.xmm13) return false
-            if (xmm14 != other.xmm14) return false
-            if (xmm15 != other.xmm15) return false
+            if (!fields.xmm0.contentEquals(other.fields.xmm0)) return false
+            if (!fields.xmm1.contentEquals(other.fields.xmm1)) return false
+            if (!fields.xmm2.contentEquals(other.fields.xmm2)) return false
+            if (!fields.xmm3.contentEquals(other.fields.xmm3)) return false
+            if (!fields.xmm4.contentEquals(other.fields.xmm4)) return false
+            if (!fields.xmm5.contentEquals(other.fields.xmm5)) return false
+            if (!fields.xmm6.contentEquals(other.fields.xmm6)) return false
+            if (!fields.xmm7.contentEquals(other.fields.xmm7)) return false
+            if (!fields.xmm8.contentEquals(other.fields.xmm8)) return false
+            if (!fields.xmm9.contentEquals(other.fields.xmm9)) return false
+            if (!fields.xmm10.contentEquals(other.fields.xmm10)) return false
+            if (!fields.xmm11.contentEquals(other.fields.xmm11)) return false
+            if (!fields.xmm12.contentEquals(other.fields.xmm12)) return false
+            if (!fields.xmm13.contentEquals(other.fields.xmm13)) return false
+            if (!fields.xmm14.contentEquals(other.fields.xmm14)) return false
+            if (!fields.xmm15.contentEquals(other.fields.xmm15)) return false
         }
-        if (includeRip && rip != other.rip) return false
-        if (includeMxcsr && mxcsr != other.mxcsr) return false
-        if (includeRflags && rflags != other.rflags) return false
+        if (includeRip && fields.rip.contentEquals(other.fields.rip)) return false
+        if (includeMxcsr && fields.mxcsr.contentEquals(other.fields.mxcsr)) return false
+        if (includeRflags && fields.rflags.contentEquals(other.fields.rflags)) return false
 
         return true
     }
@@ -766,5 +811,9 @@ class CpuState(val includeRip: Boolean = false,
         return result
     }
 
+
+    override fun toString() : String {
+        return fields.toString()
+    }
 
 }

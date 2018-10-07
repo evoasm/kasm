@@ -1,5 +1,6 @@
 package kasm.x64
 
+import kasm.Address
 import kasm.ExecutableBuffer
 import kasm.ext.alignUp
 import java.nio.ByteBuffer
@@ -28,6 +29,9 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         private val NOP9 = byteArrayOf(0x66, 0x0F, 0x1F, 0x84.toByte(), 0x00, 0x00, 0x00, 0x00, 0x00)
     }
 
+    private fun requireSmallCodeModel(address: Address) {
+        require(address.value <= Int.MAX_VALUE.toULong())
+    }
 
     class JumpSite(val buffer: ByteBuffer) {
         private val offset = buffer.position()
@@ -99,156 +103,156 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         pop(register)
     }
 
-    fun load(address: Long, register: GpRegister64) {
-        check(address <= Int.MAX_VALUE)
-        mov(register, Address64(address.toInt()))
+    fun load(address: Address, register: GpRegister64) {
+        requireSmallCodeModel(address)
+        mov(register, AddressExpression64(address.value.toInt()))
     }
 
-    fun load(address: Long, register: GpRegister64, scratchRegister: GpRegister64) {
+    fun load(address: Address, register: GpRegister64, scratchRegister: GpRegister64) {
         check(register != scratchRegister)
-        mov(scratchRegister, address)
-        mov(register, Address64(scratchRegister))
+        mov(scratchRegister, address.value.toLong())
+        mov(register, AddressExpression64(scratchRegister))
     }
 
-    fun load(address: Long, register: MmRegister) {
-        check(address <= Int.MAX_VALUE)
-        movq(register, Address64(address.toInt()))
+    fun load(address: Address, register: MmRegister) {
+        requireSmallCodeModel(address)
+        movq(register, AddressExpression64(address.value.toInt()))
     }
 
-    fun load(address: Long, register: MmRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        movq(register, Address64(scratchRegister))
+    fun load(address: Address, register: MmRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        movq(register, AddressExpression64(scratchRegister))
     }
 
-    fun load(address: Long, register: XmmRegister) {
-        check(address <= Int.MAX_VALUE)
-        movdqa(register, Address128(address.toInt()))
+    fun load(address: Address, register: XmmRegister) {
+        requireSmallCodeModel(address)
+        movdqa(register, AddressExpression128(address.value.toInt()))
     }
 
-    fun load(address: Long, register: XmmRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        movdqa(register, Address128(scratchRegister))
+    fun load(address: Address, register: XmmRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        movdqa(register, AddressExpression128(scratchRegister))
     }
 
-    fun load(address: Long, register: YmmRegister) {
-        check(address <= Int.MAX_VALUE)
-        vmovdqa(register, Address256(address.toInt()))
+    fun load(address: Address, register: YmmRegister) {
+        requireSmallCodeModel(address)
+        vmovdqa(register, AddressExpression256(address.value.toInt()))
     }
 
-    fun load(address: Long, register: YmmRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        vmovdqa(register, Address256(scratchRegister))
+    fun load(address: Address, register: YmmRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        vmovdqa(register, AddressExpression256(scratchRegister))
     }
 
-    fun load(address: Long, register: IpRegister) {
-        check(address <= Int.MAX_VALUE)
-        jmp(Address64(address.toInt()))
+    fun load(address: Address, register: IpRegister) {
+        requireSmallCodeModel(address)
+        jmp(AddressExpression64(address.value.toInt()))
     }
 
-    fun load(address: Long, register: IpRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
+    fun load(address: Address, register: IpRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
         jmp(scratchRegister)
     }
 
-    fun load(address: Long, register: RflagsRegister, scratchRegister: GpRegister64) {
-        check(address <= Int.MAX_VALUE)
-        mov(scratchRegister, Address64(address.toInt()))
+    fun load(address: Address, register: RflagsRegister, scratchRegister: GpRegister64) {
+        requireSmallCodeModel(address)
+        mov(scratchRegister, AddressExpression64(address.value.toInt()))
         push(scratchRegister)
         popfq()
     }
 
-    fun load(address: Long, register: RflagsRegister, scratchRegister1: GpRegister64, scratchRegister2: GpRegister64) {
-        mov(scratchRegister1, address)
-        mov(scratchRegister2, Address64(scratchRegister1))
+    fun load(address: Address, register: RflagsRegister, scratchRegister1: GpRegister64, scratchRegister2: GpRegister64) {
+        mov(scratchRegister1, address.value.toLong())
+        mov(scratchRegister2, AddressExpression64(scratchRegister1))
         push(scratchRegister2)
         popfq()
     }
 
-    fun load(address: Long, register: MxcsrRegister) {
-        check(address <= Int.MAX_VALUE)
-        ldmxcsr(Address32(address.toInt()))
+    fun load(address: Address, register: MxcsrRegister) {
+        requireSmallCodeModel(address)
+        ldmxcsr(AddressExpression32(address.value.toInt()))
     }
 
-    fun load(address: Long, register: MxcsrRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        ldmxcsr(Address32(scratchRegister))
+    fun load(address: Address, register: MxcsrRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        ldmxcsr(AddressExpression32(scratchRegister))
     }
 
-    fun store(address: Long, register: GpRegister64) {
-        check(address <= Int.MAX_VALUE)
-        mov(Address64(address.toInt()), register)
+    fun store(address: Address, register: GpRegister64) {
+        requireSmallCodeModel(address)
+        mov(AddressExpression64(address.value.toInt()), register)
     }
 
-    fun store(address: Long, register: GpRegister64, scratchRegister: GpRegister64) {
+    fun store(address: Address, register: GpRegister64, scratchRegister: GpRegister64) {
         check(register != scratchRegister)
-        mov(scratchRegister, address)
-        mov(Address64(scratchRegister), register)
+        mov(scratchRegister, address.value.toLong())
+        mov(AddressExpression64(scratchRegister), register)
     }
 
-    fun store(address: Long, register: MmRegister) {
-        check(address <= Int.MAX_VALUE)
-        movq(Address64(address.toInt()), register)
+    fun store(address: Address, register: MmRegister) {
+        requireSmallCodeModel(address)
+        movq(AddressExpression64(address.value.toInt()), register)
     }
 
-    fun store(address: Long, register: MmRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        movq(Address64(scratchRegister), register)
+    fun store(address: Address, register: MmRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        movq(AddressExpression64(scratchRegister), register)
     }
 
-    fun store(address: Long, register: XmmRegister) {
-        check(address <= Int.MAX_VALUE)
-        movdqa(Address128(address.toInt()), register)
+    fun store(address: Address, register: XmmRegister) {
+        requireSmallCodeModel(address)
+        movdqa(AddressExpression128(address.value.toInt()), register)
     }
 
-    fun store(address: Long, register: XmmRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        movdqa(Address128(scratchRegister), register)
+    fun store(address: Address, register: XmmRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        movdqa(AddressExpression128(scratchRegister), register)
     }
 
-    fun store(address: Long, register: YmmRegister) {
-        check(address <= Int.MAX_VALUE)
-        vmovdqa(Address256(address.toInt()), register)
+    fun store(address: Address, register: YmmRegister) {
+        requireSmallCodeModel(address)
+        vmovdqa(AddressExpression256(address.value.toInt()), register)
     }
 
-    fun store(address: Long, register: YmmRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        vmovdqa(Address256(scratchRegister), register)
+    fun store(address: Address, register: YmmRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        vmovdqa(AddressExpression256(scratchRegister), register)
     }
 
-    fun store(address: Long, register: IpRegister, scratchRegister: GpRegister64) {
-        check(address <= Int.MAX_VALUE)
-        lea(scratchRegister, Address64(IpRegister.RIP))
-        mov(Address64(address.toInt()), scratchRegister)
+    fun store(address: Address, register: IpRegister, scratchRegister: GpRegister64) {
+        requireSmallCodeModel(address)
+        lea(scratchRegister, AddressExpression64(IpRegister.RIP))
+        mov(AddressExpression64(address.value.toInt()), scratchRegister)
     }
 
-    fun store(address: Long, register: IpRegister, scratchRegister1: GpRegister64, scratchRegister2: GpRegister64) {
-        mov(scratchRegister1, address)
-        lea(scratchRegister2, Address64(IpRegister.RIP))
-        mov(Address64(scratchRegister1), scratchRegister2)
+    fun store(address: Address, register: IpRegister, scratchRegister1: GpRegister64, scratchRegister2: GpRegister64) {
+        mov(scratchRegister1, address.value.toLong())
+        lea(scratchRegister2, AddressExpression64(IpRegister.RIP))
+        mov(AddressExpression64(scratchRegister1), scratchRegister2)
     }
 
-    fun store(address: Long, register: RflagsRegister, scratchRegister: GpRegister64) {
-        check(address < Int.MAX_VALUE)
+    fun store(address: Address, register: RflagsRegister, scratchRegister: GpRegister64) {
+        requireSmallCodeModel(address)
         pushfq()
         pop(scratchRegister)
-        mov(Address64(address.toInt()), scratchRegister)
+        mov(AddressExpression64(address.value.toInt()), scratchRegister)
     }
 
-    fun store(address: Long, register: RflagsRegister, scratchRegister1: GpRegister64, scratchRegister2: GpRegister64) {
+    fun store(address: Address, register: RflagsRegister, scratchRegister1: GpRegister64, scratchRegister2: GpRegister64) {
         pushfq()
         pop(scratchRegister2)
-        mov(scratchRegister1, address)
-        mov(Address64(scratchRegister1), scratchRegister2)
+        mov(scratchRegister1, address.value.toLong())
+        mov(AddressExpression64(scratchRegister1), scratchRegister2)
     }
 
-    fun store(address: Long, register: MxcsrRegister) {
-        check(address < Int.MAX_VALUE)
-        stmxcsr(Address32(address.toInt()))
+    fun store(address: Address, register: MxcsrRegister) {
+        requireSmallCodeModel(address)
+        stmxcsr(AddressExpression32(address.value.toInt()))
     }
 
-    fun store(address: Long, register: MxcsrRegister, scratchRegister: GpRegister64) {
-        mov(scratchRegister, address)
-        stmxcsr(Address32(scratchRegister))
+    fun store(address: Address, register: MxcsrRegister, scratchRegister: GpRegister64) {
+        mov(scratchRegister, address.value.toLong())
+        stmxcsr(AddressExpression32(scratchRegister))
     }
 
     fun align(alignment: Int) {

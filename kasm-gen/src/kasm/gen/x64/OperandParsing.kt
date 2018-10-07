@@ -443,18 +443,18 @@ class OperandsParser(val list: MutableList<Pair<String, String>>, val haveVex: B
 
                 is ExplicitMemoryRegisterOperand -> {
                     if (memory) {
-                        Operand.Parameter("address", "Address" + operand.size.toInt())
+                        Operand.Parameter("addressExpression", "AddressExpression" + operand.size.toInt())
                     } else {
                         registerOperandParameter(operand.type, operand.size)
                     }
                 }
 
                 is ExplicitVectorMemoryOperand -> {
-                    Operand.Parameter("vectorAddress", "VectorAddress")
+                    Operand.Parameter("vectorAddressExpression", "VectorAddressExpression")
                 }
 
                 is ExplicitMemoryOperand -> {
-                    Operand.Parameter("address", "Address" + operand.size.toInt())
+                    Operand.Parameter("addressExpression", "AddressExpression" + operand.size.toInt())
                 }
 
                 is ExplicitImmediateOperand -> {

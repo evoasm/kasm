@@ -35,7 +35,7 @@ internal class ExecutableBufferTest {
         val displacement = 0xdeadL
 
         Assembler(buffer).emitStackFrame {
-            // mov(RBX, Address(displacement))
+            // mov(RBX, AddressExpression(displacement))
             movabsRax(displacement)
         }
 

@@ -7,11 +7,11 @@ interface InstructionTracer {
     fun endTracing() {}
 
     fun traceWrite(register: Register, implicit: Boolean, range: BitRange?, always: Boolean) {}
-    fun traceWrite(address: Address) {}
+    fun traceWrite(addressExpression: AddressExpression) {}
 
     fun traceRead(register: Register, implicit: Boolean, range: BitRange?) {}
-    fun traceRead(address: Address) {}
-    fun traceRead(address: VectorAddress) {}
+    fun traceRead(addressExpression: AddressExpression) {}
+    fun traceRead(addressExpression: VectorAddressExpression) {}
     fun traceRead(immediate: Long, implicit: Boolean, size: BitSize?) {}
 
     fun traceRead(rflag: Rflag) {}
@@ -32,17 +32,17 @@ interface InstructionModel {
     fun getYmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): YmmRegister
     fun getZmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): ZmmRegister
 
-    fun getAddress8(index: Int, isRead: Boolean, isWritten: Boolean): Address8
-    fun getAddress16(index: Int, isRead: Boolean, isWritten: Boolean): Address16
-    fun getAddress32(index: Int, isRead: Boolean, isWritten: Boolean): Address32
-    fun getAddress64(index: Int, isRead: Boolean, isWritten: Boolean): Address64
-    fun getAddress128(index: Int, isRead: Boolean, isWritten: Boolean): Address128
-    fun getAddress256(index: Int, isRead: Boolean, isWritten: Boolean): Address256
-    fun getAddress512(index: Int, isRead: Boolean, isWritten: Boolean): Address512
+    fun getAddress8(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression8
+    fun getAddress16(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression16
+    fun getAddress32(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression32
+    fun getAddress64(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression64
+    fun getAddress128(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression128
+    fun getAddress256(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression256
+    fun getAddress512(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512
 
-    fun getVectorAddress(index: Int, isRead: Boolean, isWritten: Boolean): VectorAddress
+    fun getVectorAddress(index: Int, isRead: Boolean, isWritten: Boolean): VectorAddressExpression
 
-    fun useAddress(): Boolean
+    fun useSibd(): Boolean
 
     fun getByteImmediate(index: Int): Byte
     fun getShortImmediate(index: Int): Short
@@ -241,45 +241,45 @@ object ModRmSib {
         buffer.put(byte)
     }
 
-    fun encode(buffer: ByteBuffer, options: EncodingOptions, reg: Int, address: Address) {
-        if (address.base == IpRegister.RIP) {
-            encodeRip(buffer, options, reg, address)
+    fun encode(buffer: ByteBuffer, options: EncodingOptions, reg: Int, addressExpression: AddressExpression) {
+        if (addressExpression.base == IpRegister.RIP) {
+            encodeRip(buffer, options, reg, addressExpression)
         } else {
-            if (address.index == null) {
-                if (address.base == null) {
-                    encodeDisplacementOnly(buffer, options, reg, address.displacement)
+            if (addressExpression.index == null) {
+                if (addressExpression.base == null) {
+                    encodeDisplacementOnly(buffer, options, reg, addressExpression.displacement)
                 } else {
-                    encodeBaseOnly(buffer, options, reg, address.base!!, address.displacement)
+                    encodeBaseOnly(buffer, options, reg, addressExpression.base!!, addressExpression.displacement)
                 }
             } else {
-                if (address.base == null) {
+                if (addressExpression.base == null) {
                     encodeIndexOnly(buffer,
                                     options,
                                     reg,
-                                    address.index!!,
-                                    address.scale,
-                                    address.displacement)
+                                    addressExpression.index!!,
+                                    addressExpression.scale,
+                                    addressExpression.displacement)
                 } else {
                     encodeBaseIndexScale(buffer,
                                          options,
                                          reg,
-                                         address.base!!,
-                                         address.index!!,
-                                         address.scale,
-                                         address.displacement)
+                                         addressExpression.base!!,
+                                         addressExpression.index!!,
+                                         addressExpression.scale,
+                                         addressExpression.displacement)
                 }
             }
         }
     }
 
-    private fun encodeRip(buffer: ByteBuffer, options: EncodingOptions, reg: Int, address: Address) {
-        if (address.index != null || address.scale != Scale._1) throw EncodingException("RIP base cannot have index or scale")
-        encodeBaseOnly(buffer, options, reg, IpRegister.RIP, address.displacement)
+    private fun encodeRip(buffer: ByteBuffer, options: EncodingOptions, reg: Int, addressExpression: AddressExpression) {
+        if (addressExpression.index != null || addressExpression.scale != Scale._1) throw EncodingException("RIP base cannot have index or scale")
+        encodeBaseOnly(buffer, options, reg, IpRegister.RIP, addressExpression.displacement)
     }
 
-    fun encode(buffer: ByteBuffer, options: EncodingOptions, address: Address) {
+    fun encode(buffer: ByteBuffer, options: EncodingOptions, addressExpression: AddressExpression) {
         val reg = options.modrmReg
-        encode(buffer, options, reg, address)
+        encode(buffer, options, reg, addressExpression)
     }
 
     private fun encodeBaseIndexScale(buffer: ByteBuffer,
@@ -293,28 +293,28 @@ object ModRmSib {
         putModrmSibDisplacement(buffer, options, reg, base, index, scale, displacement)
     }
 
-    fun encode(buffer: ByteBuffer, options: EncodingOptions, register: Register, address: Address) {
-        encode(buffer, options, register.unextendedCode, address)
+    fun encode(buffer: ByteBuffer, options: EncodingOptions, register: Register, addressExpression: AddressExpression) {
+        encode(buffer, options, register.unextendedCode, addressExpression)
     }
 
-    fun encode(buffer: ByteBuffer, options: EncodingOptions, register: Register, vectorAddress: VectorAddress) {
+    fun encode(buffer: ByteBuffer, options: EncodingOptions, register: Register, vectorAddressExpression: VectorAddressExpression) {
         val reg = register.unextendedCode
 
-        if (vectorAddress.base == null) {
+        if (vectorAddressExpression.base == null) {
             encodeIndexOnlyWithoutIndexCheck(buffer,
                                              options,
                                              reg,
-                                             vectorAddress.index,
-                                             vectorAddress.scale,
-                                             vectorAddress.displacement)
+                                             vectorAddressExpression.index,
+                                             vectorAddressExpression.scale,
+                                             vectorAddressExpression.displacement)
         } else {
             encodeBaseIndexScale(buffer,
                                  options,
                                  reg,
-                                 vectorAddress.base!!,
-                                 vectorAddress.index,
-                                 vectorAddress.scale,
-                                 vectorAddress.displacement)
+                                 vectorAddressExpression.base!!,
+                                 vectorAddressExpression.index,
+                                 vectorAddressExpression.scale,
+                                 vectorAddressExpression.displacement)
         }
     }
 
@@ -551,11 +551,11 @@ sealed class VexPrefix {
                    vexL: Int,
                    vexP: Int,
                    register: Register,
-                   address: Address) {
+                   addressExpression: AddressExpression) {
 
             val vexR = register.rexBit
-            val vexX = address.index?.rexBit ?: options.rexX
-            val vexB = address.base?.rexBit ?: options.rexB
+            val vexX = addressExpression.index?.rexBit ?: options.rexX
+            val vexB = addressExpression.base?.rexBit ?: options.rexB
 
             /* FIXME: does it have to be zero ? */
             val vexV = 0
@@ -591,12 +591,12 @@ sealed class VexPrefix {
                    vexM: Int,
                    vexL: Int,
                    vexP: Int,
-                   address: Address,
+                   addressExpression: AddressExpression,
                    register: Register) {
 
             val vexR = options.rexR
-            val vexX = address.index?.rexBit ?: options.rexX
-            val vexB = address.base?.rexBit ?: options.rexB
+            val vexX = addressExpression.index?.rexBit ?: options.rexX
+            val vexB = addressExpression.base?.rexBit ?: options.rexB
             val vexV = register.code
 
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
@@ -627,10 +627,10 @@ sealed class VexPrefix {
                    vexM: Int,
                    vexL: Int,
                    vexP: Int,
-                   address: Address) {
+                   addressExpression: AddressExpression) {
             val vexR = options.rexR
-            val vexX = address.index?.rexBit ?: options.rexX
-            val vexB = address.base?.rexBit ?: options.rexB
+            val vexX = addressExpression.index?.rexBit ?: options.rexX
+            val vexB = addressExpression.base?.rexBit ?: options.rexB
             val vexV = options.vexV
 
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
@@ -646,12 +646,12 @@ sealed class VexPrefix {
                    vexL: Int,
                    vexP: Int,
                    register0: Register,
-                   address: Address,
+                   addressExpression: AddressExpression,
                    register1: Register) {
 
             val vexR = register0.rexBit
-            val vexX = address.index?.rexBit ?: options.rexX
-            val vexB = address.base?.rexBit ?: options.rexB
+            val vexX = addressExpression.index?.rexBit ?: options.rexX
+            val vexB = addressExpression.base?.rexBit ?: options.rexB
             val vexV = register1.code
 
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
@@ -664,12 +664,12 @@ sealed class VexPrefix {
                    vexL: Int,
                    vexP: Int,
                    register0: Register,
-                   vectorAddress: VectorAddress,
+                   vectorAddressExpression: VectorAddressExpression,
                    register1: Register) {
 
             val vexR = register0.rexBit
-            val vexX = vectorAddress.index.rexBit
-            val vexB = vectorAddress.base?.rexBit ?: options.rexB
+            val vexX = vectorAddressExpression.index.rexBit
+            val vexB = vectorAddressExpression.base?.rexBit ?: options.rexB
             val vexV = register1.code
 
             putVex(buffer, options, vexW, vexR, vexX, vexB, vexM, vexV, vexL, vexP)
@@ -710,9 +710,9 @@ sealed class RexPrefix {
 
     object RegRm : RexPrefix() {
 
-        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, register: Register, address: Address) {
-            if (options.forceRex || register.rexBit == 1 || address.needsRex) {
-                putRex(buffer, options, options.rexW, register, address)
+        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, register: Register, addressExpression: AddressExpression) {
+            if (options.forceRex || register.rexBit == 1 || addressExpression.needsRex) {
+                putRex(buffer, options, options.rexW, register, addressExpression)
             }
         }
 
@@ -720,8 +720,8 @@ sealed class RexPrefix {
                                      options: EncodingOptions,
                                      rexW: Int,
                                      register: Register,
-                                     address: Address) {
-            putRex(buffer, options, rexW, register, address)
+                                     addressExpression: AddressExpression) {
+            putRex(buffer, options, rexW, register, addressExpression)
         }
 
         internal fun encode(buffer: ByteBuffer, options: EncodingOptions, register0: Register, register1: Register) {
@@ -738,10 +738,10 @@ sealed class RexPrefix {
             putRex(buffer, options, rexW, register0, register1)
         }
 
-        internal fun putRex(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, register: Register, address: Address) {
+        internal fun putRex(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, register: Register, addressExpression: AddressExpression) {
             val rexR = register.rexBit
-            val rexX = address.index?.rexBit ?: options.rexX
-            val rexB = address.base?.rexBit ?: options.rexB
+            val rexX = addressExpression.index?.rexBit ?: options.rexX
+            val rexB = addressExpression.base?.rexBit ?: options.rexB
 
             putRex(buffer, rexW, rexR, rexX, rexB)
         }
@@ -788,12 +788,12 @@ sealed class RexPrefix {
                                      options: EncodingOptions,
                                      rexW: Int,
                                      register: GpRegister,
-                                     address: Address) {
-            RegRm.encodeMandatory(buffer, options, rexW, register, address)
+                                     addressExpression: AddressExpression) {
+            RegRm.encodeMandatory(buffer, options, rexW, register, addressExpression)
         }
 
-        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, register: GpRegister, address: Address) {
-            RegRm.encode(buffer, options, register, address)
+        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, register: GpRegister, addressExpression: AddressExpression) {
+            RegRm.encode(buffer, options, register, addressExpression)
         }
 
     }
@@ -830,9 +830,9 @@ sealed class RexPrefix {
     }
 
     object Rm8 : RexPrefix() {
-        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, address: Address) {
-            if (options.forceRex || address.needsRex) {
-                Rm.encode(buffer, options, address)
+        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, addressExpression: AddressExpression) {
+            if (options.forceRex || addressExpression.needsRex) {
+                Rm.encode(buffer, options, addressExpression)
             }
         }
 
@@ -843,8 +843,8 @@ sealed class RexPrefix {
             }
         }
 
-        internal fun encodeMandatory(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, address: Address) {
-            Rm.putRex(buffer, options, rexW, address)
+        internal fun encodeMandatory(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, addressExpression: AddressExpression) {
+            Rm.putRex(buffer, options, rexW, addressExpression)
         }
 
         internal fun encodeMandatory(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, register: GpRegister8) {
@@ -876,17 +876,17 @@ sealed class RexPrefix {
 
     object Rm : RexPrefix() {
 
-        internal fun encodeMandatory(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, address: Address) {
-            putRex(buffer, options, rexW, address)
+        internal fun encodeMandatory(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, addressExpression: AddressExpression) {
+            putRex(buffer, options, rexW, addressExpression)
         }
 
         internal fun encodeMandatory(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, register: Register) {
             Reg.putRex(buffer, options, rexW, register)
         }
 
-        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, address: Address) {
-            if (options.forceRex || address.needsRex) {
-                putRex(buffer, options, options.rexW, address)
+        internal fun encode(buffer: ByteBuffer, options: EncodingOptions, addressExpression: AddressExpression) {
+            if (options.forceRex || addressExpression.needsRex) {
+                putRex(buffer, options, options.rexW, addressExpression)
             }
         }
 
@@ -896,10 +896,10 @@ sealed class RexPrefix {
             }
         }
 
-        fun putRex(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, address: Address) {
+        fun putRex(buffer: ByteBuffer, options: EncodingOptions, rexW: Int, addressExpression: AddressExpression) {
             val rexR = options.rexR
-            val rexX = address.index?.rexBit ?: options.rexX
-            val rexB = address.base?.rexBit ?: options.rexB
+            val rexX = addressExpression.index?.rexBit ?: options.rexX
+            val rexB = addressExpression.base?.rexBit ?: options.rexB
 
             putRex(buffer, rexW, rexR, rexX, rexB)
         }

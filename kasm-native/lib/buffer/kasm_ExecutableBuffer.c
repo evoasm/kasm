@@ -180,6 +180,7 @@ kasm_mmap(JNIEnv *env, size_t size) {
 #else
 #error
 #endif
+
   return mem;
 
 error:

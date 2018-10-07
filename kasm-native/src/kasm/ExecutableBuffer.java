@@ -35,7 +35,7 @@ public class ExecutableBuffer  {
     }
 
     public String toByteString() {
-        return ByteBuffers.toByteString(byteBuffer);
+        return ByteBuffers.INSTANCE.toByteString(byteBuffer);
     }
 
     public ExecutableBuffer(long capacity) {

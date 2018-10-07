@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 import kotlin.test.*
-import kasm.ext.toByteString
 
 internal class CpuStateTest {
 
@@ -23,16 +22,16 @@ internal class CpuStateTest {
             cpuState.emitSave(this)
         }
 
-        assertEquals(cpuState.eax, 0)
-        assertEquals(cpuState.edi, 0)
-        assertEquals(cpuState.rsi, 0)
+        assertEquals(0, cpuState.eax)
+        assertEquals(0, cpuState.edi)
+        assertEquals(0, cpuState.rsi)
 
         println(buffer.toByteString())
         buffer.execute()
 
-        assertEquals(cpuState.eax, 0xdead)
-        assertEquals(cpuState.edi, 0xbeef)
-        assertEquals(cpuState.rsi, 0xdeadbeef)
+        assertEquals(0xdead, cpuState.eax)
+        assertEquals(0xbeef, cpuState.edi)
+        assertEquals(0xdeadbeef, cpuState.rsi)
     }
 
     @Test
@@ -51,7 +50,7 @@ internal class CpuStateTest {
                     is Structure.VectorField -> {
                         val array = ByteArray(it.elementSize)
                         random.nextBytes(array)
-                        it.set(array)
+                        it.setByteArray(array)
                     }
                 }
             }

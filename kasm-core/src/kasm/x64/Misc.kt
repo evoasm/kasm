@@ -99,45 +99,45 @@ sealed class LegacyPrefix(val prefixGroup: LegacyPrefixGroup, byte: Int) {
     }
 }
 
-abstract class Address(val base: AddressRegister?, val index: AddressRegister?, val scale : Scale, val displacement: Int) {
+abstract class AddressExpression(val base: AddressRegister?, val index: AddressRegister?, val scale : Scale, val displacement: Int) {
     val needsRex = base?.rexBit == 1 || index?.rexBit == 1
 }
 
-class Address8(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {
+class AddressExpression8(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale._1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale._1, displacement)
 }
 
-class Address16(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {
+class AddressExpression16(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale._1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale._1, displacement)
 }
 
-class Address32(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {
+class AddressExpression32(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale._1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale._1, displacement)
 }
 
-class Address64(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {
+class AddressExpression64(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale._1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale._1, displacement)
 }
 
-class Address128(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {
+class AddressExpression128(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale._1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale._1, displacement)
 }
 
-class Address256(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {
+class AddressExpression256(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale._1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale._1, displacement)
 }
 
-class Address512(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : Address(base, index, scale, displacement) {
+class AddressExpression512(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale._1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale._1, displacement)
 }
 
-data class VectorAddress(val base: AddressRegister?, val index: VectorRegister, val scale: Scale = Scale._1, val displacement: Int = 0) {
+data class VectorAddressExpression(val base: AddressRegister?, val index: VectorRegister, val scale: Scale = Scale._1, val displacement: Int = 0) {
 
 }

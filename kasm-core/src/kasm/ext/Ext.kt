@@ -63,3 +63,21 @@ fun Int.alignUp(alignment: Int): Int {
     return (this + alignment - 1).alignDown(alignment)
 }
 
+fun Long.alignDown(alignment: Int): Long {
+    return this - (this.rem(alignment))
+}
+
+fun Long.alignUp(alignment: Int): Long {
+    return (this + alignment - 1).alignDown(alignment)
+}
+
+@ExperimentalUnsignedTypes
+fun ULong.alignDown(alignment: UInt): ULong {
+    return this - (this.rem(alignment))
+}
+
+@ExperimentalUnsignedTypes
+fun ULong.alignUp(alignment: UInt): ULong {
+    return (this + alignment - 1UL).alignDown(alignment)
+}
+
