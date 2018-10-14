@@ -8,13 +8,13 @@ import kasm.x64.GpRegister64.*
 
 import org.junit.jupiter.api.BeforeEach
 
-internal class ExecutableBufferTest {
+internal class NativeBufferTest {
 
-    private lateinit var buffer: ExecutableBuffer
+    private lateinit var buffer: NativeBuffer
 
     @BeforeEach
     fun setup() {
-        buffer = ExecutableBuffer(1024)
+        buffer = NativeBuffer(1024)
     }
 
     @Test

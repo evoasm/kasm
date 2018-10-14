@@ -4,7 +4,7 @@ import java.lang.ref.Cleaner;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public class ExecutableBuffer  {
+public class NativeBuffer {
     private static final Cleaner cleaner;
 
     static {
@@ -38,7 +38,7 @@ public class ExecutableBuffer  {
         return ByteBuffers.INSTANCE.toByteString(byteBuffer);
     }
 
-    public ExecutableBuffer(long capacity) {
+    public NativeBuffer(long capacity) {
         this.byteBuffer = allocate(capacity);
         this.byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         cleaner.register(byteBuffer, new Deallocator(getAddress(byteBuffer), byteBuffer.capacity()));

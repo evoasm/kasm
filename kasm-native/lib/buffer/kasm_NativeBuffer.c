@@ -1,4 +1,4 @@
-#include "kasm_ExecutableBuffer.h"
+#include "kasm_NativeBuffer.h"
 
 #include <stdbool.h>
 
@@ -205,7 +205,7 @@ kasm_munmap(JNIEnv *env, void *p, size_t size) {
   return ret;
 }
 
-jobject Java_kasm_ExecutableBuffer_allocate(JNIEnv *env, jclass cls, jlong capa) {
+jobject Java_kasm_NativeBuffer_allocate(JNIEnv *env, jclass cls, jlong capa) {
 
   void *mem = kasm_mmap(env, (size_t) capa);
   jobject buf = (*env)->NewDirectByteBuffer(env, mem, capa);
@@ -213,7 +213,7 @@ jobject Java_kasm_ExecutableBuffer_allocate(JNIEnv *env, jclass cls, jlong capa)
   return buf;
 }
 
-void Java_kasm_ExecutableBuffer_protect(JNIEnv *env, jclass cls, jobject buf, jboolean exec) {
+void Java_kasm_NativeBuffer_protect(JNIEnv *env, jclass cls, jobject buf, jboolean exec) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
   kasm_mprot(env, mem, (size_t) capa, exec);
@@ -303,7 +303,7 @@ kasm_sig_install() {
 }
 
 void
-Java_kasm_ExecutableBuffer_register(JNIEnv *env, jclass cls) {
+Java_kasm_NativeBuffer_register(JNIEnv *env, jclass cls) {
 }
 
 #else
@@ -377,26 +377,26 @@ kasm_exec_asm6(void *mem, intptr_t arg1, intptr_t arg2, intptr_t arg3, intptr_t 
   }\
   return (jlong) result;
 
-jlong Java_kasm_ExecutableBuffer_execute0(JNIEnv *env, jclass cls, jobject buf) {
+jlong Java_kasm_NativeBuffer_execute0(JNIEnv *env, jclass cls, jobject buf) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm0(mem);
   KASM_EXEC_ASM_POST
 }
 
-jlong Java_kasm_ExecutableBuffer_execute1(JNIEnv *env, jclass cls, jobject buf, jlong arg1) {
+jlong Java_kasm_NativeBuffer_execute1(JNIEnv *env, jclass cls, jobject buf, jlong arg1) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm1(mem, (intptr_t) arg1);
   KASM_EXEC_ASM_POST
 }
 
-jlong Java_kasm_ExecutableBuffer_execute2(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2) {
+jlong Java_kasm_NativeBuffer_execute2(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm2(mem, (intptr_t) arg1, (intptr_t) arg2);
   KASM_EXEC_ASM_POST
 }
 
 jlong
-Java_kasm_ExecutableBuffer_execute6(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2, jlong arg3, jlong arg4,
+Java_kasm_NativeBuffer_execute6(JNIEnv *env, jclass cls, jobject buf, jlong arg1, jlong arg2, jlong arg3, jlong arg4,
                                 jlong arg5, jlong arg6) {
   KASM_EXEC_ASM_PRE
     result = kasm_exec_asm6(mem, (intptr_t) arg1,
@@ -409,12 +409,12 @@ Java_kasm_ExecutableBuffer_execute6(JNIEnv *env, jclass cls, jobject buf, jlong 
   KASM_EXEC_ASM_POST
 }
 
-void Java_kasm_ExecutableBuffer_release(JNIEnv *env, jclass cls, jlong addr, jint capa) {
+void Java_kasm_NativeBuffer_release(JNIEnv *env, jclass cls, jlong addr, jint capa) {
   void *mem = (void *) addr;
   kasm_munmap(env, mem, (size_t) capa);
 }
 
-jbyteArray Java_kasm_ExecutableBuffer_toArray(JNIEnv *env, jclass cls, jobject buf) {
+jbyteArray Java_kasm_NativeBuffer_toArray(JNIEnv *env, jclass cls, jobject buf) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   jlong capa = (*env)->GetDirectBufferCapacity(env, buf);
 
@@ -425,7 +425,7 @@ jbyteArray Java_kasm_ExecutableBuffer_toArray(JNIEnv *env, jclass cls, jobject b
   return ary;
 }
 
-jlong Java_kasm_ExecutableBuffer_getAddress(JNIEnv *env, jclass cls, jobject buf) {
+jlong Java_kasm_NativeBuffer_getAddress(JNIEnv *env, jclass cls, jobject buf) {
   void *mem = (*env)->GetDirectBufferAddress(env, buf);
   return (jlong) mem;
 }

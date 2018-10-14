@@ -356,7 +356,7 @@ open class Structure() {
 
     val address: Address get() {
         initializeIfNeeded()
-        return Address(ExecutableBuffer.getAddress(_buffer).toULong())
+        return Address(NativeBuffer.getAddress(_buffer).toULong())
     }
 
     private fun initializeIfNeeded() {

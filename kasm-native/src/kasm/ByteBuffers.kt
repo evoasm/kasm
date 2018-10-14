@@ -1,6 +1,5 @@
 package kasm
 
-import kasm.ext.alignUp
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -10,7 +9,7 @@ object ByteBuffers {
         val byteBuffer = ByteBuffer.allocateDirect(capacity)
         byteBuffer.order(ByteOrder.LITTLE_ENDIAN)
 
-//        val address = ExecutableBuffer.getAddress(byteBuffer)
+//        val address = NativeBuffer.getAddress(byteBuffer)
 //        val alignedAddress = address.alignUp(alignment)
 //        val skip = (alignedAddress - address).toInt()
 //        byteBuffer.position(skip)
@@ -41,7 +40,10 @@ object ByteBuffers {
         byteBuffer.position(currentPosition)
         return array
     }
+
 }
+
+val ByteBuffer.address get() = NativeBuffer.getAddress(this)
 
 fun ByteBuffer.toArray() : ByteArray {
     return ByteBuffers.toArray(this)

@@ -1,13 +1,13 @@
 package kasm.x64
 
 import kasm.Address
-import kasm.ExecutableBuffer
+import kasm.NativeBuffer
 import kasm.ext.alignUp
 import java.nio.ByteBuffer
 
 class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
 
-    constructor(buffer: ExecutableBuffer) : this(buffer.byteBuffer)
+    constructor(buffer: NativeBuffer) : this(buffer.byteBuffer)
 
     companion object {
         val SYSV_CALLEE_SAVED_REGISTERS = listOf(

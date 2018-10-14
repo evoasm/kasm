@@ -11,7 +11,7 @@ internal class CpuStateTest {
 
     @Test
     fun save() {
-        val buffer = ExecutableBuffer(1024)
+        val buffer = NativeBuffer(1024)
 
         val cpuState = CpuState()
 
@@ -36,7 +36,7 @@ internal class CpuStateTest {
 
     @Test
     fun saveRestore() {
-        val buffer = ExecutableBuffer(1024 * 2)
+        val buffer = NativeBuffer(1024 * 2)
 
         val cpuState1 = CpuState()
 

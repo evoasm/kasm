@@ -1,6 +1,6 @@
 package kasm.x64
 
-import kasm.ExecutableBuffer
+import kasm.NativeBuffer
 import kasm.Structure
 import java.util.*
 
@@ -272,7 +272,7 @@ object CpuId {
 //    }
 
     val features by lazy {
-        val buffer = ExecutableBuffer(1024)
+        val buffer = NativeBuffer(1024)
         Assembler(buffer).emitStackFrame {
             CPUID_MAP.entries.forEachIndexed { leafIndex, (registerValues, outputRegisters) ->
                 val (eaxValue, ecxValue) = registerValues
