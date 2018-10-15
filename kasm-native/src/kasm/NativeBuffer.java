@@ -35,11 +35,26 @@ public class NativeBuffer {
     }
 
     public String toByteString() {
-        return ByteBuffers.INSTANCE.toByteString(byteBuffer);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < byteBuffer.limit(); i++) {
+            builder.append(String.format("%02X", byteBuffer.get(i)));
+            builder.append(" ");
+        }
+        return builder.toString();
     }
 
+    public enum CodeModel {
+        SMALL,
+        LARGE
+    }
+
+
     public NativeBuffer(long capacity) {
-        this.byteBuffer = allocate(capacity);
+        this(capacity, CodeModel.LARGE);
+    }
+
+    public NativeBuffer(long capacity, CodeModel codeModel) {
+        this.byteBuffer = allocate(capacity, codeModel == CodeModel.SMALL);
         this.byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
         cleaner.register(byteBuffer, new Deallocator(getAddress(byteBuffer), byteBuffer.capacity()));
     }
@@ -48,7 +63,7 @@ public class NativeBuffer {
         return toArray(byteBuffer);
     }
 
-    private static native ByteBuffer allocate(long capacity);
+    private static native ByteBuffer allocate(long capacity, boolean smallCodeModel);
     public static native byte[] toArray(ByteBuffer byteBuffer);
     private static native void protect(ByteBuffer byteBuffer, boolean executable);
     private static native long execute0(ByteBuffer byteBuffer) throws SignalException;

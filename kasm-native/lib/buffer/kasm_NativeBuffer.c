@@ -112,15 +112,44 @@ error:
   return false;
 }
 
-static long kasm_page_size = -1;
 
 static void *
 kasm_mmap_(void *mmap_hint, size_t size, int flags) {
   return mmap(mmap_hint, size, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE | flags, -1, 0);
 }
 
+#define KASM_MMAP_SCAN_START 0x0
+#define KASM_MMAP_SCAN_END INT32_MAX
+#define KASM_MMAP_SCAN_STEP kasm_page_size
+
+static long kasm_page_size = -1;
 static void *
-kasm_mmap(JNIEnv *env, size_t size) {
+kasm_mmap_scan(size_t size) {
+  void *mem = MAP_FAILED;
+  /* FIXME: be more clever here */
+  if(kasm_page_size < 0) kasm_page_size = sysconf(_SC_PAGE_SIZE);
+  static intptr_t kasm_mmap_hint = KASM_MMAP_SCAN_START;
+  while(kasm_mmap_hint < KASM_MMAP_SCAN_END) {
+    mem = kasm_mmap_((void *) kasm_mmap_hint, size, 0);
+    //fprintf(stderr, "PROBING %p\n", (void *)kasm_mmap_hint);
+    /* must be within 2GB */
+    if(mem == MAP_FAILED) {
+      kasm_mmap_hint += KASM_MMAP_SCAN_STEP;
+      continue;
+    } else if(((intptr_t)mem + (ssize_t)size) < INT32_MAX) {
+      break;
+    } else {
+      munmap(mem, size);
+      mem = MAP_FAILED;
+      kasm_mmap_hint += KASM_MMAP_SCAN_STEP;
+    }
+  }
+  return mem;
+}
+
+
+static void *
+kasm_mmap(JNIEnv *env, size_t size, bool small_cm) {
   /* Note that mmap considers the pointer passed soley as a hint address
    * and returns a valid address (possibly at a different address) in any case.
    * VirtualAlloc, on the other hand, will return NULL if the address is
@@ -140,40 +169,17 @@ kasm_mmap(JNIEnv *env, size_t size) {
       }
       return mem;
 #elif defined(_POSIX_VERSION)
+
+  if(!small_cm) {
+    mem = kasm_mmap_(NULL, size, 0);
+  } else {
 #  if defined(__linux__)
-  mem = kasm_mmap_(NULL, size, MAP_32BIT);
-  /* retry without 32bit constraint */
-  if(mem == MAP_FAILED) {
-    mem = kasm_mmap_(NULL, size, 0);
-  }
+    mem = kasm_mmap_(NULL, size, MAP_32BIT);
 #  else
-#  define KASM_MMAP_SCAN_START 0x0
-#  define KASM_MMAP_SCAN_END INT32_MAX
-#  define KASM_MMAP_SCAN_STEP kasm_page_size
-  /* FIXME: be more clever here */
-  if(kasm_page_size < 0) kasm_page_size = sysconf(_SC_PAGE_SIZE);
-  static intptr_t kasm_mmap_hint = KASM_MMAP_SCAN_START;
-  while(kasm_mmap_hint < KASM_MMAP_SCAN_END) {
-    mem = kasm_mmap_((void *) kasm_mmap_hint, size, 0);
-    //fprintf(stderr, "PROBING %p\n", (void *)kasm_mmap_hint);
-    /* must be within 2GB */
-    if(mem == MAP_FAILED) {
-      kasm_mmap_hint += KASM_MMAP_SCAN_STEP;
-      continue;
-    } else if(((intptr_t)mem + (ssize_t)size) < INT32_MAX) {
-      break;
-    } else {
-      munmap(mem, size);
-      mem = MAP_FAILED;
-      kasm_mmap_hint += KASM_MMAP_SCAN_STEP;
-    }
-  }
-
-  if(mem == MAP_FAILED) {
-    mem = kasm_mmap_(NULL, size, 0);
-  }
-
+    mem = kasm_mmap_scan(size);
 #  endif
+  }
+
   if(mem == MAP_FAILED) {
     goto error;
   }
@@ -205,9 +211,9 @@ kasm_munmap(JNIEnv *env, void *p, size_t size) {
   return ret;
 }
 
-jobject Java_kasm_NativeBuffer_allocate(JNIEnv *env, jclass cls, jlong capa) {
+jobject Java_kasm_NativeBuffer_allocate(JNIEnv *env, jclass cls, jlong capa, jboolean small_cm) {
 
-  void *mem = kasm_mmap(env, (size_t) capa);
+  void *mem = kasm_mmap(env, (size_t) capa, small_cm);
   jobject buf = (*env)->NewDirectByteBuffer(env, mem, capa);
 
   return buf;

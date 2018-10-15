@@ -10,10 +10,10 @@ extern "C" {
 /*
  * Class:     kasm_NativeBuffer
  * Method:    allocate
- * Signature: (J)Ljava/nio/ByteBuffer;
+ * Signature: (JZ)Ljava/nio/ByteBuffer;
  */
 JNIEXPORT jobject JNICALL Java_kasm_NativeBuffer_allocate
-  (JNIEnv *, jclass, jlong);
+  (JNIEnv *, jclass, jlong, jboolean);
 
 /*
  * Class:     kasm_NativeBuffer
