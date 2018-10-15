@@ -43,7 +43,8 @@ object ByteBuffers {
 
 }
 
-val ByteBuffer.address get() = NativeBuffer.getAddress(this)
+val ByteBuffer.address get() = Address(NativeBuffer.getAddress(this).toULong())
+val NativeBuffer.address get() = this.byteBuffer.address
 
 fun ByteBuffer.toArray() : ByteArray {
     return ByteBuffers.toArray(this)

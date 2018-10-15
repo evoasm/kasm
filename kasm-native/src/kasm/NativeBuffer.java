@@ -43,11 +43,6 @@ public class NativeBuffer {
         return builder.toString();
     }
 
-    public enum CodeModel {
-        SMALL,
-        LARGE
-    }
-
 
     public NativeBuffer(long capacity) {
         this(capacity, CodeModel.LARGE);
@@ -119,9 +114,5 @@ public class NativeBuffer {
         protect(byteBuffer, true);
         executeUnsafe(byteBuffer);
         protect(byteBuffer, false);
-    }
-
-    public long getAddress() {
-        return getAddress(byteBuffer);
     }
 }

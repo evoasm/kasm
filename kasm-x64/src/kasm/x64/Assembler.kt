@@ -2,6 +2,7 @@ package kasm.x64
 
 import kasm.Address
 import kasm.NativeBuffer
+import kasm.address
 import kasm.ext.alignUp
 import java.nio.ByteBuffer
 
@@ -255,11 +256,13 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         stmxcsr(AddressExpression32(scratchRegister))
     }
 
-    fun align(alignment: Int) {
-        buffer.position().also {
-            nop(it.alignUp(alignment) - it)
+    fun align(alignment: UInt) {
+        buffer.address.also {
+            nop((it.alignUp(alignment).value - it.value).toInt())
         }
     }
+
+    fun align(alignment: Int) = align(alignment.toUInt())
 
     fun nop(byteSize: Int) {
         var remaining = byteSize

@@ -17,6 +17,17 @@ inline class Address(val value: ULong) {
         return Address(value.alignUp(alignment))
     }
 
+    fun alignUp(alignment: Int) = alignUp(alignment.toUInt())
+
+    fun toLong(): Long {
+        return value.toLong();
+    }
+
+    fun toInt(): Int {
+        check(value <= Int.MAX_VALUE.toULong())
+        return value.toInt();
+    }
+
     operator fun plus(value: ULong): Address {
         return Address(this.value + value)
     }
