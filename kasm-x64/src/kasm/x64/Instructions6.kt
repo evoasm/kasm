@@ -366,7 +366,7 @@ object CallRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0xE8, 0xcd)
+    Encoding.encodeOpcode(buffer, 0xE8)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {

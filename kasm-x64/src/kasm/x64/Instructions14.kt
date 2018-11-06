@@ -6,7 +6,7 @@ object JbeRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x76, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x76)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -26,7 +26,7 @@ object JecxzRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0xE3, 0xcb)
+    Encoding.encodeOpcode(buffer, 0xE3)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -45,7 +45,7 @@ object JeRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x74, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x74)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -64,7 +64,7 @@ object JgRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x7F, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x7F)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -83,7 +83,7 @@ object JgeRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x7D, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x7D)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -103,7 +103,7 @@ object JlRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x7C, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x7C)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -122,7 +122,7 @@ object JleRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x7E, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x7E)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -143,7 +143,7 @@ object JneRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x75, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x75)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -162,7 +162,7 @@ object JnoRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x71, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x71)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -181,7 +181,7 @@ object JnpRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x7B, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x7B)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -200,7 +200,7 @@ object JnsRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x79, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x79)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -219,7 +219,7 @@ object JoRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x70, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x70)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -238,7 +238,7 @@ object JpRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x7A, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x7A)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -257,7 +257,7 @@ object JsRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x78, 0xcb)
+    Encoding.encodeOpcode(buffer, 0x78)
     Encoding.encodeImmediate8(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
@@ -276,7 +276,7 @@ object JaRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x87, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x87)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -296,7 +296,7 @@ object JaeRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x83, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x83)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -315,7 +315,7 @@ object JbRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x82, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x82)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -334,7 +334,7 @@ object JbeRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x86, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x86)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -354,7 +354,7 @@ object JeRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x84, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x84)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -373,7 +373,7 @@ object JgRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x8F, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x8F)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -392,7 +392,7 @@ object JgeRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x8D, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x8D)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -412,7 +412,7 @@ object JlRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x8C, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x8C)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -431,7 +431,7 @@ object JleRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x8E, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x8E)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -452,7 +452,7 @@ object JneRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x85, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x85)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -471,7 +471,7 @@ object JnoRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x81, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x81)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -490,7 +490,7 @@ object JnpRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x8B, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x8B)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -509,7 +509,7 @@ object JnsRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x89, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x89)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -528,7 +528,7 @@ object JoRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x80, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x80)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -547,7 +547,7 @@ object JpRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x8A, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x8A)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
@@ -566,7 +566,7 @@ object JsRel32Rip : Imm32Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x88, 0xcd)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x88)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {

@@ -388,7 +388,7 @@ class InstructionGenerator(generator: Generator,
 
 
         run {
-            val byteRegex = "^(\\p{XDigit}{2})(\\+r[bwdq])?$".toRegex()
+            val byteRegex = "^([0-9A-F]{2})(\\+r[bwdq])?$".toRegex()
             val opcodeBytes = opcode.split(" ").mapNotNull {
                 byteRegex.matchEntire(it)?.let { matchResult ->
                     matchResult.groups[1]?.value

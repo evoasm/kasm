@@ -182,7 +182,7 @@ object XbeginRel32Rip : Imm32Instruction(), JumpInstruction, RtmInstruction {
     if(tracer != null) trace(tracer, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.Np.encode(buffer, options)
-    Encoding.encodeOpcode(buffer, 0xC7, 0xF8, 0xcd)
+    Encoding.encodeOpcode(buffer, 0xC7, 0xF8)
     Encoding.encodeImmediate32(buffer, immediate)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {

@@ -15,6 +15,7 @@ public class NativeBuffer {
     }
 
     private final ByteBuffer byteBuffer;
+    private final CodeModel codeModel;
 
     private static class Deallocator implements Runnable {
         private final int capacity;
@@ -51,11 +52,16 @@ public class NativeBuffer {
     public NativeBuffer(long capacity, CodeModel codeModel) {
         this.byteBuffer = allocate(capacity, codeModel == CodeModel.SMALL);
         this.byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        this.codeModel = codeModel;
         cleaner.register(byteBuffer, new Deallocator(getAddress(byteBuffer), byteBuffer.capacity()));
     }
 
     public byte[] toArray() {
         return toArray(byteBuffer);
+    }
+
+    public CodeModel getCodeModel() {
+        return codeModel;
     }
 
     private static native ByteBuffer allocate(long capacity, boolean smallCodeModel);

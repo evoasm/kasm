@@ -72,6 +72,6 @@ internal class NativeBufferTest {
             buffer.execute()
         }
 
-        assertEquals(buffer.getAddress() + offset, exception.address)
+        assertEquals(buffer.address.value.toLong() + offset, exception.address)
     }
 }

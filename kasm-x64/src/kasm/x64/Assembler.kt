@@ -34,13 +34,24 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         require(address.value <= Int.MAX_VALUE.toULong())
     }
 
-    class JumpSite(val buffer: ByteBuffer) {
-        private val offset = buffer.position()
+    abstract class LinkPoint<T : Number>(val buffer: ByteBuffer) {
+        val offset = buffer.position()
 
-        fun link(jumpTargetOffset: Int) {
-            buffer.putInt(jumpTargetOffset - 2, jumpTargetOffset - this.offset)
+        abstract fun link(targetOffset: T)
+    }
+
+    class IntLinkPoint(buffer: ByteBuffer, val relative : Boolean) : LinkPoint<Int>(buffer) {
+        override fun link(targetOffset: Int) {
+            val patchOffset = offset - 4
+            if(relative) {
+                buffer.putInt(patchOffset, targetOffset - this.offset)
+            } else {
+                buffer.putInt(patchOffset, buffer.address.toInt() + offset)
+            }
+
         }
     }
+
 
     fun ifEqual(ifBlock: Assembler.() -> Unit) {
         jne(0xdeadbeef.toInt())
@@ -64,14 +75,19 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         buffer.putInt(offset2 - 4, offset3 - offset2)
     }
 
-    fun je(): JumpSite {
+    fun je(): IntLinkPoint {
         je(0xdeadbeef.toInt())
-        return JumpSite(buffer)
+        return IntLinkPoint(buffer, relative = true)
     }
 
-    fun jmp(): JumpSite {
+    fun jmp(): IntLinkPoint {
         jmp(0xdeadbeef.toInt())
-        return JumpSite(buffer)
+        return IntLinkPoint(buffer, relative = true)
+    }
+
+    fun jmp(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1): LinkPoint<Int> {
+        jmp(AddressExpression64(base, index, scale, 0xdeadbeef.toInt()))
+        return IntLinkPoint(buffer, relative = false)
     }
 
     inline fun pushed(registers: List<GpRegister64>, action: Assembler.() -> Unit) {
@@ -257,9 +273,11 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     }
 
     fun align(alignment: UInt) {
-        buffer.address.also {
-            nop((it.alignUp(alignment).value - it.value).toInt())
-        }
+        val currentAddress = buffer.address.value + buffer.position().toULong()
+        val alignedAddress = currentAddress.alignUp(alignment)
+        val nopSize = (alignedAddress - currentAddress).toInt()
+
+        nop(nopSize)
     }
 
     fun align(alignment: Int) = align(alignment.toUInt())
@@ -324,6 +342,10 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     inline fun emitStackFrame(action: Assembler.() -> Unit) {
         pushed(SYSV_CALLEE_SAVED_REGISTERS, action = action)
         ret()
+    }
+
+    fun link(linkPoint: Assembler.IntLinkPoint) {
+        linkPoint.link(buffer.position())
     }
 
 }
