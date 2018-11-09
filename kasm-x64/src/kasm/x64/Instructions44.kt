@@ -45,12 +45,12 @@ object ShrRm64Cl : R64mInstruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress64(0, true, true), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress64(0, true, true), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, true, true), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, true, true), options, tracer)
     }
   }
 }
@@ -99,12 +99,12 @@ object ShrRm32Imm8 : R32mImm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress32(0, true, true), model.getByteImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress32(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, true, true), model.getByteImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
 }
@@ -153,12 +153,12 @@ object ShrRm64Imm8 : R64mImm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress64(0, true, true), model.getByteImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress64(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, true, true), model.getByteImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
 }
@@ -193,12 +193,12 @@ object SarxR32Rm32R32 : R32R32mR32Instruction(), Bmi2Instruction {
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getAddress32(1, true, false), model.getGpRegister32(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false), parameters.getGpRegister32(2, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getGpRegister32(1, true, false), model.getGpRegister32(2, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false), parameters.getGpRegister32(2, true, false), options, tracer)
     }
   }
 }
@@ -233,12 +233,12 @@ object ShlxR32Rm32R32 : R32R32mR32Instruction(), Bmi2Instruction {
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getAddress32(1, true, false), model.getGpRegister32(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false), parameters.getGpRegister32(2, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getGpRegister32(1, true, false), model.getGpRegister32(2, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false), parameters.getGpRegister32(2, true, false), options, tracer)
     }
   }
 }
@@ -273,12 +273,12 @@ object ShrxR32Rm32R32 : R32R32mR32Instruction(), Bmi2Instruction {
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getAddress32(1, true, false), model.getGpRegister32(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false), parameters.getGpRegister32(2, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getGpRegister32(1, true, false), model.getGpRegister32(2, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false), parameters.getGpRegister32(2, true, false), options, tracer)
     }
   }
 }
@@ -313,12 +313,12 @@ object SarxR64Rm64R64 : R64R64mR64Instruction(), Bmi2Instruction {
     tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getAddress64(1, true, false), model.getGpRegister64(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false), parameters.getGpRegister64(2, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getGpRegister64(1, true, false), model.getGpRegister64(2, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false), parameters.getGpRegister64(2, true, false), options, tracer)
     }
   }
 }
@@ -353,12 +353,12 @@ object ShlxR64Rm64R64 : R64R64mR64Instruction(), Bmi2Instruction {
     tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getAddress64(1, true, false), model.getGpRegister64(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false), parameters.getGpRegister64(2, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getGpRegister64(1, true, false), model.getGpRegister64(2, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false), parameters.getGpRegister64(2, true, false), options, tracer)
     }
   }
 }
@@ -393,12 +393,12 @@ object ShrxR64Rm64R64 : R64R64mR64Instruction(), Bmi2Instruction {
     tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getAddress64(1, true, false), model.getGpRegister64(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false), parameters.getGpRegister64(2, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getGpRegister64(1, true, false), model.getGpRegister64(2, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false), parameters.getGpRegister64(2, true, false), options, tracer)
     }
   }
 }
@@ -423,8 +423,8 @@ object SbbAlImm8 : Imm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object SbbAxImm16 : Imm16Instruction() {
@@ -448,8 +448,8 @@ object SbbAxImm16 : Imm16Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getShortImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getShortImmediate(0), options, tracer)
   }
 }
 object SbbEaxImm32 : Imm32Instruction() {
@@ -474,8 +474,8 @@ object SbbEaxImm32 : Imm32Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object SbbRaxImm32 : Imm32Instruction() {
@@ -500,8 +500,8 @@ object SbbRaxImm32 : Imm32Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object SbbRm8Imm8 : R8m8Imm8Instruction() {
@@ -549,12 +549,12 @@ object SbbRm8Imm8 : R8m8Imm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress8(0, true, true), model.getByteImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress8(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister8(0, true, true), model.getByteImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
 }
@@ -603,12 +603,12 @@ object SbbRm16Imm16 : R16mImm16Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress16(0, true, true), model.getShortImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress16(0, true, true), parameters.getShortImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister16(0, true, true), model.getShortImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getShortImmediate(1), options, tracer)
     }
   }
 }
@@ -657,12 +657,12 @@ object SbbRm32Imm32 : R32mImm32Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress32(0, true, true), model.getIntImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress32(0, true, true), parameters.getIntImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, true, true), model.getIntImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getIntImmediate(1), options, tracer)
     }
   }
 }
@@ -711,12 +711,12 @@ object SbbRm64Imm32 : R64mImm32Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress64(0, true, true), model.getIntImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress64(0, true, true), parameters.getIntImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, true, true), model.getIntImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getIntImmediate(1), options, tracer)
     }
   }
 }
@@ -765,12 +765,12 @@ object SbbRm16Imm8 : R16mImm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress16(0, true, true), model.getByteImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress16(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister16(0, true, true), model.getByteImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
 }
@@ -819,12 +819,12 @@ object SbbRm32Imm8 : R32mImm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress32(0, true, true), model.getByteImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress32(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, true, true), model.getByteImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
 }
@@ -873,12 +873,12 @@ object SbbRm64Imm8 : R64mImm8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress64(0, true, true), model.getByteImmediate(1), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress64(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, true, true), model.getByteImmediate(1), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
 }
@@ -925,12 +925,12 @@ object SbbRm8R8 : R8m8R88Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress8(0, true, true), model.getGpRegister8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress8(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister8(0, true, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }
@@ -977,12 +977,12 @@ object SbbRm16R16 : R16mR16Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress16(0, true, true), model.getGpRegister16(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress16(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister16(0, true, true), model.getGpRegister16(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
 }
@@ -1029,12 +1029,12 @@ object SbbRm32R32 : R32mR32Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress32(0, true, true), model.getGpRegister32(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, true, true), model.getGpRegister32(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
     }
   }
 }
@@ -1081,12 +1081,12 @@ object SbbRm64R64 : R64mR64Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress64(0, true, true), model.getGpRegister64(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, true, true), model.getGpRegister64(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
   }
 }
@@ -1133,12 +1133,12 @@ object SbbR8Rm8 : R88R8m8Instruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister8(0, true, true), model.getAddress8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getAddress8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister8(0, true, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }
@@ -1185,12 +1185,12 @@ object SbbR16Rm16 : R16R16mInstruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister16(0, true, true), model.getAddress16(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getAddress16(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister16(0, true, true), model.getGpRegister16(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
 }
@@ -1237,12 +1237,12 @@ object SbbR32Rm32 : R32R32mInstruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister32(0, true, true), model.getAddress32(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getAddress32(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, true, true), model.getGpRegister32(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
     }
   }
 }
@@ -1289,12 +1289,12 @@ object SbbR64Rm64 : R64R64mInstruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, true, true), model.getAddress64(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getAddress64(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, true, true), model.getGpRegister64(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
   }
 }
@@ -1321,7 +1321,7 @@ object ScasbSilDilDilAl : NullaryInstruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, options, tracer)
   }
 }
@@ -1348,7 +1348,7 @@ object ScaswSiDiDiAx : NullaryInstruction() {
     tracer.traceWrite(kasm.x64.Rflag.AF, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, options, tracer)
   }
 }

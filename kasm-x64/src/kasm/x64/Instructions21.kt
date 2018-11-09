@@ -31,12 +31,12 @@ object MovsldupXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, MoveInstruc
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getAddress128(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -69,12 +69,12 @@ object VmovsldupXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, MoveInstru
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getAddress128(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -107,12 +107,12 @@ object VmovsldupYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, MoveInstru
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getAddress256(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getAddress256(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -145,12 +145,12 @@ object MovssXmm0To31Xmmm32 : XmmXmmmInstruction(), VectorInstruction, MoveInstru
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_31, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getAddress128(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -170,8 +170,8 @@ object VmovssXmmXmmXmm : XmmXmmXmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), model.getXmmRegister(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), options, tracer)
   }
 }
 object VmovssXmmM32 : XmmM32Instruction(), VectorInstruction, MoveInstruction, AvxInstruction {
@@ -189,8 +189,8 @@ object VmovssXmmM32 : XmmM32Instruction(), VectorInstruction, MoveInstruction, A
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getXmmRegister(0, false, true), model.getAddress32(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress32(1, true, false), options, tracer)
   }
 }
 object MovssXmmm32Xmm : XmmmXmmInstruction(), VectorInstruction, MoveInstruction, SseInstruction {
@@ -222,12 +222,12 @@ object MovssXmmm32Xmm : XmmmXmmInstruction(), VectorInstruction, MoveInstruction
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress128(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress128(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -247,8 +247,8 @@ object VmovssXmmXmmXmmMvr : XmmXmmXmmInstruction(), VectorInstruction, MoveInstr
     tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), model.getXmmRegister(2, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), options, tracer)
   }
 }
 object VmovssM32Xmm : M32XmmInstruction(), VectorInstruction, MoveInstruction, AvxInstruction {
@@ -266,8 +266,8 @@ object VmovssM32Xmm : M32XmmInstruction(), VectorInstruction, MoveInstruction, A
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getAddress32(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getAddress32(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
   }
 }
 object MovsxR16Rm8 : R16R8m8Instruction(), MoveInstruction {
@@ -297,12 +297,12 @@ object MovsxR16Rm8 : R16R8m8Instruction(), MoveInstruction {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister16(0, false, true), model.getAddress8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getAddress8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister16(0, false, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }
@@ -333,12 +333,12 @@ object MovsxR32Rm8 : R32R8m8Instruction(), MoveInstruction {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getAddress8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }
@@ -369,12 +369,12 @@ object MovsxR64Rm8 : R64R8m8Instruction(), MoveInstruction {
     tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getAddress8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }
@@ -405,12 +405,12 @@ object MovsxR32Rm16 : R32R16mInstruction(), MoveInstruction {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getAddress16(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress16(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getGpRegister16(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
 }
@@ -441,12 +441,12 @@ object MovsxR64Rm16 : R64R16mInstruction(), MoveInstruction {
     tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getAddress16(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress16(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getGpRegister16(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
 }
@@ -477,12 +477,12 @@ object MovsxdR64Rm32 : R64R32mInstruction(), MoveInstruction {
     tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getAddress32(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress32(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getGpRegister32(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister32(1, true, false), options, tracer)
     }
   }
 }
@@ -515,12 +515,12 @@ object MovupdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, MoveInstructi
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getAddress128(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -553,12 +553,12 @@ object MovupdXmmm128Xmm : XmmmXmmInstruction(), VectorInstruction, MoveInstructi
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress128(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress128(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -591,12 +591,12 @@ object VmovupdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getAddress128(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -629,12 +629,12 @@ object VmovupdXmmm128Xmm : XmmmXmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress128(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress128(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -667,12 +667,12 @@ object VmovupdYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getAddress256(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getAddress256(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -705,12 +705,12 @@ object VmovupdYmmm256Ymm : YmmmYmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress256(0, false, true), model.getYmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress256(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -743,12 +743,12 @@ object MovupsXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, MoveInstructi
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getAddress128(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -781,12 +781,12 @@ object MovupsXmmm128Xmm : XmmmXmmInstruction(), VectorInstruction, MoveInstructi
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress128(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress128(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -819,12 +819,12 @@ object VmovupsXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getAddress128(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -857,12 +857,12 @@ object VmovupsXmmm128Xmm : XmmmXmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress128(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress128(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getXmmRegister(0, false, true), model.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -895,12 +895,12 @@ object VmovupsYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getAddress256(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getAddress256(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -933,12 +933,12 @@ object VmovupsYmmm256Ymm : YmmmYmmInstruction(), VectorInstruction, MoveInstruct
     tracer.traceWrite(addressExpression)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getAddress256(0, false, true), model.getYmmRegister(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getAddress256(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getYmmRegister(0, false, true), model.getYmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
     }
   }
 }
@@ -969,12 +969,12 @@ object MovzxR16Rm8 : R16R8m8Instruction(), MoveInstruction {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister16(0, false, true), model.getAddress8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getAddress8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister16(0, false, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }
@@ -1005,12 +1005,12 @@ object MovzxR32Rm8 : R32R8m8Instruction(), MoveInstruction {
     tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getAddress8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister32(0, false, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }
@@ -1041,12 +1041,12 @@ object MovzxR64Rm8 : R64R8m8Instruction(), MoveInstruction {
     tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(model.useSibd()) {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getAddress8(1, true, false), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress8(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, model.getGpRegister64(0, false, true), model.getGpRegister8(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister8(1, true, false), options, tracer)
     }
   }
 }

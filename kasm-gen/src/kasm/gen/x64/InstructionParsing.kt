@@ -110,7 +110,7 @@ class InstructionGenerator(generator: Generator,
                 val encodingOptionsParameter = CodeWriter.encodingOptionsParameter(false)
                 writer.writeFunction("encode",
                                      listOf(bufferParameter,
-                                            "model" to "InstructionModel",
+                                            "parameters" to "InstructionParameters",
                                             encodingOptionsParameter,
                                             tracerParameter), CodeWriter.OVERRIDE_FUNCTION_MODIFIER) {
                     if (!hasMemoryRegisterOperand) {
@@ -120,7 +120,7 @@ class InstructionGenerator(generator: Generator,
                                                  encodingOptionsParameter,
                                                  tracerParameter)
                     } else {
-                        writer.writeBlock("if(model.useSibd())") {
+                        writer.writeBlock("if(parameters.useSibd())") {
                             writeEncodeCallWithModel(writer,
                                                      true,
                                                      bufferParameter,
@@ -150,12 +150,12 @@ class InstructionGenerator(generator: Generator,
             val operandSize = operand.size.toInt()
             val argumentList = "($index, ${operand.isRead}, ${operand.isWritten})"
             when (operand) {
-                is ExplicitMemoryRegisterOperand -> if (memory) "model.getAddress$operandSize$argumentList" else getModelMethodName(
+                is ExplicitMemoryRegisterOperand -> if (memory) "parameters.getAddress$operandSize$argumentList" else getModelMethodName(
                         operand.type) + argumentList
-                is ExplicitMemoryOperand         -> "model.getAddress$operandSize$argumentList"
-                is ExplicitVectorMemoryOperand   -> "model.getVectorAddress$argumentList"
+                is ExplicitMemoryOperand         -> "parameters.getAddress$operandSize$argumentList"
+                is ExplicitVectorMemoryOperand   -> "parameters.getVectorAddress$argumentList"
                 is ExplicitRegisterOperand       -> getModelMethodName(operand.type) + argumentList
-                is ExplicitImmediateOperand      -> "model." + when (operand.size) {
+                is ExplicitImmediateOperand      -> "parameters." + when (operand.size) {
                     BitSize._8  -> "getByte"
                     BitSize._16 -> "getShort"
                     BitSize._32 -> "getInt"
@@ -170,7 +170,7 @@ class InstructionGenerator(generator: Generator,
     }
 
     private fun getModelMethodName(type: RegisterType): String {
-        return "model." + when (type) {
+        return "parameters." + when (type) {
             GP64 -> "getGpRegister64"
             GP32 -> "getGpRegister32"
             GP16 -> "getGpRegister16"

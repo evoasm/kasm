@@ -37,18 +37,31 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     abstract class LinkPoint<T : Number>(val buffer: ByteBuffer) {
         val offset = buffer.position()
 
-        abstract fun link(targetOffset: T)
+        abstract fun link(value: T)
     }
 
-    class IntLinkPoint(buffer: ByteBuffer, val relative : Boolean) : LinkPoint<Int>(buffer) {
-        override fun link(targetOffset: Int) {
+    open class IntLinkPoint(buffer: ByteBuffer) : LinkPoint<Int>(buffer) {
+        override fun link(value: Int) {
             val patchOffset = offset - 4
+            buffer.putInt(patchOffset, value)
+        }
+    }
+
+    class JumpLinkPoint(buffer: ByteBuffer, val relative : Boolean) : IntLinkPoint(buffer) {
+        override fun link(value: Int) {
             if(relative) {
-                buffer.putInt(patchOffset, targetOffset - this.offset)
+                super.link(value - this.offset)
             } else {
-                buffer.putInt(patchOffset, buffer.address.toInt() + offset)
+                super.link(buffer.address.toInt() + offset)
             }
 
+        }
+    }
+
+    class LongLinkPoint(buffer: ByteBuffer) : LinkPoint<Long>(buffer) {
+        override fun link(value: Long) {
+          val patchOffset = offset - 8
+          buffer.putLong(patchOffset, value)
         }
     }
 
@@ -75,19 +88,24 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         buffer.putInt(offset2 - 4, offset3 - offset2)
     }
 
-    fun je(): IntLinkPoint {
-        je(0xdeadbeef.toInt())
-        return IntLinkPoint(buffer, relative = true)
+    fun mov(register: GpRegister64) : LongLinkPoint {
+        mov(register, 0xdeadbeefdeadbeefU.toLong())
+        return LongLinkPoint(buffer)
     }
 
-    fun jmp(): IntLinkPoint {
+    fun je(): JumpLinkPoint {
+        je(0xdeadbeef.toInt())
+        return JumpLinkPoint(buffer, relative = true)
+    }
+
+    fun jmp(): JumpLinkPoint {
         jmp(0xdeadbeef.toInt())
-        return IntLinkPoint(buffer, relative = true)
+        return JumpLinkPoint(buffer, relative = true)
     }
 
     fun jmp(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1): LinkPoint<Int> {
         jmp(AddressExpression64(base, index, scale, 0xdeadbeef.toInt()))
-        return IntLinkPoint(buffer, relative = false)
+        return JumpLinkPoint(buffer, relative = false)
     }
 
     inline fun pushed(registers: List<GpRegister64>, action: Assembler.() -> Unit) {
@@ -344,7 +362,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         ret()
     }
 
-    fun link(linkPoint: Assembler.IntLinkPoint) {
+    fun link(linkPoint: Assembler.JumpLinkPoint) {
         linkPoint.link(buffer.position())
     }
 

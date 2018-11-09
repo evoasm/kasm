@@ -436,6 +436,7 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
     private fun allocateIfNeeded() {
         if(_buffer != null) return;
 
+        size = 0
         _fields.forEach {
             size += it.size + it.alignment - 1
         }

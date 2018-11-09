@@ -18,8 +18,8 @@ object JbeRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JecxzRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -37,8 +37,8 @@ object JecxzRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JeRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -56,8 +56,8 @@ object JeRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JgRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -75,8 +75,8 @@ object JgRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JgeRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -95,8 +95,8 @@ object JgeRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JlRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -114,8 +114,8 @@ object JlRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JleRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -135,8 +135,8 @@ object JleRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JneRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -154,8 +154,8 @@ object JneRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JnoRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -173,8 +173,8 @@ object JnoRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JnpRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -192,8 +192,8 @@ object JnpRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JnsRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -211,8 +211,8 @@ object JnsRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JoRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -230,8 +230,8 @@ object JoRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JpRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -249,8 +249,8 @@ object JpRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JsRel8Rip : Imm8Instruction(), JumpInstruction {
@@ -268,8 +268,8 @@ object JsRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getByteImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
 }
 object JaRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -288,8 +288,8 @@ object JaRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JaeRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -307,8 +307,8 @@ object JaeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JbRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -326,8 +326,8 @@ object JbRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JbeRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -346,8 +346,8 @@ object JbeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JeRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -365,8 +365,8 @@ object JeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JgRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -384,8 +384,8 @@ object JgRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JgeRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -404,8 +404,8 @@ object JgeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JlRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -423,8 +423,8 @@ object JlRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JleRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -444,8 +444,8 @@ object JleRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JneRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -463,8 +463,8 @@ object JneRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JnoRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -482,8 +482,8 @@ object JnoRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JnpRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -501,8 +501,8 @@ object JnpRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JnsRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -520,8 +520,8 @@ object JnsRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JoRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -539,8 +539,8 @@ object JoRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JpRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -558,8 +558,8 @@ object JpRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }
 object JsRel32Rip : Imm32Instruction(), JumpInstruction {
@@ -577,7 +577,7 @@ object JsRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, model: InstructionModel, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, model.getIntImmediate(0), options, tracer)
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
 }

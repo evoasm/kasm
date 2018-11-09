@@ -22,7 +22,7 @@ interface InstructionTracer {
     fun traceFeature(feature: CpuFeature) {}
 }
 
-interface InstructionModel {
+interface InstructionParameters {
     fun getGpRegister8(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister8
     fun getGpRegister16(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister16
     fun getGpRegister32(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister32

@@ -4,7 +4,7 @@ import java.nio.ByteBuffer
 
 abstract class AbstractInstruction {
     abstract fun encode(buffer: ByteBuffer,
-                        model: InstructionModel,
+                        parameters: InstructionParameters,
                         options: EncodingOptions = EncodingOptions.DEFAULT,
                         tracer: InstructionTracer? = null)
 
