@@ -19,9 +19,9 @@ object VpsigndXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIns
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceRead(register3, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -34,9 +34,9 @@ object VpsigndXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIns
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -63,9 +63,9 @@ object VpsignbYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceRead(register3, false, BitRange._0_255)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -78,9 +78,9 @@ object VpsignbYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -107,9 +107,9 @@ object VpsignwYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceRead(register3, false, BitRange._0_255)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -122,9 +122,9 @@ object VpsignwYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -151,9 +151,9 @@ object VpsigndYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceRead(register3, false, BitRange._0_255)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -166,9 +166,9 @@ object VpsigndYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -196,9 +196,9 @@ object PslldqXmmImm8 : XmmImm8Instruction(), VectorInstruction, Sse2Instruction 
   override fun trace(tracer: InstructionTracer, register: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -221,9 +221,9 @@ object VpslldqXmmXmmImm8 : XmmXmmImm8Instruction(), VectorInstruction, AvxInstru
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -246,9 +246,9 @@ object VpslldqYmmYmmImm8 : YmmYmmImm8Instruction(), VectorInstruction, Avx2Instr
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -314,9 +314,9 @@ object PsllwXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instructio
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register1.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceRead(register1, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -329,9 +329,9 @@ object PsllwXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instructio
   override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -384,9 +384,9 @@ object PsllwXmmImm8 : XmmImm8Instruction(), VectorInstruction, Sse2Instruction {
   override fun trace(tracer: InstructionTracer, register: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -452,9 +452,9 @@ object PslldXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instructio
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register1.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceRead(register1, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -467,9 +467,9 @@ object PslldXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instructio
   override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -522,9 +522,9 @@ object PslldXmmImm8 : XmmImm8Instruction(), VectorInstruction, Sse2Instruction {
   override fun trace(tracer: InstructionTracer, register: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -590,9 +590,9 @@ object PsllqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instructio
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register1.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceRead(register1, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -605,9 +605,9 @@ object PsllqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instructio
   override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -660,9 +660,9 @@ object PsllqXmmImm8 : XmmImm8Instruction(), VectorInstruction, Sse2Instruction {
   override fun trace(tracer: InstructionTracer, register: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -684,9 +684,9 @@ object VpsllwXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceRead(register3, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -699,9 +699,9 @@ object VpsllwXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -729,9 +729,9 @@ object VpsllwXmmXmmImm8 : XmmXmmImm8Instruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -753,9 +753,9 @@ object VpslldXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceRead(register3, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -768,9 +768,9 @@ object VpslldXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -798,9 +798,9 @@ object VpslldXmmXmmImm8 : XmmXmmImm8Instruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -822,9 +822,9 @@ object VpsllqXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceRead(register3, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -837,9 +837,9 @@ object VpsllqXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -867,9 +867,9 @@ object VpsllqXmmXmmImm8 : XmmXmmImm8Instruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -891,9 +891,9 @@ object VpsllwYmmYmmXmmm128 : YmmYmmXmmmInstruction(), VectorInstruction, Avx2Ins
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceRead(register3, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -906,9 +906,9 @@ object VpsllwYmmYmmXmmm128 : YmmYmmXmmmInstruction(), VectorInstruction, Avx2Ins
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -936,9 +936,9 @@ object VpsllwYmmYmmImm8 : YmmYmmImm8Instruction(), VectorInstruction, Avx2Instru
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -960,9 +960,9 @@ object VpslldYmmYmmXmmm128 : YmmYmmXmmmInstruction(), VectorInstruction, Avx2Ins
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceRead(register3, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -975,9 +975,9 @@ object VpslldYmmYmmXmmm128 : YmmYmmXmmmInstruction(), VectorInstruction, Avx2Ins
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1005,9 +1005,9 @@ object VpslldYmmYmmImm8 : YmmYmmImm8Instruction(), VectorInstruction, Avx2Instru
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1029,9 +1029,9 @@ object VpsllqYmmYmmXmmm128 : YmmYmmXmmmInstruction(), VectorInstruction, Avx2Ins
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceRead(register3, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1044,9 +1044,9 @@ object VpsllqYmmYmmXmmm128 : YmmYmmXmmmInstruction(), VectorInstruction, Avx2Ins
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
+    tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

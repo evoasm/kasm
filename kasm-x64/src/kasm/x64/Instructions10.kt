@@ -19,8 +19,8 @@ object Cvtpd2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -36,7 +36,7 @@ object Cvtpd2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -65,8 +65,8 @@ object Vcvtpd2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -82,7 +82,7 @@ object Vcvtpd2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -111,8 +111,8 @@ object Vcvtpd2dqXmmYmmm256 : XmmYmmmInstruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -128,7 +128,7 @@ object Vcvtpd2dqXmmYmmm256 : XmmYmmmInstruction(), VectorInstruction, AvxInstruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -156,7 +156,7 @@ object Cvtpd2piMmXmmm128 : MmXmmmInstruction(), VectorInstruction {
   }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -197,8 +197,8 @@ object Cvtpd2psXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -217,7 +217,7 @@ object Cvtpd2psXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -249,8 +249,8 @@ object Vcvtpd2psXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -269,7 +269,7 @@ object Vcvtpd2psXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -301,8 +301,8 @@ object Vcvtpd2psXmmYmmm256 : XmmYmmmInstruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -321,7 +321,7 @@ object Vcvtpd2psXmmYmmm256 : XmmYmmmInstruction(), VectorInstruction, AvxInstruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -353,7 +353,7 @@ object Cvtpi2pdXmmMmm64 : XmmMmmInstruction(), VectorInstruction {
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: MmRegister)  {
     tracer.beginTracing()
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -366,7 +366,7 @@ object Cvtpi2pdXmmMmm64 : XmmMmmInstruction(), VectorInstruction {
   override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -393,7 +393,7 @@ object Cvtpi2psXmm0To63Mmm64 : XmmMmmInstruction(), VectorInstruction {
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: MmRegister)  {
     tracer.beginTracing()
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -406,7 +406,7 @@ object Cvtpi2psXmm0To63Mmm64 : XmmMmmInstruction(), VectorInstruction {
   override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -433,8 +433,8 @@ object Cvtps2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -450,7 +450,7 @@ object Cvtps2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -479,8 +479,8 @@ object Vcvtps2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -496,7 +496,7 @@ object Vcvtps2dqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -525,8 +525,8 @@ object Vcvtps2dqYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_255)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_255)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -542,7 +542,7 @@ object Vcvtps2dqYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, AvxInstruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register, false, BitRange._0_255, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -571,8 +571,8 @@ object Cvtps2pdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruct
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceRead(register2, false, BitRange._0_63)
+    tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.DE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -588,7 +588,7 @@ object Cvtps2pdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruct
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_127, true)
+    tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.DE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -617,8 +617,8 @@ object Vcvtps2pdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, AvxInstruct
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_63)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.DE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -634,7 +634,7 @@ object Vcvtps2pdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, AvxInstruct
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.DE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -663,8 +663,8 @@ object Vcvtps2pdYmmXmmm128 : YmmXmmmInstruction(), VectorInstruction, AvxInstruc
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.DE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -680,7 +680,7 @@ object Vcvtps2pdYmmXmmm128 : YmmXmmmInstruction(), VectorInstruction, AvxInstruc
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_255, true)
+    tracer.traceWrite(register, false, BitRange._0_255, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.DE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -708,7 +708,7 @@ object Cvtps2piMmXmmm64 : MmXmmmInstruction(), VectorInstruction {
   }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
+    tracer.traceRead(register2, false, BitRange._0_63)
     tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -749,8 +749,8 @@ object Cvtsd2siR32Xmmm64 : R32XmmmInstruction(), VectorInstruction, Sse2Instruct
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceRead(register2, false, BitRange._0_63)
+    tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -766,7 +766,7 @@ object Cvtsd2siR32Xmmm64 : R32XmmmInstruction(), VectorInstruction, Sse2Instruct
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -795,7 +795,7 @@ object Cvtsd2siR64Xmmm64 : R64XmmmInstruction(), VectorInstruction, Sse2Instruct
   override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
+    tracer.traceRead(register2, false, BitRange._0_63)
     tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
@@ -841,8 +841,8 @@ object Vcvtsd2siR32Xmmm64 : R32XmmmInstruction(), VectorInstruction, AvxInstruct
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceRead(register2, false, BitRange._0_63)
+    tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -858,7 +858,7 @@ object Vcvtsd2siR32Xmmm64 : R32XmmmInstruction(), VectorInstruction, AvxInstruct
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
     tracer.endTracing()
@@ -887,7 +887,7 @@ object Vcvtsd2siR64Xmmm64 : R64XmmmInstruction(), VectorInstruction, AvxInstruct
   override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
+    tracer.traceRead(register2, false, BitRange._0_63)
     tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.IE, false)
@@ -933,8 +933,8 @@ object Cvtsd2ssXmm0To31Xmmm64 : XmmXmmmInstruction(), VectorInstruction, Sse2Ins
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_31, true)
+    tracer.traceRead(register2, false, BitRange._0_63)
+    tracer.traceWrite(register1, false, BitRange._0_31, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -953,7 +953,7 @@ object Cvtsd2ssXmm0To31Xmmm64 : XmmXmmmInstruction(), VectorInstruction, Sse2Ins
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_31, true)
+    tracer.traceWrite(register, false, BitRange._0_31, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -985,9 +985,9 @@ object Vcvtsd2ssXmmXmmXmmm64 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIn
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceRead(register3, false, BitRange._0_63)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -1005,9 +1005,9 @@ object Vcvtsd2ssXmmXmmXmmm64 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIn
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.UE, false)
     tracer.traceWrite(kasm.x64.MxcsrFlag.OE, false)
@@ -1039,8 +1039,8 @@ object Cvtsi2sdXmm0To63Rm32 : XmmR32mInstruction(), VectorInstruction, Sse2Instr
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceRead(register2, false, BitRange._0_31)
+    tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1055,7 +1055,7 @@ object Cvtsi2sdXmm0To63Rm32 : XmmR32mInstruction(), VectorInstruction, Sse2Instr
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1084,7 +1084,7 @@ object Cvtsi2sdXmm0To63Rm64 : XmmR64mInstruction(), VectorInstruction, Sse2Instr
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceWrite(register1, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1099,7 +1099,7 @@ object Cvtsi2sdXmm0To63Rm64 : XmmR64mInstruction(), VectorInstruction, Sse2Instr
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, true)
+    tracer.traceWrite(register, false, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1127,9 +1127,9 @@ object Vcvtsi2sdXmmXmmRm32 : XmmXmmR32mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_31)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceRead(register3, false, BitRange._0_31)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1143,9 +1143,9 @@ object Vcvtsi2sdXmmXmmRm32 : XmmXmmR32mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1173,9 +1173,9 @@ object Vcvtsi2sdXmmXmmRm64 : XmmXmmR64mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(register3, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1189,9 +1189,9 @@ object Vcvtsi2sdXmmXmmRm64 : XmmXmmR64mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1219,8 +1219,8 @@ object Cvtsi2ssXmm0To31Rm32 : XmmR32mInstruction(), VectorInstruction, SseInstru
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_31, true)
+    tracer.traceRead(register2, false, BitRange._0_31)
+    tracer.traceWrite(register1, false, BitRange._0_31, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1235,7 +1235,7 @@ object Cvtsi2ssXmm0To31Rm32 : XmmR32mInstruction(), VectorInstruction, SseInstru
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_31, true)
+    tracer.traceWrite(register, false, BitRange._0_31, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1264,7 +1264,7 @@ object Cvtsi2ssXmm0To31Rm64 : XmmR64mInstruction(), VectorInstruction, SseInstru
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_31, true)
+    tracer.traceWrite(register1, false, BitRange._0_31, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1279,7 +1279,7 @@ object Cvtsi2ssXmm0To31Rm64 : XmmR64mInstruction(), VectorInstruction, SseInstru
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_31, true)
+    tracer.traceWrite(register, false, BitRange._0_31, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1307,9 +1307,9 @@ object Vcvtsi2ssXmmXmmRm32 : XmmXmmR32mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
-    tracer.traceRead(register3.topLevelRegister, false, BitRange._0_31)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceRead(register2, false, BitRange._0_127)
+    tracer.traceRead(register3, false, BitRange._0_31)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1323,9 +1323,9 @@ object Vcvtsi2ssXmmXmmRm32 : XmmXmmR32mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1353,9 +1353,9 @@ object Vcvtsi2ssXmmXmmRm64 : XmmXmmR64mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(register3, false, BitRange._0_63)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }
@@ -1369,9 +1369,9 @@ object Vcvtsi2ssXmmXmmRm64 : XmmXmmR64mInstruction(), VectorInstruction, AvxInst
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_127)
+    tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_511, true)
+    tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(kasm.x64.MxcsrFlag.PE, false)
     tracer.endTracing()
   }

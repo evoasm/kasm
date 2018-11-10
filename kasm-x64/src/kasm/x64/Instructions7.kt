@@ -19,9 +19,9 @@ object CmoveR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -36,7 +36,7 @@ object CmoveR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -107,9 +107,9 @@ object CmovgR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -124,7 +124,7 @@ object CmovgR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -151,9 +151,9 @@ object CmovgR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -168,7 +168,7 @@ object CmovgR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -239,10 +239,10 @@ object CmovgeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -258,7 +258,7 @@ object CmovgeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -285,10 +285,10 @@ object CmovgeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -304,7 +304,7 @@ object CmovgeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -377,9 +377,9 @@ object CmovlR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -394,7 +394,7 @@ object CmovlR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -421,9 +421,9 @@ object CmovlR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -438,7 +438,7 @@ object CmovlR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -509,11 +509,11 @@ object CmovleR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -530,7 +530,7 @@ object CmovleR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -557,11 +557,11 @@ object CmovleR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -578,7 +578,7 @@ object CmovleR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceRead(kasm.x64.Rflag.OF)
     tracer.traceRead(kasm.x64.Rflag.SF)
     tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -653,9 +653,9 @@ object CmovneR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -670,7 +670,7 @@ object CmovneR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -697,9 +697,9 @@ object CmovneR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -714,7 +714,7 @@ object CmovneR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -785,9 +785,9 @@ object CmovnoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -802,7 +802,7 @@ object CmovnoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -829,9 +829,9 @@ object CmovnoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -846,7 +846,7 @@ object CmovnoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -917,9 +917,9 @@ object CmovnpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.PF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -934,7 +934,7 @@ object CmovnpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.PF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -961,9 +961,9 @@ object CmovnpR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.PF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -978,7 +978,7 @@ object CmovnpR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.PF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1049,9 +1049,9 @@ object CmovnsR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1066,7 +1066,7 @@ object CmovnsR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1093,9 +1093,9 @@ object CmovnsR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1110,7 +1110,7 @@ object CmovnsR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1181,9 +1181,9 @@ object CmovoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1198,7 +1198,7 @@ object CmovoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1225,9 +1225,9 @@ object CmovoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_31)
+    tracer.traceRead(register2, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1242,7 +1242,7 @@ object CmovoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_63, false)
+    tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1313,9 +1313,9 @@ object CmovpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2.topLevelRegister, false, BitRange._0_15)
+    tracer.traceRead(register2, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register1.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1330,7 +1330,7 @@ object CmovpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.Rflag.CF)
-    tracer.traceWrite(register.topLevelRegister, false, BitRange._0_15, false)
+    tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

@@ -304,14 +304,14 @@ class InstructionGenerator(generator: Generator,
             is ImplicitRegisterOperand       -> operand.register.qualifiedName()
             is ImplicitMemoryOperand         -> "AddressExpression${operand.size.toInt()}(${operand.baseRegister.qualifiedName()}, ${operand.indexRegister?.qualifiedName() ?: "null"})"
             is ExplicitImmediateOperand      -> parameter!!.name + if (operand.size != BitSize._64) ".toLong()" else ""
-            is ExplicitRegisterOperand       -> parameter!!.name + if (operand.type.isSubRegisterType) ".topLevelRegister" else ""
-            is ExplicitMemoryRegisterOperand -> parameter!!.name + if (!memory && operand.type.isSubRegisterType) ".topLevelRegister" else ""
+            is ExplicitRegisterOperand       -> parameter!!.name
+            is ExplicitMemoryRegisterOperand -> parameter!!.name
             else                             -> parameter!!.name
         }
 
         val haveAddressParameter = (memory && operand is ExplicitMemoryRegisterOperand) || operand is ExplicitMemoryOperand || operand is ImplicitMemoryOperand || operand is ExplicitVectorMemoryOperand
 
-        val rangeOrSizeParamter = when (operand) {
+        val rangeOrSizeParameter = when (operand) {
             is ExplicitImmediateOperand -> "BitSize." + operand.size
             is ImplicitImmediateOperand -> "null"
             else                        -> {
@@ -341,7 +341,7 @@ class InstructionGenerator(generator: Generator,
 
         val implicitParameter = if (haveAddressParameter) null else if (operand.isImplicit) "true" else "false"
 
-        val parameters = mutableListOf(name, implicitParameter, rangeOrSizeParamter)
+        val parameters = mutableListOf(name, implicitParameter, rangeOrSizeParameter)
         if (write && !haveAddressParameter) {
             parameters.add(if (operand.isAlwaysWritten) "true" else "false")
         }
