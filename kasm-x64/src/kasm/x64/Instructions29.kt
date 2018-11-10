@@ -1,6 +1,8 @@
 package kasm.x64
 
 import java.nio.ByteBuffer
+import kasm.ext.*
+import kasm.x64.CpuFeature.*
 
 object PhsubwMmMmm64 : MmMmmInstruction(), VectorInstruction, Ssse3Instruction {
   override fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -9,6 +11,10 @@ object PhsubwMmMmm64 : MmMmmInstruction(), VectorInstruction, Ssse3Instruction {
     RexPrefix.RegRm.encode(buffer, options, register1, register2)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x05)
     ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)  {
     tracer.beginTracing()
@@ -50,6 +56,10 @@ object PhsubwXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Ssse3Instruct
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x05)
     ModRmSib.encode(buffer, options, register1, register2)
   }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSSE3)
@@ -89,6 +99,10 @@ object PhsubdMmMmm64 : MmMmmInstruction(), VectorInstruction, Ssse3Instruction {
     RexPrefix.RegRm.encode(buffer, options, register1, register2)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x06)
     ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)  {
     tracer.beginTracing()
@@ -130,6 +144,10 @@ object PhsubdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Ssse3Instruct
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x06)
     ModRmSib.encode(buffer, options, register1, register2)
   }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSSE3)
@@ -169,6 +187,10 @@ object VphsubwXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIns
     VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 2, 0, 1, register1, register3, register2)
     Encoding.encodeOpcode(buffer, 0x05)
     ModRmSib.encode(buffer, options, register1, register3)
+  }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
@@ -212,6 +234,10 @@ object VphsubdXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIns
     Encoding.encodeOpcode(buffer, 0x06)
     ModRmSib.encode(buffer, options, register1, register3)
   }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
@@ -253,6 +279,10 @@ object VphsubwYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 2, 1, 1, register1, register3, register2)
     Encoding.encodeOpcode(buffer, 0x05)
     ModRmSib.encode(buffer, options, register1, register3)
+  }
+  private val features = enumSetOf<CpuFeature>(AVX2)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
@@ -296,6 +326,10 @@ object VphsubdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2In
     Encoding.encodeOpcode(buffer, 0x06)
     ModRmSib.encode(buffer, options, register1, register3)
   }
+  private val features = enumSetOf<CpuFeature>(AVX2)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
@@ -338,6 +372,10 @@ object PhsubswMmMmm64 : MmMmmInstruction(), VectorInstruction, Ssse3Instruction 
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x07)
     ModRmSib.encode(buffer, options, register1, register2)
   }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSSE3)
@@ -378,6 +416,10 @@ object PhsubswXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Ssse3Instruc
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x07)
     ModRmSib.encode(buffer, options, register1, register2)
   }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSSE3)
@@ -417,6 +459,10 @@ object VphsubswXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIn
     VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 2, 0, 1, register1, register3, register2)
     Encoding.encodeOpcode(buffer, 0x07)
     ModRmSib.encode(buffer, options, register1, register3)
+  }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
@@ -460,6 +506,10 @@ object VphsubswYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2I
     Encoding.encodeOpcode(buffer, 0x07)
     ModRmSib.encode(buffer, options, register1, register3)
   }
+  private val features = enumSetOf<CpuFeature>(AVX2)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
@@ -502,6 +552,10 @@ object PinsrbXmmR32m8Imm8 : XmmR32mImm8Instruction(), VectorInstruction, Sse4_1I
     Encoding.encodeOpcode(buffer, 0x0F, 0x3A, 0x20)
     ModRmSib.encode(buffer, options, register1, register2)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>(SSE4_1)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
@@ -547,6 +601,10 @@ object PinsrdXmmRm32Imm8 : XmmR32mImm8Instruction(), VectorInstruction, Sse4_1In
     ModRmSib.encode(buffer, options, register1, register2)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>(SSE4_1)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE4_1)
@@ -591,6 +649,10 @@ object PinsrqXmmRm64Imm8 : XmmR64mImm8Instruction(), VectorInstruction, Sse4_1In
     ModRmSib.encode(buffer, options, register1, register2)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>(SSE4_1)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister64, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE4_1)
@@ -634,6 +696,10 @@ object VpinsrbXmmXmmR32m8Imm8 : XmmXmmR32mImm8Instruction(), VectorInstruction, 
     Encoding.encodeOpcode(buffer, 0x20)
     ModRmSib.encode(buffer, options, register1, register3)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
@@ -681,6 +747,10 @@ object VpinsrdXmmXmmRm32Imm8 : XmmXmmR32mImm8Instruction(), VectorInstruction, A
     ModRmSib.encode(buffer, options, register1, register3)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
@@ -726,6 +796,10 @@ object VpinsrqXmmXmmRm64Imm8 : XmmXmmR64mImm8Instruction(), VectorInstruction, A
     Encoding.encodeOpcode(buffer, 0x22)
     ModRmSib.encode(buffer, options, register1, register3)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64, immediate: Byte)  {
     tracer.beginTracing()
@@ -773,6 +847,10 @@ object PinsrwMmR32m16Imm8 : MmR32mImm8Instruction(), VectorInstruction, SseInstr
     ModRmSib.encode(buffer, options, register1, register2)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>(SSE)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE)
@@ -817,6 +895,10 @@ object PinsrwXmmR32m16Imm8 : XmmR32mImm8Instruction(), VectorInstruction, Sse2In
     ModRmSib.encode(buffer, options, register1, register2)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>(SSE2)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
@@ -860,6 +942,10 @@ object VpinsrwXmmXmmR32m16Imm8 : XmmXmmR32mImm8Instruction(), VectorInstruction,
     Encoding.encodeOpcode(buffer, 0xC4)
     ModRmSib.encode(buffer, options, register1, register3)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)  {
     tracer.beginTracing()
@@ -906,6 +992,10 @@ object PmaddubswMmMmm64 : MmMmmInstruction(), VectorInstruction, Ssse3Instructio
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x04)
     ModRmSib.encode(buffer, options, register1, register2)
   }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSSE3)
@@ -945,6 +1035,10 @@ object PmaddubswXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Ssse3Instr
     RexPrefix.RegRm.encode(buffer, options, register1, register2)
     Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0x04)
     ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(SSSE3)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
@@ -986,6 +1080,10 @@ object VpmaddubswXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx
     Encoding.encodeOpcode(buffer, 0x04)
     ModRmSib.encode(buffer, options, register1, register3)
   }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
@@ -1025,6 +1123,10 @@ object VpmaddubswYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx
     VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 2, 1, 1, register1, register3, register2)
     Encoding.encodeOpcode(buffer, 0x04)
     ModRmSib.encode(buffer, options, register1, register3)
+  }
+  private val features = enumSetOf<CpuFeature>(AVX2)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
@@ -1066,6 +1168,10 @@ object PmaddwdMmMmm64 : MmMmmInstruction(), VectorInstruction, MmxInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0xF5)
     ModRmSib.encode(buffer, options, register1, register2)
   }
+  private val features = enumSetOf<CpuFeature>(MMX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.MMX)
@@ -1105,6 +1211,10 @@ object PmaddwdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruct
     RexPrefix.RegRm.encode(buffer, options, register1, register2)
     Encoding.encodeOpcode(buffer, 0x0F, 0xF5)
     ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(SSE2)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
@@ -1146,6 +1256,10 @@ object VpmaddwdXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxIn
     Encoding.encodeOpcode(buffer, 0xF5)
     ModRmSib.encode(buffer, options, register1, register3)
   }
+  private val features = enumSetOf<CpuFeature>(AVX)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
@@ -1186,6 +1300,10 @@ object VpmaddwdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2I
     Encoding.encodeOpcode(buffer, 0xF5)
     ModRmSib.encode(buffer, options, register1, register3)
   }
+  private val features = enumSetOf<CpuFeature>(AVX2)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
@@ -1225,6 +1343,10 @@ object PmaxswMmMmm64 : MmMmmInstruction(), VectorInstruction, SseInstruction {
     RexPrefix.RegRm.encode(buffer, options, register1, register2)
     Encoding.encodeOpcode(buffer, 0x0F, 0xEE)
     ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(SSE)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)  {
     tracer.beginTracing()

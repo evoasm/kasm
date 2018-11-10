@@ -1,6 +1,8 @@
 package kasm.x64
 
 import java.nio.ByteBuffer
+import kasm.ext.*
+import kasm.x64.CpuFeature.*
 
 abstract class XmmmYmmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)

@@ -1,6 +1,8 @@
 package kasm.x64
 
 import java.nio.ByteBuffer
+import kasm.ext.*
+import kasm.x64.CpuFeature.*
 
 abstract class AbstractAssembler: InstructionTracer {
   abstract val buffer: ByteBuffer

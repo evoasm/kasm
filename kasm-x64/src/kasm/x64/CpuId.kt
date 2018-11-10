@@ -12,6 +12,7 @@ object CpuId {
         }
 
     val supportsAvx get() = CpuFeature.AVX in features
+    val supportsAvx2 get() = CpuFeature.AVX2 in features
 
     private val CPUID_MAP = mapOf(
             listOf(0x1, null) to mapOf(
@@ -311,4 +312,17 @@ object CpuId {
 
         enumSet
     }
+}
+
+fun XmmRegister.isSupported(): Boolean {
+    if(code <= 7) return true
+    else return CpuId.supportsAvx
+}
+
+fun YmmRegister.isSupported(): Boolean {
+    return CpuId.supportsAvx
+}
+
+fun ZmmRegister.isSupported(): Boolean {
+    return CpuId.supportsAvx
 }

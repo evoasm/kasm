@@ -64,6 +64,7 @@ class CodeWriter(val printWriter: PrintWriter) : Appendable by printWriter {
     fun writeFunction(functionName: String,
                       parameters: List<Pair<String, String>>,
                       modifiers: EnumSet<FunctionModifier>,
+                      returnType : String? = null,
                       body: (() -> Unit)?) {
         print(modifiers.joinToString(" ") { it.name.toLowerCase() }.addSpaceIfPresent())
         print("fun $functionName(")
@@ -71,6 +72,9 @@ class CodeWriter(val printWriter: PrintWriter) : Appendable by printWriter {
             "${it.first}: ${it.second}"
         }.joinToString(", "))
         print(")")
+        if(returnType != null) {
+            print(": ${returnType}")
+        }
         if (body != null) {
             writeBlock(" ", body)
         } else {
@@ -124,7 +128,7 @@ class CodeWriter(val printWriter: PrintWriter) : Appendable by printWriter {
         val parameters_ = parameters.toMutableList()
         parameters_.addAll(encodeFunctionParameters(operands, memory))
         parameters_.addAll(postParameters)
-        writeFunction(functionName, parameters_, modifiers, body)
+        writeFunction(functionName, parameters_, modifiers, null, body)
     }
 
     companion object {

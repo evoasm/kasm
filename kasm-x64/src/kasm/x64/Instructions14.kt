@@ -1,6 +1,8 @@
 package kasm.x64
 
 import java.nio.ByteBuffer
+import kasm.ext.*
+import kasm.x64.CpuFeature.*
 
 object JbeRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -8,6 +10,10 @@ object JbeRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x76)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
@@ -29,6 +35,10 @@ object JecxzRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0xE3)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
@@ -47,6 +57,10 @@ object JeRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x74)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
@@ -67,6 +81,10 @@ object JgRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x7F)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
@@ -85,6 +103,10 @@ object JgeRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x7D)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
@@ -106,6 +128,10 @@ object JlRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x7C)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
@@ -124,6 +150,10 @@ object JleRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x7E)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
@@ -146,6 +176,10 @@ object JneRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x75)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
@@ -164,6 +198,10 @@ object JnoRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x71)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
@@ -184,6 +222,10 @@ object JnpRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x7B)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
@@ -202,6 +244,10 @@ object JnsRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x79)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
@@ -222,6 +268,10 @@ object JoRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x70)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
@@ -240,6 +290,10 @@ object JpRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x7A)
     Encoding.encodeImmediate8(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
@@ -260,6 +314,10 @@ object JsRel8Rip : Imm8Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x78)
     Encoding.encodeImmediate8(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
@@ -278,6 +336,10 @@ object JaRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x0F, 0x87)
     Encoding.encodeImmediate32(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
@@ -299,6 +361,10 @@ object JaeRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x83)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -318,6 +384,10 @@ object JbRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x82)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -336,6 +406,10 @@ object JbeRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x0F, 0x86)
     Encoding.encodeImmediate32(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
@@ -357,6 +431,10 @@ object JeRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x84)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -376,6 +454,10 @@ object JgRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x8F)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -394,6 +476,10 @@ object JgeRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x0F, 0x8D)
     Encoding.encodeImmediate32(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
@@ -415,6 +501,10 @@ object JlRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x8C)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -433,6 +523,10 @@ object JleRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x0F, 0x8E)
     Encoding.encodeImmediate32(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
@@ -455,6 +549,10 @@ object JneRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x85)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -473,6 +571,10 @@ object JnoRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x0F, 0x81)
     Encoding.encodeImmediate32(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
@@ -493,6 +595,10 @@ object JnpRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x8B)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -511,6 +617,10 @@ object JnsRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x0F, 0x89)
     Encoding.encodeImmediate32(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
@@ -531,6 +641,10 @@ object JoRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x80)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -550,6 +664,10 @@ object JpRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x8A)
     Encoding.encodeImmediate32(buffer, immediate)
   }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
@@ -568,6 +686,10 @@ object JsRel32Rip : Imm32Instruction(), JumpInstruction {
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     Encoding.encodeOpcode(buffer, 0x0F, 0x88)
     Encoding.encodeImmediate32(buffer, immediate)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()

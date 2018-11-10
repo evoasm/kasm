@@ -105,6 +105,8 @@ class Generator {
         writer.println("package kasm.x64")
         writer.println()
         writer.println("import java.nio.ByteBuffer")
+        writer.println("import kasm.ext.*")
+        writer.println("import kasm.x64.CpuFeature.*")
         writer.println()
     }
 

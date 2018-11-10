@@ -1,5 +1,7 @@
 package kasm.ext
 
+import java.util.*
+
 fun <T, C : MutableCollection<List<T>>> generatePermutations(permutations: C, permutation: MutableList<T>, collection: Collection<T>): C {
     if (permutation.size < collection.size) {
         var first = true
@@ -81,3 +83,13 @@ fun ULong.alignUp(alignment: UInt): ULong {
     return (this + alignment - 1UL).alignDown(alignment)
 }
 
+inline fun <reified E : Enum<E>> enumSetOf(): MutableSet<E> = EnumSet.noneOf(E::class.java)
+fun <E : Enum<E>> enumSetOf(e: E): MutableSet<E> = EnumSet.of(e)
+fun <E : Enum<E>> enumSetOf(e0: E, e1: E): MutableSet<E> = EnumSet.of(e0, e1)
+fun <E : Enum<E>> enumSetOf(e0: E, e1: E, e2: E): MutableSet<E> = EnumSet.of(e0, e1, e2)
+fun <E : Enum<E>> enumSetOf(first: E, vararg rest: E): MutableSet<E> = EnumSet.of(first, *rest)
+inline fun <reified  E : Enum<E>> Collection<E>.toEnumSet(): MutableSet<E> {
+    val set = enumSetOf<E>()
+    forEach { set.add(it) }
+    return set
+}

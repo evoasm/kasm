@@ -8,6 +8,8 @@ abstract class AbstractInstruction {
                         options: EncodingOptions = EncodingOptions.DEFAULT,
                         tracer: InstructionTracer? = null)
 
+    abstract fun isSupported() : Boolean
+
 }
 
 interface JumpInstruction

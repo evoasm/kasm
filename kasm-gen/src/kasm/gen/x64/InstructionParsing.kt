@@ -86,6 +86,11 @@ class InstructionGenerator(generator: Generator,
                 writeEncodeFunctionBody(writer, false)
             }
 
+            writer.println("private val features = enumSetOf<CpuFeature>(${features.joinToString(", ")})")
+            writer.writeFunction("isSupported", listOf(), modifiers = CodeWriter.OVERRIDE_FUNCTION_MODIFIER, returnType = "Boolean") {
+                writeIsSupportedFunctionBody(writer)
+            }
+
             writer.writeTraceFunction(explicitOperands,
                                       memory = false,
                                       modifiers = CodeWriter.OVERRIDE_FUNCTION_MODIFIER) {
@@ -241,6 +246,10 @@ class InstructionGenerator(generator: Generator,
 
     private fun Enum<*>.qualifiedName(): String {
         return this.javaClass.name + "." + this.name
+    }
+
+    private fun writeIsSupportedFunctionBody(writer: CodeWriter) {
+        writer.println("return CpuId.features.containsAll(features)")
     }
 
     private fun writeTraceFunctionBody(writer: CodeWriter, memory: Boolean) {
