@@ -1019,9 +1019,9 @@ object CwdDxAx : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_15)
-    tracer.traceWrite(kasm.x64.GpRegister64.RDX, true, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_15, true)
+    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
+    tracer.traceWrite(kasm.x64.GpRegister16.DX, true, BitRange._0_15, true)
+    tracer.traceWrite(kasm.x64.GpRegister16.AX, true, BitRange._0_15, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1041,9 +1041,9 @@ object CdqEdxEax : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_31)
-    tracer.traceWrite(kasm.x64.GpRegister64.RDX, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_63, true)
+    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
+    tracer.traceWrite(kasm.x64.GpRegister32.EDX, true, BitRange._0_63, true)
+    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange._0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1287,8 +1287,8 @@ object DivRm8Ax : R8m8Instruction() {
   override fun trace(tracer: InstructionTracer, register: GpRegister8)  {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_15)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_15, true)
+    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
+    tracer.traceWrite(kasm.x64.GpRegister16.AX, true, BitRange._0_15, true)
     tracer.traceWrite(kasm.x64.Rflag.OF, false)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
     tracer.traceWrite(kasm.x64.Rflag.ZF, false)
@@ -1307,8 +1307,8 @@ object DivRm8Ax : R8m8Instruction() {
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_15)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_15, true)
+    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
+    tracer.traceWrite(kasm.x64.GpRegister16.AX, true, BitRange._0_15, true)
     tracer.traceWrite(kasm.x64.Rflag.OF, false)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
     tracer.traceWrite(kasm.x64.Rflag.ZF, false)

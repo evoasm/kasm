@@ -41,7 +41,7 @@ object MovabsMoffs8Al : Imm8Instruction(), MoveInstruction {
   override fun trace(tracer: InstructionTracer, offset: Byte)  {
     tracer.beginTracing()
     tracer.traceRead(offset.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_7)
+    tracer.traceRead(kasm.x64.GpRegister8.AL, true, BitRange._0_7)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -62,7 +62,7 @@ object MovabsMoffs16Ax : Imm16Instruction(), MoveInstruction {
   override fun trace(tracer: InstructionTracer, offset: Short)  {
     tracer.beginTracing()
     tracer.traceRead(offset.toLong(), false, BitSize._16)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_15)
+    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -84,7 +84,7 @@ object MovabsMoffs32Eax : Imm32Instruction(), MoveInstruction {
   override fun trace(tracer: InstructionTracer, offset: Int)  {
     tracer.beginTracing()
     tracer.traceRead(offset.toLong(), false, BitSize._32)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_31)
+    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

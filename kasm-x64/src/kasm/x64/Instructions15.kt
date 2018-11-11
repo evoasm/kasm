@@ -107,7 +107,7 @@ object LahfAh : NullaryInstruction(), LahfLmInstruction {
     tracer.traceRead(kasm.x64.Rflag.PF)
     tracer.traceRead(kasm.x64.Rflag.CF)
     tracer.traceRead(kasm.x64.Rflag.AF)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._8_15, true)
+    tracer.traceWrite(kasm.x64.GpRegister8.AL, true, BitRange._8_15, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -338,10 +338,10 @@ object LeavewSpBp : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RSP, true, BitRange._0_15)
-    tracer.traceRead(kasm.x64.GpRegister64.RBP, true, BitRange._0_15)
-    tracer.traceWrite(kasm.x64.GpRegister64.RSP, true, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.GpRegister64.RBP, true, BitRange._0_15, true)
+    tracer.traceRead(kasm.x64.GpRegister16.SP, true, BitRange._0_15)
+    tracer.traceRead(kasm.x64.GpRegister16.BP, true, BitRange._0_15)
+    tracer.traceWrite(kasm.x64.GpRegister16.SP, true, BitRange._0_15, true)
+    tracer.traceWrite(kasm.x64.GpRegister16.BP, true, BitRange._0_15, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -403,9 +403,9 @@ object LodsbSilSil : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RSI, true, BitRange._0_7)
+    tracer.traceRead(kasm.x64.GpRegister8.SIL, true, BitRange._0_7)
     tracer.traceRead(AddressExpression8(kasm.x64.GpRegister64.RSI, null))
-    tracer.traceWrite(kasm.x64.GpRegister64.RSI, true, BitRange._0_7, true)
+    tracer.traceWrite(kasm.x64.GpRegister8.SIL, true, BitRange._0_7, true)
     tracer.traceWrite(kasm.x64.Rflag.IF, false)
     tracer.endTracing()
   }
@@ -426,9 +426,9 @@ object LodswSiSi : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RSI, true, BitRange._0_15)
+    tracer.traceRead(kasm.x64.GpRegister16.SI, true, BitRange._0_15)
     tracer.traceRead(AddressExpression16(kasm.x64.GpRegister64.RSI, null))
-    tracer.traceWrite(kasm.x64.GpRegister64.RSI, true, BitRange._0_15, true)
+    tracer.traceWrite(kasm.x64.GpRegister16.SI, true, BitRange._0_15, true)
     tracer.traceWrite(kasm.x64.Rflag.IF, false)
     tracer.endTracing()
   }
@@ -449,9 +449,9 @@ object LodsdEsiEsi : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RSI, true, BitRange._0_31)
+    tracer.traceRead(kasm.x64.GpRegister32.ESI, true, BitRange._0_31)
     tracer.traceRead(AddressExpression32(kasm.x64.GpRegister64.RSI, null))
-    tracer.traceWrite(kasm.x64.GpRegister64.RSI, true, BitRange._0_63, true)
+    tracer.traceWrite(kasm.x64.GpRegister32.ESI, true, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.Rflag.IF, false)
     tracer.endTracing()
   }

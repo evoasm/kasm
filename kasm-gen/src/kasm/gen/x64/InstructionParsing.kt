@@ -230,8 +230,8 @@ class InstructionGenerator(generator: Generator,
         }
     }
 
-    private fun Register.qualifiedName(): String {
-        if (this is SubRegister<*, *>) {
+    private fun Register.qualifiedName(toplevelRegister: Boolean = false): String {
+        if (toplevelRegister && this is SubRegister<*, *>) {
             return this.topLevelRegister.qualifiedName()
         }
 
@@ -302,7 +302,7 @@ class InstructionGenerator(generator: Generator,
         val name = when (operand) {
             is ImplicitImmediateOperand      -> operand.value.toString() + "L"
             is ImplicitRegisterOperand       -> operand.register.qualifiedName()
-            is ImplicitMemoryOperand         -> "AddressExpression${operand.size.toInt()}(${operand.baseRegister.qualifiedName()}, ${operand.indexRegister?.qualifiedName() ?: "null"})"
+            is ImplicitMemoryOperand         -> "AddressExpression${operand.size.toInt()}(${operand.baseRegister.qualifiedName(true)}, ${operand.indexRegister?.qualifiedName(true) ?: "null"})"
             is ExplicitImmediateOperand      -> parameter!!.name + if (operand.size != BitSize._64) ".toLong()" else ""
             is ExplicitRegisterOperand       -> parameter!!.name
             is ExplicitMemoryRegisterOperand -> parameter!!.name

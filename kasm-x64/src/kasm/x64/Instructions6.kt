@@ -467,8 +467,8 @@ object CbwAx : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_15)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_15, true)
+    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
+    tracer.traceWrite(kasm.x64.GpRegister16.AX, true, BitRange._0_15, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -488,8 +488,8 @@ object CwdeEax : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_31)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_63, true)
+    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
+    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange._0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

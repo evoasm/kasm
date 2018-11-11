@@ -656,7 +656,7 @@ object PblendvbXmmXmmm128Xmm0 : XmmXmmmInstruction(), VectorInstruction, Sse4_1I
     tracer.traceFeature(CpuFeature.SSE4_1)
     tracer.traceRead(register1, false, BitRange._0_127)
     tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceRead(kasm.x64.ZmmRegister.ZMM0, true, BitRange._0_127)
+    tracer.traceRead(kasm.x64.XmmRegister.XMM0, true, BitRange._0_127)
     tracer.traceWrite(register1, false, BitRange._0_127, true)
     tracer.endTracing()
   }
@@ -672,7 +672,7 @@ object PblendvbXmmXmmm128Xmm0 : XmmXmmmInstruction(), VectorInstruction, Sse4_1I
     tracer.traceFeature(CpuFeature.SSE4_1)
     tracer.traceRead(register, false, BitRange._0_127)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.ZmmRegister.ZMM0, true, BitRange._0_127)
+    tracer.traceRead(kasm.x64.XmmRegister.XMM0, true, BitRange._0_127)
     tracer.traceWrite(register, false, BitRange._0_127, true)
     tracer.endTracing()
   }

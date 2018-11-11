@@ -467,9 +467,9 @@ object AndAlImm8 : Imm8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_7)
+    tracer.traceRead(kasm.x64.GpRegister8.AL, true, BitRange._0_7)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_7, true)
+    tracer.traceWrite(kasm.x64.GpRegister8.AL, true, BitRange._0_7, true)
     tracer.traceWrite(kasm.x64.Rflag.OF, true)
     tracer.traceWrite(kasm.x64.Rflag.CF, true)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
@@ -495,9 +495,9 @@ object AndAxImm16 : Imm16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, immediate: Short)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_15)
+    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
     tracer.traceRead(immediate.toLong(), false, BitSize._16)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_15, true)
+    tracer.traceWrite(kasm.x64.GpRegister16.AX, true, BitRange._0_15, true)
     tracer.traceWrite(kasm.x64.Rflag.OF, true)
     tracer.traceWrite(kasm.x64.Rflag.CF, true)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
@@ -524,9 +524,9 @@ object AndEaxImm32 : Imm32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_31)
+    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_63, true)
+    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange._0_63, true)
     tracer.traceWrite(kasm.x64.Rflag.OF, true)
     tracer.traceWrite(kasm.x64.Rflag.CF, true)
     tracer.traceWrite(kasm.x64.Rflag.SF, false)
