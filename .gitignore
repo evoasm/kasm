@@ -4,3 +4,5 @@
 *.so
 *.class
 /out
+/kasm-x64/hs_err_*
+/kasm-native/build-lib-Desktop-Default/
