@@ -109,57 +109,124 @@ class InstructionGenerator(generator: Generator,
                 }
             }
 
-            run {
-                val bufferParameter = CodeWriter.BUFFER_PARAMETER
-                val tracerParameter = CodeWriter.tracerParameter(false)
-                val encodingOptionsParameter = CodeWriter.encodingOptionsParameter(false)
-                writer.writeFunction("encode",
-                                     listOf(bufferParameter,
-                                            "parameters" to "InstructionParameters",
-                                            encodingOptionsParameter,
-                                            tracerParameter), CodeWriter.OVERRIDE_FUNCTION_MODIFIER) {
-                    if (!hasMemoryRegisterOperand) {
-                        writeEncodeCallWithModel(writer,
-                                                 false,
-                                                 bufferParameter,
-                                                 encodingOptionsParameter,
-                                                 tracerParameter)
-                    } else {
-                        writer.writeBlock("if(parameters.useSibd())") {
-                            writeEncodeCallWithModel(writer,
-                                                     true,
-                                                     bufferParameter,
-                                                     encodingOptionsParameter,
-                                                     tracerParameter)
-                        }
-                        writer.writeBlock("else") {
-                            writeEncodeCallWithModel(writer,
-                                                     false,
-                                                     bufferParameter,
-                                                     encodingOptionsParameter,
-                                                     tracerParameter)
-                        }
-                    }
-                }
+            writeEncodeOrTraceFunctionWithParametersObject(writer, encodeFunction = true) {memory, bufferParameter, encodingOptionsParameter, tracerParameter ->
+                writeEncodeCallWithParametersObject(writer, memory, bufferParameter, encodingOptionsParameter, tracerParameter)
             }
+
+            writeEncodeOrTraceFunctionWithParametersObject(writer, encodeFunction = false) {memory, bufferParameter, encodingOptionsParameter, tracerParameter ->
+                writeTraceCallWithParametersObject(writer, memory, bufferParameter, encodingOptionsParameter, tracerParameter)
+            }
+
+//            run {
+//                val bufferParameter = CodeWriter.BUFFER_PARAMETER
+//                val tracerParameter = CodeWriter.tracerParameter(false)
+//                val encodingOptionsParameter = CodeWriter.encodingOptionsParameter(false)
+//                writer.writeFunction("encode",
+//                                     listOf(bufferParameter,
+//                                            "parameters" to "InstructionParameters",
+//                                            encodingOptionsParameter,
+//                                            tracerParameter), CodeWriter.OVERRIDE_FUNCTION_MODIFIER) {
+//                    if (!hasMemoryRegisterOperand) {
+//                        writeEncodeCallWithParametersObject(writer,
+//                                                            false,
+//                                                            bufferParameter,
+//                                                            encodingOptionsParameter,
+//                                                            tracerParameter)
+//                    } else {
+//                        writer.writeBlock("if(parameters.useSibd())") {
+//                            writeEncodeCallWithParametersObject(writer,
+//                                                                true,
+//                                                                bufferParameter,
+//                                                                encodingOptionsParameter,
+//                                                                tracerParameter)
+//                        }
+//                        writer.writeBlock("else") {
+//                            writeEncodeCallWithParametersObject(writer,
+//                                                                false,
+//                                                                bufferParameter,
+//                                                                encodingOptionsParameter,
+//                                                                tracerParameter)
+//                        }
+//                    }
+//                }
+//            }
 
         }
     }
 
-    private fun writeEncodeCallWithModel(writer: CodeWriter,
-                                         memory: Boolean,
-                                         bufferParameter: Pair<String, String>,
-                                         encodingOptionsParameter: Pair<String, String>,
-                                         tracerParameter: Pair<String, String>) {
-        val parameters = listOf(bufferParameter.first) + explicitOperands.mapIndexed { index, operand ->
+    private fun writeEncodeOrTraceFunctionWithParametersObject(writer: CodeWriter,
+                                                               encodeFunction: Boolean,
+                                                               block: (Boolean, Pair<String, String>, Pair<String, String>, Pair<String, String>) -> Unit) {
+        val bufferParameter = CodeWriter.BUFFER_PARAMETER
+        val tracerParameter = CodeWriter.tracerParameter(false, nullable = encodeFunction)
+        val encodingOptionsParameter = CodeWriter.encodingOptionsParameter(false)
+        val functionName = if(encodeFunction) "encode" else "trace"
+        val parameters = if(encodeFunction) {
+            listOf(bufferParameter, "parameters" to "InstructionParameters", encodingOptionsParameter, tracerParameter)
+        } else {
+            listOf(tracerParameter, "parameters" to "InstructionParameters")
+        }
+
+        writer.writeFunction(functionName,
+                             parameters,
+                             CodeWriter.OVERRIDE_FUNCTION_MODIFIER) {
+
+            if (!hasMemoryRegisterOperand) {
+                block(false, bufferParameter, encodingOptionsParameter, tracerParameter)
+            } else {
+                writer.writeBlock("if(parameters.useSibd())") {
+
+                    block(
+                                                        true,
+                                                        bufferParameter,
+                                                        encodingOptionsParameter,
+                                                        tracerParameter)
+                }
+                writer.writeBlock("else") {
+                    block(
+                                                        false,
+                                                        bufferParameter,
+                                                        encodingOptionsParameter,
+                                                        tracerParameter)
+                }
+            }
+        }
+    }
+
+    private fun writeEncodeCallWithParametersObject(writer: CodeWriter,
+                                                    memory: Boolean,
+                                                    bufferParameter: Pair<String, String>,
+                                                    encodingOptionsParameter: Pair<String, String>,
+                                                    tracerParameter: Pair<String, String>) {
+
+
+        val methodNames = getExplicitOperandsParametersMethodNames(memory)
+        val parameters = listOf(bufferParameter.first) + methodNames + listOf(encodingOptionsParameter.first, tracerParameter.first)
+        writer.writeCall("encode", parameters)
+    }
+
+    private fun writeTraceCallWithParametersObject(writer: CodeWriter,
+                                                    memory: Boolean,
+                                                    bufferParameter: Pair<String, String>,
+                                                    encodingOptionsParameter: Pair<String, String>,
+                                                    tracerParameter: Pair<String, String>) {
+
+
+        val methodNames = getExplicitOperandsParametersMethodNames(memory)
+        val parameters = listOf(tracerParameter.first) + methodNames
+        writer.writeCall("trace", parameters)
+    }
+
+    private fun getExplicitOperandsParametersMethodNames(memory: Boolean): List<String> {
+        val methodNames = explicitOperands.mapIndexed { index, operand ->
             val operandSize = operand.size.toInt()
             val argumentList = "($index, ${operand.isRead}, ${operand.isWritten})"
             when (operand) {
-                is ExplicitMemoryRegisterOperand -> if (memory) "parameters.getAddress$operandSize$argumentList" else getModelMethodName(
+                is ExplicitMemoryRegisterOperand -> if (memory) "parameters.getAddress$operandSize$argumentList" else getParametersMethodName(
                         operand.type) + argumentList
                 is ExplicitMemoryOperand         -> "parameters.getAddress$operandSize$argumentList"
                 is ExplicitVectorMemoryOperand   -> "parameters.getVectorAddress$argumentList"
-                is ExplicitRegisterOperand       -> getModelMethodName(operand.type) + argumentList
+                is ExplicitRegisterOperand       -> getParametersMethodName(operand.type) + argumentList
                 is ExplicitImmediateOperand      -> "parameters." + when (operand.size) {
                     BitSize._8  -> "getByte"
                     BitSize._16 -> "getShort"
@@ -169,12 +236,11 @@ class InstructionGenerator(generator: Generator,
                 } + "Immediate($index)"
                 else                             -> throw IllegalArgumentException(operand::class.toString())
             }
-        } + listOf(encodingOptionsParameter.first, tracerParameter.first)
-
-        writer.writeCall("encode", parameters)
+        }
+        return methodNames
     }
 
-    private fun getModelMethodName(type: RegisterType): String {
+    private fun getParametersMethodName(type: RegisterType): String {
         return "parameters." + when (type) {
             GP64 -> "getGpRegister64"
             GP32 -> "getGpRegister32"
@@ -348,10 +414,13 @@ class InstructionGenerator(generator: Generator,
         writer.writeCall(functionName, parameters.filterNotNull())
     }
 
-    private fun writeEncodeFunctionBody(writer: CodeWriter, memory: Boolean) {
+    private fun writeTraceCallWithTracerNullCheck(writer: CodeWriter, memory: Boolean) {
         writer.print("if(tracer != null) ")
         writer.writeEncodeCall("trace", listOf("tracer"), explicitOperands, listOf(), memory)
+    }
 
+    private fun writeEncodeFunctionBody(writer: CodeWriter, memory: Boolean) {
+        writeTraceCallWithTracerNullCheck(writer, memory)
         run {
             val parameters = listOf("buffer",
                                     "options.legacyPrefixOrder") + legacyPrefixes.mapIndexed { index, legacyPrefix ->

@@ -47,6 +47,14 @@ object VpunpckhbwYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
+    }
+  }
 }
 object VpunpckhwdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2Instruction {
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -89,6 +97,14 @@ object VpunpckhwdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx
     }
     else {
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
     }
   }
 }
@@ -135,6 +151,14 @@ object VpunpckhdqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
+    }
+  }
 }
 object VpunpckhqdqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2Instruction {
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -177,6 +201,14 @@ object VpunpckhqdqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Av
     }
     else {
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
     }
   }
 }
@@ -223,6 +255,14 @@ object PunpcklbwMmMmm32 : MmMmmInstruction(), VectorInstruction, MmxInstruction 
       encode(buffer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false))
+    }
+  }
 }
 object PunpcklbwXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -265,6 +305,14 @@ object PunpcklbwXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instru
     }
     else {
       encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false))
     }
   }
 }
@@ -311,6 +359,14 @@ object PunpcklwdMmMmm32 : MmMmmInstruction(), VectorInstruction, MmxInstruction 
       encode(buffer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false))
+    }
+  }
 }
 object PunpcklwdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -353,6 +409,14 @@ object PunpcklwdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instru
     }
     else {
       encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false))
     }
   }
 }
@@ -399,6 +463,14 @@ object PunpckldqMmMmm32 : MmMmmInstruction(), VectorInstruction, MmxInstruction 
       encode(buffer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false))
+    }
+  }
 }
 object PunpckldqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -441,6 +513,14 @@ object PunpckldqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instru
     }
     else {
       encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false))
     }
   }
 }
@@ -487,6 +567,14 @@ object PunpcklqdqXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instr
       encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false))
+    }
+  }
 }
 object VpunpcklbwXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInstruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -529,6 +617,14 @@ object VpunpcklbwXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx
     }
     else {
       encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false))
     }
   }
 }
@@ -575,6 +671,14 @@ object VpunpcklwdXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx
       encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false))
+    }
+  }
 }
 object VpunpckldqXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInstruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -617,6 +721,14 @@ object VpunpckldqXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Avx
     }
     else {
       encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false))
     }
   }
 }
@@ -663,6 +775,14 @@ object VpunpcklqdqXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, Av
       encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false))
+    }
+  }
 }
 object VpunpcklbwYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2Instruction {
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -705,6 +825,14 @@ object VpunpcklbwYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx
     }
     else {
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
     }
   }
 }
@@ -751,6 +879,14 @@ object VpunpcklwdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
+    }
+  }
 }
 object VpunpckldqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2Instruction {
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -793,6 +929,14 @@ object VpunpckldqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx
     }
     else {
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
     }
   }
 }
@@ -839,6 +983,14 @@ object VpunpcklqdqYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Av
       encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getAddress256(2, true, false))
+    }
+    else {
+      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), parameters.getYmmRegister(2, true, false))
+    }
+  }
 }
 object PushRm16Rsp : R16mInstruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, register: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -879,6 +1031,14 @@ object PushRm16Rsp : R16mInstruction(), StackInstruction {
     }
     else {
       encode(buffer, parameters.getGpRegister16(0, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress16(0, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, true, false))
     }
   }
 }
@@ -923,6 +1083,14 @@ object PushRm64Rsp : R64mInstruction(), StackInstruction {
       encode(buffer, parameters.getGpRegister64(0, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress64(0, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, true, false))
+    }
+  }
 }
 object PushR16Rsp : R16Instruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, register: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -944,6 +1112,9 @@ object PushR16Rsp : R16Instruction(), StackInstruction {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getGpRegister16(0, true, false), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getGpRegister16(0, true, false))
   }
 }
 object PushR64Rsp : R64Instruction(), StackInstruction {
@@ -967,6 +1138,9 @@ object PushR64Rsp : R64Instruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getGpRegister64(0, true, false), options, tracer)
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getGpRegister64(0, true, false))
+  }
 }
 object PushImm8Rsp : Imm8Instruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -988,6 +1162,9 @@ object PushImm8Rsp : Imm8Instruction(), StackInstruction {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getByteImmediate(0), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getByteImmediate(0))
   }
 }
 object PushImm16Rsp : Imm16Instruction(), StackInstruction {
@@ -1011,6 +1188,9 @@ object PushImm16Rsp : Imm16Instruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getShortImmediate(0), options, tracer)
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getShortImmediate(0))
+  }
 }
 object PushImm32Rsp : Imm32Instruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1033,6 +1213,9 @@ object PushImm32Rsp : Imm32Instruction(), StackInstruction {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getIntImmediate(0), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getIntImmediate(0))
   }
 }
 object PushfRsp : NullaryInstruction(), StackInstruction {
@@ -1061,6 +1244,9 @@ object PushfRsp : NullaryInstruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, options, tracer)
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer)
+  }
 }
 object PushfqRsp : NullaryInstruction(), StackInstruction {
   override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1087,6 +1273,9 @@ object PushfqRsp : NullaryInstruction(), StackInstruction {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer)
   }
 }
 object PxorMmMmm64 : MmMmmInstruction(), VectorInstruction, MmxInstruction {
@@ -1132,6 +1321,14 @@ object PxorMmMmm64 : MmMmmInstruction(), VectorInstruction, MmxInstruction {
       encode(buffer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getMmRegister(0, true, true), parameters.getMmRegister(1, true, false))
+    }
+  }
 }
 object PxorXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1174,6 +1371,14 @@ object PxorXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction
     }
     else {
       encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false))
     }
   }
 }

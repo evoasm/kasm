@@ -8,6 +8,7 @@ abstract class AbstractInstruction {
                         options: EncodingOptions = EncodingOptions.DEFAULT,
                         tracer: InstructionTracer? = null)
 
+    abstract fun trace(tracer: InstructionTracer, parameters: InstructionParameters)
     abstract fun isSupported() : Boolean
 
 }

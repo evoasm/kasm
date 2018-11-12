@@ -32,6 +32,9 @@ object AdcAlImm8 : Imm8Instruction() {
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getByteImmediate(0))
+  }
 }
 object AdcAxImm16 : Imm16Instruction() {
   override fun encode(buffer: ByteBuffer, immediate: Short, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -60,6 +63,9 @@ object AdcAxImm16 : Imm16Instruction() {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getShortImmediate(0), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getShortImmediate(0))
   }
 }
 object AdcEaxImm32 : Imm32Instruction() {
@@ -91,6 +97,9 @@ object AdcEaxImm32 : Imm32Instruction() {
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getIntImmediate(0))
+  }
 }
 object AdcRaxImm32 : Imm32Instruction() {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -120,6 +129,9 @@ object AdcRaxImm32 : Imm32Instruction() {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getIntImmediate(0), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getIntImmediate(0))
   }
 }
 object AdcRm8Imm8 : R8m8Imm8Instruction() {
@@ -177,6 +189,14 @@ object AdcRm8Imm8 : R8m8Imm8Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getByteImmediate(1), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress8(0, true, true), parameters.getByteImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister8(0, true, true), parameters.getByteImmediate(1))
     }
   }
 }
@@ -237,6 +257,14 @@ object AdcRm16Imm16 : R16mImm16Instruction() {
       encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getShortImmediate(1), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress16(0, true, true), parameters.getShortImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getShortImmediate(1))
+    }
+  }
 }
 object AdcRm32Imm32 : R32mImm32Instruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister32, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -293,6 +321,14 @@ object AdcRm32Imm32 : R32mImm32Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getIntImmediate(1), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress32(0, true, true), parameters.getIntImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getIntImmediate(1))
     }
   }
 }
@@ -353,6 +389,14 @@ object AdcRm64Imm32 : R64mImm32Instruction() {
       encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getIntImmediate(1), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress64(0, true, true), parameters.getIntImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getIntImmediate(1))
+    }
+  }
 }
 object AdcRm16Imm8 : R16mImm8Instruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister16, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -409,6 +453,14 @@ object AdcRm16Imm8 : R16mImm8Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getByteImmediate(1), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress16(0, true, true), parameters.getByteImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getByteImmediate(1))
     }
   }
 }
@@ -469,6 +521,14 @@ object AdcRm32Imm8 : R32mImm8Instruction() {
       encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress32(0, true, true), parameters.getByteImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getByteImmediate(1))
+    }
+  }
 }
 object AdcRm64Imm8 : R64mImm8Instruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister64, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -527,6 +587,14 @@ object AdcRm64Imm8 : R64mImm8Instruction() {
       encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getByteImmediate(1), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress64(0, true, true), parameters.getByteImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getByteImmediate(1))
+    }
+  }
 }
 object AdcRm8R8 : R8m8R88Instruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -581,6 +649,14 @@ object AdcRm8R8 : R8m8R88Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress8(0, true, true), parameters.getGpRegister8(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false))
     }
   }
 }
@@ -639,6 +715,14 @@ object AdcRm16R16 : R16mR16Instruction() {
       encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress16(0, true, true), parameters.getGpRegister16(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false))
+    }
+  }
 }
 object AdcRm32R32 : R32mR32Instruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -693,6 +777,14 @@ object AdcRm32R32 : R32mR32Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress32(0, true, true), parameters.getGpRegister32(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false))
     }
   }
 }
@@ -751,6 +843,14 @@ object AdcRm64R64 : R64mR64Instruction() {
       encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress64(0, true, true), parameters.getGpRegister64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false))
+    }
+  }
 }
 object AdcR8Rm8 : R88R8m8Instruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -805,6 +905,14 @@ object AdcR8Rm8 : R88R8m8Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister8(0, true, true), parameters.getAddress8(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false))
     }
   }
 }
@@ -863,6 +971,14 @@ object AdcR16Rm16 : R16R16mInstruction() {
       encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getAddress16(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false))
+    }
+  }
 }
 object AdcR32Rm32 : R32R32mInstruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -917,6 +1033,14 @@ object AdcR32Rm32 : R32R32mInstruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getAddress32(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false))
     }
   }
 }
@@ -975,6 +1099,14 @@ object AdcR64Rm64 : R64R64mInstruction() {
       encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false))
+    }
+  }
 }
 object AdcxR32Rm32 : R32R32mInstruction(), AdxInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1021,6 +1153,14 @@ object AdcxR32Rm32 : R32R32mInstruction(), AdxInstruction {
     }
     else {
       encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getAddress32(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false))
     }
   }
 }
@@ -1071,6 +1211,14 @@ object AdcxR64Rm64 : R64R64mInstruction(), AdxInstruction {
       encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false))
+    }
+  }
 }
 object AddAlImm8 : Imm8Instruction() {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1099,6 +1247,9 @@ object AddAlImm8 : Imm8Instruction() {
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getByteImmediate(0), options, tracer)
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getByteImmediate(0))
+  }
 }
 object AddAxImm16 : Imm16Instruction() {
   override fun encode(buffer: ByteBuffer, immediate: Short, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1126,6 +1277,9 @@ object AddAxImm16 : Imm16Instruction() {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getShortImmediate(0), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getShortImmediate(0))
   }
 }
 object AddEaxImm32 : Imm32Instruction() {
@@ -1156,6 +1310,9 @@ object AddEaxImm32 : Imm32Instruction() {
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getIntImmediate(0), options, tracer)
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getIntImmediate(0))
+  }
 }
 object AddRaxImm32 : Imm32Instruction() {
   override fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1184,6 +1341,9 @@ object AddRaxImm32 : Imm32Instruction() {
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     encode(buffer, parameters.getIntImmediate(0), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getIntImmediate(0))
   }
 }
 object AddRm8Imm8 : R8m8Imm8Instruction() {
@@ -1239,6 +1399,14 @@ object AddRm8Imm8 : R8m8Imm8Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getByteImmediate(1), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress8(0, true, true), parameters.getByteImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister8(0, true, true), parameters.getByteImmediate(1))
     }
   }
 }
@@ -1297,6 +1465,14 @@ object AddRm16Imm16 : R16mImm16Instruction() {
       encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getShortImmediate(1), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress16(0, true, true), parameters.getShortImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getShortImmediate(1))
+    }
+  }
 }
 object AddRm32Imm32 : R32mImm32Instruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister32, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1351,6 +1527,14 @@ object AddRm32Imm32 : R32mImm32Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getIntImmediate(1), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress32(0, true, true), parameters.getIntImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getIntImmediate(1))
     }
   }
 }
@@ -1409,6 +1593,14 @@ object AddRm64Imm32 : R64mImm32Instruction() {
       encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getIntImmediate(1), options, tracer)
     }
   }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress64(0, true, true), parameters.getIntImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getIntImmediate(1))
+    }
+  }
 }
 object AddRm16Imm8 : R16mImm8Instruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister16, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1463,6 +1655,14 @@ object AddRm16Imm8 : R16mImm8Instruction() {
     }
     else {
       encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getByteImmediate(1), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getAddress16(0, true, true), parameters.getByteImmediate(1))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getByteImmediate(1))
     }
   }
 }

@@ -143,11 +143,12 @@ class CodeWriter(val printWriter: PrintWriter) : Appendable by printWriter {
             return "options" to if (!withDefault) "EncodingOptions" else "EncodingOptions = EncodingOptions.DEFAULT"
         }
 
-        fun tracerParameter(withDefault: Boolean) : Pair<String, String> {
-            return "tracer" to if (!withDefault) "InstructionTracer?" else "InstructionTracer? = null"
+        fun tracerParameter(withDefault: Boolean, nullable: Boolean = true) : Pair<String, String> {
+            val typeName = "InstructionTracer${if(nullable) "?" else ""}"
+            return "tracer" to if (!withDefault) typeName else "${typeName} = null"
         }
 
-        private fun encodeFunctionParameter(operand: Operand, memory: Boolean): Pair<String, String> {
+        internal fun encodeFunctionParameter(operand: Operand, memory: Boolean): Pair<String, String> {
             return if (memory) {
                 operand.parameterVariants.memoryVariant
             } else {

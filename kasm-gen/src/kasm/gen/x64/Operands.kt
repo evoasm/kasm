@@ -18,6 +18,7 @@ sealed class Operand {
     abstract val isRead: Boolean
     data class Parameter(val name: String, val type: String)
     data class ParameterVariants(var registerVariant: Parameter?, var memoryVariant: Parameter? = null)
+
 }
 
 interface SizedOperand {
