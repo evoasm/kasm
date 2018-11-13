@@ -396,7 +396,7 @@ object VcmpssXmmXmmXmmm32Imm8 : XmmXmmXmmmImm8Instruction(), VectorInstruction, 
     }
   }
 }
-object CmpxchgRm8R8Al : R8m8R88Instruction() {
+object CmpxchgRm8R8Al : R8mR8Instruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -1017,7 +1017,7 @@ object CpuidEaxEbxEcxEdx : NullaryInstruction() {
     trace(tracer)
   }
 }
-object Crc32R32Rm8 : R32R8m8Instruction(), Sse4_2Instruction {
+object Crc32R32Rm8 : R32R8mInstruction(), Sse4_2Instruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -1173,7 +1173,7 @@ object Crc32R32Rm32 : R32R32mInstruction(), Sse4_2Instruction {
     }
   }
 }
-object Crc32R64Rm8 : R64R8m8Instruction(), Sse4_2Instruction {
+object Crc32R64Rm8 : R64R8mInstruction(), Sse4_2Instruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

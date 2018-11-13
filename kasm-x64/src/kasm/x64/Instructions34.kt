@@ -4,7 +4,7 @@ import java.nio.ByteBuffer
 import kasm.ext.*
 import kasm.x64.CpuFeature.*
 
-object Prefetcht2M8 : M88Instruction() {
+object Prefetcht2M8 : M8Instruction() {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -28,7 +28,7 @@ object Prefetcht2M8 : M88Instruction() {
     trace(tracer, parameters.getAddress8(0, true, false))
   }
 }
-object PrefetchntaM8 : M88Instruction() {
+object PrefetchntaM8 : M8Instruction() {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -52,7 +52,7 @@ object PrefetchntaM8 : M88Instruction() {
     trace(tracer, parameters.getAddress8(0, true, false))
   }
 }
-object PrefetchwM8 : M88Instruction(), PrfchwInstruction {
+object PrefetchwM8 : M8Instruction(), PrfchwInstruction {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -77,7 +77,7 @@ object PrefetchwM8 : M88Instruction(), PrfchwInstruction {
     trace(tracer, parameters.getAddress8(0, true, false))
   }
 }
-object Prefetchwt1M8 : M88Instruction(), PrfchwInstruction {
+object Prefetchwt1M8 : M8Instruction(), PrfchwInstruction {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

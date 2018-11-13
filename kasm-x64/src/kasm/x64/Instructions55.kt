@@ -327,7 +327,7 @@ object XchgRaxR64 : R64Instruction() {
     trace(tracer, parameters.getGpRegister64(0, true, true))
   }
 }
-object XchgRm8R8 : R8m8R88Instruction() {
+object XchgRm8R8 : R8mR8Instruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -707,7 +707,7 @@ object XorRaxImm32 : Imm32Instruction() {
     trace(tracer, parameters.getIntImmediate(0))
   }
 }
-object XorRm8Imm8 : R8m8Imm8Instruction() {
+object XorRm8Imm8 : R8mImm8Instruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -1155,7 +1155,7 @@ object XorRm64Imm8 : R64mImm8Instruction() {
     }
   }
 }
-object XorRm8R8 : R8m8R88Instruction() {
+object XorRm8R8 : R8mR8Instruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -1403,7 +1403,7 @@ object XorRm64R64 : R64mR64Instruction() {
     }
   }
 }
-object XorR8Rm8 : R88R8m8Instruction() {
+object XorR8Rm8 : R8R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

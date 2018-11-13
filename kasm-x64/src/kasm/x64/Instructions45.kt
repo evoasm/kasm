@@ -72,7 +72,7 @@ object ScasqRsiRdiRdiRax : NullaryInstruction() {
     trace(tracer)
   }
 }
-object SetaRm8 : R8m8Instruction() {
+object SetaRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -122,7 +122,7 @@ object SetaRm8 : R8m8Instruction() {
     }
   }
 }
-object SetaeRm8 : R8m8Instruction() {
+object SetaeRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -170,7 +170,7 @@ object SetaeRm8 : R8m8Instruction() {
     }
   }
 }
-object SetbRm8 : R8m8Instruction() {
+object SetbRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -218,7 +218,7 @@ object SetbRm8 : R8m8Instruction() {
     }
   }
 }
-object SetbeRm8 : R8m8Instruction() {
+object SetbeRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -268,7 +268,7 @@ object SetbeRm8 : R8m8Instruction() {
     }
   }
 }
-object SeteRm8 : R8m8Instruction() {
+object SeteRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -316,7 +316,7 @@ object SeteRm8 : R8m8Instruction() {
     }
   }
 }
-object SetgRm8 : R8m8Instruction() {
+object SetgRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -364,7 +364,7 @@ object SetgRm8 : R8m8Instruction() {
     }
   }
 }
-object SetgeRm8 : R8m8Instruction() {
+object SetgeRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -414,7 +414,7 @@ object SetgeRm8 : R8m8Instruction() {
     }
   }
 }
-object SetngeRm8 : R8m8Instruction() {
+object SetngeRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -464,7 +464,7 @@ object SetngeRm8 : R8m8Instruction() {
     }
   }
 }
-object SetleRm8 : R8m8Instruction() {
+object SetleRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -516,7 +516,7 @@ object SetleRm8 : R8m8Instruction() {
     }
   }
 }
-object SetneRm8 : R8m8Instruction() {
+object SetneRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -564,7 +564,7 @@ object SetneRm8 : R8m8Instruction() {
     }
   }
 }
-object SetnoRm8 : R8m8Instruction() {
+object SetnoRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -612,7 +612,7 @@ object SetnoRm8 : R8m8Instruction() {
     }
   }
 }
-object SetpoRm8 : R8m8Instruction() {
+object SetpoRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -660,7 +660,7 @@ object SetpoRm8 : R8m8Instruction() {
     }
   }
 }
-object SetnsRm8 : R8m8Instruction() {
+object SetnsRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -708,7 +708,7 @@ object SetnsRm8 : R8m8Instruction() {
     }
   }
 }
-object SetoRm8 : R8m8Instruction() {
+object SetoRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -756,7 +756,7 @@ object SetoRm8 : R8m8Instruction() {
     }
   }
 }
-object SetpRm8 : R8m8Instruction() {
+object SetpRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -804,7 +804,7 @@ object SetpRm8 : R8m8Instruction() {
     }
   }
 }
-object SetsRm8 : R8m8Instruction() {
+object SetsRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

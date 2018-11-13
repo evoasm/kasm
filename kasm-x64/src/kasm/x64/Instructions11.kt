@@ -1257,7 +1257,7 @@ object CqoRdxRax : NullaryInstruction() {
     trace(tracer)
   }
 }
-object DecRm8 : R8m8Instruction() {
+object DecRm8 : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -1489,7 +1489,7 @@ object DecRm64 : R64mInstruction() {
     }
   }
 }
-object DivRm8Ax : R8m8Instruction() {
+object DivRm8Ax : R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

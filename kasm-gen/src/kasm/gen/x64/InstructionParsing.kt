@@ -570,7 +570,7 @@ class InstructionInterfaceGenerator(val operands: List<ExplicitOperand>) {
         }
 
         operands.mapNotNull { operand ->
-            val size = if (operand.size == BitSize._8 || operand is ExplicitImmediateOperand) {
+            val size = if (/*operand.size == BitSize._8 ||*/ operand is ExplicitImmediateOperand) {
                 operand.size.toInt().toString()
             } else {
                 ""

@@ -639,7 +639,7 @@ object Cld : NullaryInstruction() {
     trace(tracer)
   }
 }
-object ClflushM8 : M88Instruction(), ClfshInstruction {
+object ClflushM8 : M8Instruction(), ClfshInstruction {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -664,7 +664,7 @@ object ClflushM8 : M88Instruction(), ClfshInstruction {
     trace(tracer, parameters.getAddress8(0, false, true))
   }
 }
-object ClflushoptM8 : M88Instruction(), ClflushoptInstruction {
+object ClflushoptM8 : M8Instruction(), ClflushoptInstruction {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)

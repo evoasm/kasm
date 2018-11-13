@@ -132,7 +132,7 @@ object AddRm64Imm8 : R64mImm8Instruction() {
     }
   }
 }
-object AddRm8R8 : R8m8R88Instruction() {
+object AddRm8R8 : R8mR8Instruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -380,7 +380,7 @@ object AddRm64R64 : R64mR64Instruction() {
     }
   }
 }
-object AddR8Rm8 : R88R8m8Instruction() {
+object AddR8Rm8 : R8R8mInstruction() {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

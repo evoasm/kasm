@@ -1388,7 +1388,7 @@ object VporYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2Instr
     }
   }
 }
-object Prefetcht0M8 : M88Instruction() {
+object Prefetcht0M8 : M8Instruction() {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -1412,7 +1412,7 @@ object Prefetcht0M8 : M88Instruction() {
     trace(tracer, parameters.getAddress8(0, true, false))
   }
 }
-object Prefetcht1M8 : M88Instruction() {
+object Prefetcht1M8 : M8Instruction() {
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

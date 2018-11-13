@@ -128,7 +128,7 @@ object MovabsMoffs64Rax : Imm64Instruction(), MoveInstruction {
     trace(tracer, parameters.getLongImmediate(0))
   }
 }
-object MovR8Imm8 : R88Imm8Instruction(), MoveInstruction {
+object MovR8Imm8 : R8Imm8Instruction(), MoveInstruction {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -228,7 +228,7 @@ object MovR64Imm64 : R64Imm64Instruction(), MoveInstruction {
     trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getLongImmediate(1))
   }
 }
-object MovRm8Imm8 : R8m8Imm8Instruction(), MoveInstruction {
+object MovRm8Imm8 : R8mImm8Instruction(), MoveInstruction {
   override fun encode(buffer: ByteBuffer, register: GpRegister8, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

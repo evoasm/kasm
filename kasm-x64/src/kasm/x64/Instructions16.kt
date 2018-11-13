@@ -1034,7 +1034,7 @@ object VminssXmmXmmXmmm32 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInstr
     }
   }
 }
-object MovRm8R8 : R8m8R88Instruction(), MoveInstruction {
+object MovRm8R8 : R8mR8Instruction(), MoveInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -1226,7 +1226,7 @@ object MovRm64R64 : R64mR64Instruction(), MoveInstruction {
     }
   }
 }
-object MovR8Rm8 : R88R8m8Instruction(), MoveInstruction {
+object MovR8Rm8 : R8R8mInstruction(), MoveInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
