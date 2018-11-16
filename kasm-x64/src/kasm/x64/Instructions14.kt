@@ -2,7 +2,6 @@ package kasm.x64
 
 import java.nio.ByteBuffer
 import kasm.ext.*
-import kasm.x64.CpuFeature.*
 
 object JbeRel8Rip : Imm8Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -19,8 +18,8 @@ object JbeRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -46,7 +45,7 @@ object JecxzRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -72,7 +71,7 @@ object JeRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -98,7 +97,7 @@ object JgRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -124,8 +123,8 @@ object JgeRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -151,7 +150,7 @@ object JlRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -177,9 +176,9 @@ object JleRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -205,7 +204,7 @@ object JneRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -231,7 +230,7 @@ object JnoRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -257,7 +256,7 @@ object JnpRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -283,7 +282,7 @@ object JnsRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -309,7 +308,7 @@ object JoRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -335,7 +334,7 @@ object JpRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -361,7 +360,7 @@ object JsRel8Rip : Imm8Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -387,8 +386,8 @@ object JaRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -414,7 +413,7 @@ object JaeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -440,7 +439,7 @@ object JbRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -466,8 +465,8 @@ object JbeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -493,7 +492,7 @@ object JeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -519,7 +518,7 @@ object JgRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -545,8 +544,8 @@ object JgeRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -572,7 +571,7 @@ object JlRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -598,9 +597,9 @@ object JleRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -626,7 +625,7 @@ object JneRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -652,7 +651,7 @@ object JnoRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -678,7 +677,7 @@ object JnpRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -704,7 +703,7 @@ object JnsRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -730,7 +729,7 @@ object JoRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -756,7 +755,7 @@ object JpRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }
@@ -782,7 +781,7 @@ object JsRel32Rip : Imm32Instruction(), JumpInstruction {
     tracer.beginTracing()
     tracer.traceRead(immediate.toLong(), false, BitSize._32)
     tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange._0_63, true)
     tracer.endTracing()
   }

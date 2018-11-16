@@ -24,7 +24,7 @@ object VpgatherqdXmmVm64y32Xmm : XmmVmXmmInstruction(), VectorInstruction, Avx2I
     tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(register2, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.Rflag.RF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.RF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -54,7 +54,7 @@ object VpgatherdqXmmVm32x64Xmm : XmmVmXmmInstruction(), VectorInstruction, Avx2I
     tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(register2, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.Rflag.RF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.RF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -84,7 +84,7 @@ object VpgatherqqXmmVm64x64Xmm : XmmVmXmmInstruction(), VectorInstruction, Avx2I
     tracer.traceRead(register2, false, BitRange._0_127)
     tracer.traceWrite(register1, false, BitRange._0_511, true)
     tracer.traceWrite(register2, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.Rflag.RF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.RF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -114,7 +114,7 @@ object VpgatherdqYmmVm32x64Ymm : YmmVmYmmInstruction(), VectorInstruction, Avx2I
     tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.traceWrite(register2, false, BitRange._0_255, true)
-    tracer.traceWrite(kasm.x64.Rflag.RF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.RF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -144,7 +144,7 @@ object VpgatherqqYmmVm64y64Ymm : YmmVmYmmInstruction(), VectorInstruction, Avx2I
     tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceWrite(register1, false, BitRange._0_255, true)
     tracer.traceWrite(register2, false, BitRange._0_255, true)
-    tracer.traceWrite(kasm.x64.Rflag.RF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.RF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -850,7 +850,7 @@ object VpermdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2Ins
     tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(register3, false, BitRange._0_255)
     tracer.traceWrite(register1, false, BitRange._0_255, true)
-    tracer.traceWrite(kasm.x64.Rflag.IF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.IF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -866,7 +866,7 @@ object VpermdYmmYmmYmmm256 : YmmYmmYmmmInstruction(), VectorInstruction, Avx2Ins
     tracer.traceRead(register2, false, BitRange._0_255)
     tracer.traceRead(addressExpression)
     tracer.traceWrite(register1, false, BitRange._0_255, true)
-    tracer.traceWrite(kasm.x64.Rflag.IF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.IF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

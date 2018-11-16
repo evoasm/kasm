@@ -2,9 +2,9 @@ package kasm.x64
 
 import java.util.*
 
-interface CpuFlag
+interface StatusField
 
-enum class Rflag(isIgnored: Boolean = false) : CpuFlag {
+enum class RflagsField(isIgnored: Boolean = false) : StatusField {
     OF,
     SF,
     ZF,
@@ -21,7 +21,38 @@ enum class Rflag(isIgnored: Boolean = false) : CpuFlag {
     AF(true),
 }
 
-enum class MxcsrFlag(isIgnored: Boolean = true) : CpuFlag {
+enum class X87StatusField(val isControlField: Boolean = false, val isStatusField: Boolean = false) : StatusField {
+    IM(isControlField = true),
+    DM(isControlField = true),
+    ZM(isControlField = true),
+    OM(isControlField = true),
+    UM(isControlField = true),
+    PM(isControlField = true),
+    PC(isControlField = true),
+    RC(isControlField = true),
+    X(isControlField = true),
+    B(isStatusField = true),
+    C3(isStatusField = true),
+    TOP(isStatusField = true),
+    C2(isStatusField = true),
+    C1(isStatusField = true),
+    C0(isStatusField = true),
+    ES(isStatusField = true),
+    SF(isStatusField = true),
+    PE(isStatusField = true),
+    UE(isStatusField = true),
+    OE(isStatusField = true),
+    ZE(isStatusField = true),
+    DE(isStatusField = true),
+    IE(isStatusField = true),
+    TAG,
+    TAG_I;
+
+    val CONTROL_FIELDS = X87StatusField.values().filter { it.isControlField }
+    val STATUS_FIELDS = X87StatusField.values().filter { it.isStatusField }
+}
+
+enum class MxcsrField(isIgnored: Boolean = true) : StatusField {
     PE,
     UE,
     OE,
@@ -82,6 +113,10 @@ enum class BitRange {
         override fun contains(bit: Int) = bit >= 0 && bit <= 63
         override val size = BitSize._64
     },
+    _0_80 {
+        override fun contains(bit: Int) = bit >= 0 && bit <= 79
+        override val size = BitSize._80
+    },
     _64_127 {
         override fun contains(bit: Int) = bit >= 64 && bit <= 127
         override val size = BitSize._64
@@ -121,6 +156,10 @@ enum class BitSize {
     _64 {
         override fun toBitRange() = BitRange._0_63
         override fun toInt() = 64
+    },
+    _80 {
+        override fun toBitRange() = BitRange._0_80
+        override fun toInt() = 80
     },
     _128 {
         override fun toBitRange() = BitRange._0_127
@@ -573,6 +612,19 @@ enum class GpRegister8(override val code: Int,
 
 }
 
+enum class X87Register(override val code: Int) : Register {
+    ST0(0),
+    ST1(1),
+    ST2(2),
+    ST3(3),
+    ST4(4),
+    ST5(5),
+    ST6(6),
+    ST7(7);
+
+    override val type = RegisterType.X87
+}
+
 enum class MmRegister(override val code: Int) : Register {
     MM0(0),
     MM1(1),
@@ -695,7 +747,9 @@ enum class RegisterType(val size: BitSize, val superRegisterType: RegisterType?,
     },
     XMM(BitSize._128, YMM, ZMM) {
         override val isVectorType = true
-    };
+    },
+    X87(BitSize._80, null, null)
+    ;
 
     val isSubRegisterType = superRegisterType != null
     open val isVectorType = false

@@ -39,25 +39,28 @@ abstract class ExplicitOperand : Operand(), SizedOperand {
     override val isImplicit : Boolean get() = false
 }
 
-abstract class FlagsRegisterOperand<T: Enum<T>> : ImplicitOperand() {
-    abstract val readFlags: EnumSet<T>
-    abstract val alwaysWrittenFlags: EnumSet<T>
-    abstract val sometimesWrittenFlags: EnumSet<T>
+abstract class StatusRegisterOperand<T: Enum<T>> : ImplicitOperand() {
+    abstract val readFields: EnumSet<T>
+    abstract val alwaysWrittenFields: EnumSet<T>
+    abstract val sometimesWrittenFields: EnumSet<T>
 
     override val isAlwaysWritten: Boolean
-        get() = alwaysWrittenFlags.isNotEmpty()
+        get() = alwaysWrittenFields.isNotEmpty()
     override val isSometimesWritten: Boolean
-        get() = !isAlwaysWritten && sometimesWrittenFlags.isNotEmpty()
+        get() = !isAlwaysWritten && sometimesWrittenFields.isNotEmpty()
     override val isRead: Boolean
-        get() = readFlags.isNotEmpty()
+        get() = readFields.isNotEmpty()
 }
 
-data class RflagsOperand(override val readFlags: EnumSet<Rflag>, override val alwaysWrittenFlags: EnumSet<Rflag>, override val sometimesWrittenFlags: EnumSet<Rflag>) : FlagsRegisterOperand<Rflag>() {
+data class RflagsOperand(override val readFields: EnumSet<RflagsField>, override val alwaysWrittenFields: EnumSet<RflagsField>, override val sometimesWrittenFields: EnumSet<RflagsField>) : StatusRegisterOperand<RflagsField>() {
     override val name = "RFLAGS"
 
 }
-data class MxcsrOperand(override val readFlags: EnumSet<MxcsrFlag>, override val alwaysWrittenFlags: EnumSet<MxcsrFlag>, override val sometimesWrittenFlags: EnumSet<MxcsrFlag>) : FlagsRegisterOperand<MxcsrFlag>() {
+data class MxcsrOperand(override val readFields: EnumSet<MxcsrField>, override val alwaysWrittenFields: EnumSet<MxcsrField>, override val sometimesWrittenFields: EnumSet<MxcsrField>) : StatusRegisterOperand<MxcsrField>() {
     override val name = "MXCSR"
+}
+data class X87StatusRegisterOperand(override val readFields: EnumSet<X87StatusField>, override val alwaysWrittenFields: EnumSet<X87StatusField>, override val sometimesWrittenFields: EnumSet<X87StatusField>) : StatusRegisterOperand<X87StatusField>() {
+    override val name = "X87"
 
 }
 

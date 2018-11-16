@@ -27,7 +27,7 @@ class InstructionGenerator(generator: Generator,
     var className: String
 
     init {
-        val operands = operands.filterNot { it is FlagsRegisterOperand<*> }
+        val operands = operands.filterNot { it is StatusRegisterOperand<*> }
         className = primaryMnemonic.toLowerCase().capitalize() + operands.joinToString("") { it.identifierName }
     }
 
@@ -37,15 +37,15 @@ class InstructionGenerator(generator: Generator,
         } else {
             operands.filter {
                 it.isImplicit && when (it) {
-                    is FlagsRegisterOperand<*> -> false
-                    is ImplicitRegisterOperand -> {
+                    is StatusRegisterOperand<*> -> false
+                    is ImplicitRegisterOperand  -> {
                         when {
                             it.register is IpRegister                                    -> false
                             GpRegister.isBp(it.register) || GpRegister.isSp(it.register) -> false
                             else                                                         -> true
                         }
                     }
-                    else                       -> false
+                    else                        -> false
                 }
             }
         }
@@ -61,6 +61,7 @@ class InstructionGenerator(generator: Generator,
     fun write(writer: CodeWriter) {
 
         if (features.any { "AVX512" in it.name }) return
+        if (features.any { "FPU" in it.name }) return
 
         val parents = mutableListOf("${instructionInterface.name}()")
         if (operands.any { it is ImplicitRegisterOperand && it.register is IpRegister }) {
@@ -326,26 +327,26 @@ class InstructionGenerator(generator: Generator,
         }
 
         loop@ for (operand in operands) {
-            if (operand is FlagsRegisterOperand<*>) continue@loop
+            if (operand is StatusRegisterOperand<*>) continue@loop
             writeTraceCall(writer, operand, memory, false)
         }
 
-        operands.filterIsInstance<FlagsRegisterOperand<*>>().forEach {
-            it.readFlags.toList().forEach {
+        operands.filterIsInstance<StatusRegisterOperand<*>>().forEach {
+            it.readFields.toList().forEach {
                 writer.writeCall("tracer.traceRead", listOf(it.qualifiedName()))
             }
         }
 
         loop@ for (operand in operands) {
-            if (operand is FlagsRegisterOperand<*>) continue@loop
+            if (operand is StatusRegisterOperand<*>) continue@loop
             writeTraceCall(writer, operand, memory, true)
         }
 
-        operands.filterIsInstance<FlagsRegisterOperand<*>>().forEach {
-            it.alwaysWrittenFlags.toList().forEach {
+        operands.filterIsInstance<StatusRegisterOperand<*>>().forEach {
+            it.alwaysWrittenFields.toList().forEach {
                 writer.writeCall("tracer.traceWrite", listOf(it.qualifiedName(), "true"))
             }
-            it.sometimesWrittenFlags.toList().forEach {
+            it.sometimesWrittenFields.toList().forEach {
                 writer.writeCall("tracer.traceWrite", listOf(it.qualifiedName(), "false"))
             }
         }
@@ -565,6 +566,7 @@ class InstructionInterfaceGenerator(val operands: List<ExplicitOperand>) {
                 GP32 -> "R32"
                 GP64 -> "R64"
                 MM   -> "Mm"
+                X87  -> "X87"
                 else -> throw IllegalArgumentException(registerType.toString())
             }
         }
@@ -631,6 +633,7 @@ class InstructionParser(val generator: Generator, val row: List<String>) {
         val mnemonics = row[Generator.Column.MNEMONICS.ordinal].split("/")
         if (mnemonics.isEmpty()) throw RuntimeException()
 
+        println(row)
         val exceptions = parseExceptions(Generator.splitToList(row, Generator.Column.EXCEPTIONS))
 
         val encoding = row[Generator.Column.ENCODING.ordinal]
@@ -641,7 +644,9 @@ class InstructionParser(val generator: Generator, val row: List<String>) {
         val vex = parseVex(opcode)
 
         val legacyPrefixes = parseLegacyPrefixes(Generator.splitToPairList(row, Generator.Column.PREFIXES))
-        val operands = parseOperands(Generator.splitToPairList(row, Generator.Column.OPERANDS), vex != null)
+
+        val isFpu = features.contains(CpuFeature.FPU)
+        val operands = parseOperands(Generator.splitToPairList(row, Generator.Column.OPERANDS), vex != null, isFpu)
 
 
         return InstructionGenerator(generator,
@@ -656,8 +661,8 @@ class InstructionParser(val generator: Generator, val row: List<String>) {
                                     vex)
     }
 
-    private fun parseOperands(list: MutableList<Pair<String, String>>, haveVex: Boolean): List<Operand> {
-        return OperandsParser(list, haveVex).parse()
+    private fun parseOperands(list: MutableList<Pair<String, String>>, haveVex: Boolean, isFpu: Boolean): List<Operand> {
+        return OperandsParser(list, haveVex, isFpu).parse()
     }
 
 

@@ -10,11 +10,12 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
     companion object {
 
         val IMM_OP_REGEXP = """^(imm|rel)(\d+)?$""".toRegex()
-        val MEM_OP_REGEXP = """^m(\d*)$""".toRegex()
+        val MEM_OP_REGEXP = """^m(\d*)(?:fp|int|dec|bcd)?$""".toRegex()
         val MOFFS_OP_REGEXP = """^moffs(\d+)$""".toRegex()
         val VSIB_OP_REGEXP = """^vm(?:\d+)(x|y)(\d+)$""".toRegex()
         val REG_OP_REGEXP = """^(?<reg1>xmm|ymm|zmm|mm)(?:\[(?<rangeMin>\d+)\.\.(?<rangeMax>\d+)\])?$|^(?<reg2>r)(?<regSize>8|16|32|64)$""".toRegex()
         val RM_OP_REGEXP = """^(?:(?<reg1>xmm|ymm|zmm|mm)|(?<reg2>r)(?<regSize>8|16|32|64)?)/m(?<memSize>\d+)$""".toRegex()
+        val ST_OP_REGEXP = """^STi$""".toRegex()
     }
 
     private var name = pair.first
@@ -55,6 +56,11 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
                 }
                 BitSize._128
             }
+            "ST0", "ST1" -> {
+                readBits = BitRange._0_63
+                writtenBits = BitRange._0_63
+                BitSize._64
+            }
             else -> throw IllegalArgumentException("unexpected register '$registerName'")
         }
 
@@ -87,6 +93,8 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
             "DIL" -> GpRegister8.DIL
             "RIP" -> IpRegister.RIP
             "XMM0" -> XmmRegister.XMM0
+            "ST0" -> X87Register.ST0
+            "ST1" -> X87Register.ST1
             else -> throw IllegalArgumentException("unexpected register '$registerName'")
         }
         return Generator.ImplicitRegister(register, size, (readBits ?: size.toBitRange()).takeIf { isRead }, (writtenBits ?: size.toBitRange()).takeIf { isWritten })
@@ -98,6 +106,7 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
             16 -> BitSize._16
             32 -> BitSize._32
             64 -> BitSize._64
+            80 -> BitSize._80
             128 -> BitSize._128
             256 -> BitSize._256
             512 -> BitSize._512
@@ -275,6 +284,20 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
                     name)
         }
 
+        match(ST_OP_REGEXP, name) {
+            val size = BitSize._80
+            val accessedBits = size.toBitRange()
+            val type = RegisterType.X87
+            return ExplicitRegisterOperand(size,
+                                           accessedBits.takeIf { isRead },
+                                           accessedBits.takeIf { isWritten },
+                                           isAlwaysWritten,
+                                           isSometimesWritten,
+                                           isRead,
+                                           type,
+                                           name)
+        }
+
         throw IllegalArgumentException("unmatched operator '$name'")
     }
 
@@ -313,7 +336,9 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
 }
 
 
-class OperandsParser(val list: MutableList<Pair<String, String>>, val haveVex: Boolean) {
+class OperandsParser(val list: MutableList<Pair<String, String>>,
+                     val haveVex: Boolean,
+                     val fpuInstruction: Boolean) {
 
     private fun <T : Enum<T>> findEnum(name: String, enumClass: Class<T>): T? {
         return enumClass.enumConstants.find {
@@ -325,16 +350,25 @@ class OperandsParser(val list: MutableList<Pair<String, String>>, val haveVex: B
 
         list.map {
             val operandName = it.first
-            val enumKey = findEnum(operandName, Rflag::class.java) ?:
-                    findEnum(operandName, MxcsrFlag::class.java) ?:
-                    operandName
+            var enumKey: Any? = findEnum(operandName, RflagsField::class.java)
+            if(operandName == "C1") {
+                println("AA")
+            }
+            if(enumKey == null) {
+                if(fpuInstruction) {
+                    enumKey = findEnum(operandName, X87StatusField::class.java) ?: findEnum(operandName, X87StatusField::class.java)
+                } else {
+                    enumKey = findEnum(operandName, MxcsrField::class.java)
+                }
+            }
+            if(enumKey == null) enumKey = operandName
             Pair(enumKey, it.second)
-        }.partition { it.first is CpuFlag }.let {
-            return parseNonFlagOperands(it.second as List<Pair<String, String>>) + parseFlagOperands(it.first as List<Pair<CpuFlag, String>>)
+        }.partition { it.first is StatusField }.let {
+            return parseNonStatusFieldOperands(it.second as List<Pair<String, String>>) + parseStatusFieldOperands(it.first as List<Pair<StatusField, String>>)
         }
     }
 
-    private fun parseNonFlagOperands(nonFlagOperands: List<Pair<String, String>>): List<Operand> {
+    private fun parseNonStatusFieldOperands(nonFlagOperands: List<Pair<String, String>>): List<Operand> {
         return nonFlagOperands.map {
             OperandParser(it, haveVex).parse()
         }.also {
@@ -342,29 +376,38 @@ class OperandsParser(val list: MutableList<Pair<String, String>>, val haveVex: B
         }
     }
 
-    private fun parseFlagOperands(flagOperands: List<Pair<CpuFlag, String>>): List<Operand> {
-        val (rFlagOperands, mxcsrOperands) = flagOperands.partition { it.first is Rflag }
+    private fun parseStatusFieldOperands(statusFieldOperands: List<Pair<StatusField, String>>): List<Operand> {
+        val (rFlagOperands, otherOperands) = statusFieldOperands.partition { it.first is RflagsField }
 
         val operands = mutableListOf<Operand>()
 
         if (rFlagOperands.isNotEmpty()) {
-            val (readRflags, alwaysWrittenRflags, sometimesWrittenRflags) = partitionFlagOperands<Rflag>(rFlagOperands as List<Pair<Rflag, String>>,
-                    Rflag::class)
-            operands.add(RflagsOperand(readRflags, alwaysWrittenRflags, sometimesWrittenRflags))
+            val (readRflagsFields, alwaysWrittenRflagsFields, sometimesWrittenRflagsFields) = partitionStatusFieldOperands<RflagsField>(rFlagOperands as List<Pair<RflagsField, String>>,
+                                                                                                                                        RflagsField::class)
+            operands.add(RflagsOperand(readRflagsFields, alwaysWrittenRflagsFields, sometimesWrittenRflagsFields))
         }
 
-        if (mxcsrOperands.isNotEmpty()) {
-            val (readMxcsrFlags, alwaysWrittenMxcsrFlags, sometimesWrittenMxcsrFlags) = partitionFlagOperands<MxcsrFlag>(
-                    mxcsrOperands as List<Pair<MxcsrFlag, String>>,
-                    MxcsrFlag::class)
-            operands.add(MxcsrOperand(readMxcsrFlags, alwaysWrittenMxcsrFlags, sometimesWrittenMxcsrFlags))
+        if(fpuInstruction) {
+            if (otherOperands.isNotEmpty()) {
+                val (readX87Fields, alwaysWrittenX87Fields, sometimesWrittenX87Fields) = partitionStatusFieldOperands<X87StatusField>(
+                        otherOperands as List<Pair<X87StatusField, String>>,
+                        X87StatusField::class)
+                operands.add(X87StatusRegisterOperand(readX87Fields, alwaysWrittenX87Fields, sometimesWrittenX87Fields))
+            }
+        } else {
+            if (otherOperands.isNotEmpty()) {
+                val (readMxcsrFields, alwaysWrittenMxcsrFields, sometimesWrittenMxcsrFields) = partitionStatusFieldOperands<MxcsrField>(
+                        otherOperands as List<Pair<MxcsrField, String>>,
+                        MxcsrField::class)
+                operands.add(MxcsrOperand(readMxcsrFields, alwaysWrittenMxcsrFields, sometimesWrittenMxcsrFields))
+            }
         }
 
         return operands
     }
 
-    private fun <T : Enum<T>> partitionFlagOperands(flagOperands: List<Pair<T, String>>,
-                                                    enumClass: KClass<T>): List<EnumSet<T>> {
+    private fun <T : Enum<T>> partitionStatusFieldOperands(flagOperands: List<Pair<T, String>>,
+                                                           enumClass: KClass<T>): List<EnumSet<T>> {
         val readFlags = EnumSet.noneOf(enumClass.java)
         val alwaysWrittenFlags = EnumSet.noneOf(enumClass.java)
         val sometimesWrittenFlags = EnumSet.noneOf(enumClass.java)
@@ -426,6 +469,7 @@ class OperandsParser(val list: MutableList<Pair<String, String>>, val haveVex: B
                     "GpRegister${operandSize.toInt()}"
                 }
                 RegisterType.MM -> "MmRegister"
+                RegisterType.X87 -> "X87Register"
                 else -> throw IllegalArgumentException(registerType.toString())
             }
             val parameterName = "register${if (useRegisterCounter) (1 + registerCounter++).toString() else ""}"

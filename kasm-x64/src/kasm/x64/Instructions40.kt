@@ -124,10 +124,10 @@ object RclRm81 : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -141,10 +141,10 @@ object RclRm81 : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -180,10 +180,10 @@ object RclRm8Cl : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -197,10 +197,10 @@ object RclRm8Cl : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -237,10 +237,10 @@ object RclRm8Imm8 : R8mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -255,10 +255,10 @@ object RclRm8Imm8 : R8mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -294,10 +294,10 @@ object RclRm161 : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_15)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -311,10 +311,10 @@ object RclRm161 : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -350,10 +350,10 @@ object RclRm16Cl : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -367,10 +367,10 @@ object RclRm16Cl : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -407,10 +407,10 @@ object RclRm16Imm8 : R16mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_15)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -425,10 +425,10 @@ object RclRm16Imm8 : R16mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -464,10 +464,10 @@ object RclRm321 : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_31)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -481,10 +481,10 @@ object RclRm321 : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -520,10 +520,10 @@ object RclRm641 : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_63)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -537,10 +537,10 @@ object RclRm641 : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -576,10 +576,10 @@ object RclRm32Cl : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -593,10 +593,10 @@ object RclRm32Cl : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -632,10 +632,10 @@ object RclRm64Cl : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_63)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -649,10 +649,10 @@ object RclRm64Cl : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -689,10 +689,10 @@ object RclRm32Imm8 : R32mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_31)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -707,10 +707,10 @@ object RclRm32Imm8 : R32mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -747,10 +747,10 @@ object RclRm64Imm8 : R64mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_63)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -765,10 +765,10 @@ object RclRm64Imm8 : R64mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -804,10 +804,10 @@ object RcrRm81 : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -821,10 +821,10 @@ object RcrRm81 : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -860,10 +860,10 @@ object RcrRm8Cl : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -877,10 +877,10 @@ object RcrRm8Cl : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -917,10 +917,10 @@ object RcrRm8Imm8 : R8mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -935,10 +935,10 @@ object RcrRm8Imm8 : R8mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -974,10 +974,10 @@ object RcrRm161 : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_15)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -991,10 +991,10 @@ object RcrRm161 : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1030,10 +1030,10 @@ object RcrRm16Cl : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_15)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1047,10 +1047,10 @@ object RcrRm16Cl : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1087,10 +1087,10 @@ object RcrRm16Imm8 : R16mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_15)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1105,10 +1105,10 @@ object RcrRm16Imm8 : R16mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1144,10 +1144,10 @@ object RcrRm321 : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_31)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1161,10 +1161,10 @@ object RcrRm321 : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1200,10 +1200,10 @@ object RcrRm641 : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_63)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1217,10 +1217,10 @@ object RcrRm641 : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1256,10 +1256,10 @@ object RcrRm32Cl : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_31)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1273,10 +1273,10 @@ object RcrRm32Cl : R32mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1312,10 +1312,10 @@ object RcrRm64Cl : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_63)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1329,10 +1329,10 @@ object RcrRm64Cl : R64mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1369,10 +1369,10 @@ object RcrRm32Imm8 : R32mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_31)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1387,10 +1387,10 @@ object RcrRm32Imm8 : R32mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1427,10 +1427,10 @@ object RcrRm64Imm8 : R64mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_63)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1445,10 +1445,10 @@ object RcrRm64Imm8 : R64mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1484,10 +1484,10 @@ object RolRm81 : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1501,10 +1501,10 @@ object RolRm81 : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1540,10 +1540,10 @@ object RolRm8Cl : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1557,10 +1557,10 @@ object RolRm8Cl : R8mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange._0_7)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1597,10 +1597,10 @@ object RolRm8Imm8 : R8mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_7)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1615,10 +1615,10 @@ object RolRm8Imm8 : R8mImm8Instruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1654,10 +1654,10 @@ object RolRm161 : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(register, false, BitRange._0_15)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -1671,10 +1671,10 @@ object RolRm161 : R16mInstruction() {
     tracer.beginTracing()
     tracer.traceRead(addressExpression)
     tracer.traceRead(1L, true, null)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.Rflag.OF, false)
-    tracer.traceWrite(kasm.x64.Rflag.CF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

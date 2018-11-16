@@ -14,10 +14,10 @@ interface InstructionTracer {
     fun traceRead(addressExpression: VectorAddressExpression) {}
     fun traceRead(immediate: Long, implicit: Boolean, size: BitSize?) {}
 
-    fun traceRead(rflag: Rflag) {}
-    fun traceWrite(rflag: Rflag, always: Boolean) {}
-    fun traceRead(mxcsrFlag: MxcsrFlag, always: Boolean) {}
-    fun traceWrite(mxcsrFlag: MxcsrFlag, always: Boolean) {}
+    fun traceRead(rflagsField: RflagsField) {}
+    fun traceWrite(rflagsField: RflagsField, always: Boolean) {}
+    fun traceRead(mxcsrField: MxcsrField, always: Boolean) {}
+    fun traceWrite(mxcsrField: MxcsrField, always: Boolean) {}
 
     fun traceFeature(feature: CpuFeature) {}
 }

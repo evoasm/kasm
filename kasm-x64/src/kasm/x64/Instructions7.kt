@@ -20,7 +20,7 @@ object CmoveR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -35,7 +35,7 @@ object CmoveR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -72,7 +72,7 @@ object CmoveR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -87,7 +87,7 @@ object CmoveR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -124,7 +124,7 @@ object CmovgR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -139,7 +139,7 @@ object CmovgR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -176,7 +176,7 @@ object CmovgR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -191,7 +191,7 @@ object CmovgR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -228,7 +228,7 @@ object CmovgR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -243,7 +243,7 @@ object CmovgR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -280,8 +280,8 @@ object CmovgeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -296,8 +296,8 @@ object CmovgeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -334,8 +334,8 @@ object CmovgeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -350,8 +350,8 @@ object CmovgeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -388,8 +388,8 @@ object CmovgeR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -404,8 +404,8 @@ object CmovgeR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -442,7 +442,7 @@ object CmovlR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -457,7 +457,7 @@ object CmovlR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -494,7 +494,7 @@ object CmovlR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -509,7 +509,7 @@ object CmovlR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -546,7 +546,7 @@ object CmovlR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -561,7 +561,7 @@ object CmovlR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -598,9 +598,9 @@ object CmovleR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -615,9 +615,9 @@ object CmovleR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -654,9 +654,9 @@ object CmovleR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -671,9 +671,9 @@ object CmovleR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -710,9 +710,9 @@ object CmovleR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -727,9 +727,9 @@ object CmovleR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
-    tracer.traceRead(kasm.x64.Rflag.SF)
-    tracer.traceRead(kasm.x64.Rflag.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -766,7 +766,7 @@ object CmovneR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -781,7 +781,7 @@ object CmovneR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -818,7 +818,7 @@ object CmovneR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -833,7 +833,7 @@ object CmovneR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -870,7 +870,7 @@ object CmovneR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -885,7 +885,7 @@ object CmovneR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -922,7 +922,7 @@ object CmovnoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -937,7 +937,7 @@ object CmovnoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -974,7 +974,7 @@ object CmovnoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -989,7 +989,7 @@ object CmovnoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1026,7 +1026,7 @@ object CmovnoR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1041,7 +1041,7 @@ object CmovnoR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1078,7 +1078,7 @@ object CmovnpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -1093,7 +1093,7 @@ object CmovnpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -1130,7 +1130,7 @@ object CmovnpR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1145,7 +1145,7 @@ object CmovnpR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1182,7 +1182,7 @@ object CmovnpR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1197,7 +1197,7 @@ object CmovnpR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.PF)
+    tracer.traceRead(kasm.x64.RflagsField.PF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1234,7 +1234,7 @@ object CmovnsR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -1249,7 +1249,7 @@ object CmovnsR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -1286,7 +1286,7 @@ object CmovnsR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1301,7 +1301,7 @@ object CmovnsR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1338,7 +1338,7 @@ object CmovnsR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1353,7 +1353,7 @@ object CmovnsR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.SF)
+    tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1390,7 +1390,7 @@ object CmovoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -1405,7 +1405,7 @@ object CmovoR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -1442,7 +1442,7 @@ object CmovoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1457,7 +1457,7 @@ object CmovoR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1494,7 +1494,7 @@ object CmovoR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register1, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1509,7 +1509,7 @@ object CmovoR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.OF)
+    tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceWrite(register, false, BitRange._0_63, false)
     tracer.endTracing()
   }
@@ -1546,7 +1546,7 @@ object CmovpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register1, false, BitRange._0_15, false)
     tracer.endTracing()
   }
@@ -1561,7 +1561,7 @@ object CmovpR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.Rflag.CF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
     tracer.traceWrite(register, false, BitRange._0_15, false)
     tracer.endTracing()
   }
