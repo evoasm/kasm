@@ -27,7 +27,7 @@ class InstructionGenerator(generator: Generator,
     var className: String
 
     init {
-        val operands = operands.filterNot { it is StatusRegisterOperand<*> }
+        val operands = operands.filterNot { it is StatusOrControlRegisterOperand<*> }
         className = primaryMnemonic.toLowerCase().capitalize() + operands.joinToString("") { it.identifierName }
     }
 
@@ -37,15 +37,15 @@ class InstructionGenerator(generator: Generator,
         } else {
             operands.filter {
                 it.isImplicit && when (it) {
-                    is StatusRegisterOperand<*> -> false
-                    is ImplicitRegisterOperand  -> {
+                    is StatusOrControlRegisterOperand<*> -> false
+                    is ImplicitRegisterOperand           -> {
                         when {
                             it.register is IpRegister                                    -> false
                             GpRegister.isBp(it.register) || GpRegister.isSp(it.register) -> false
                             else                                                         -> true
                         }
                     }
-                    else                        -> false
+                    else                                 -> false
                 }
             }
         }
@@ -61,7 +61,7 @@ class InstructionGenerator(generator: Generator,
     fun write(writer: CodeWriter) {
 
         if (features.any { "AVX512" in it.name }) return
-        if (features.any { "FPU" in it.name }) return
+//        if (features.any { "FPU" in it.name }) return
 
         val parents = mutableListOf("${instructionInterface.name}()")
         if (operands.any { it is ImplicitRegisterOperand && it.register is IpRegister }) {
@@ -229,11 +229,11 @@ class InstructionGenerator(generator: Generator,
                 is ExplicitVectorMemoryOperand   -> "parameters.getVectorAddress$argumentList"
                 is ExplicitRegisterOperand       -> getParametersMethodName(operand.type) + argumentList
                 is ExplicitImmediateOperand      -> "parameters." + when (operand.size) {
-                    BitSize._8  -> "getByte"
-                    BitSize._16 -> "getShort"
-                    BitSize._32 -> "getInt"
-                    BitSize._64 -> "getLong"
-                    else        -> throw IllegalArgumentException()
+                    BitSize.BITS_8  -> "getByte"
+                    BitSize.BITS_16 -> "getShort"
+                    BitSize.BITS_32 -> "getInt"
+                    BitSize.BITS_64 -> "getLong"
+                    else            -> throw IllegalArgumentException()
                 } + "Immediate($index)"
                 else                             -> throw IllegalArgumentException(operand::class.toString())
             }
@@ -251,6 +251,7 @@ class InstructionGenerator(generator: Generator,
             ZMM  -> "getZmmRegister"
             YMM  -> "getYmmRegister"
             XMM  -> "getXmmRegister"
+            X87  -> "getX87Register"
             else -> throw IllegalArgumentException()
         }
     }
@@ -327,22 +328,22 @@ class InstructionGenerator(generator: Generator,
         }
 
         loop@ for (operand in operands) {
-            if (operand is StatusRegisterOperand<*>) continue@loop
+            if (operand is StatusOrControlRegisterOperand<*>) continue@loop
             writeTraceCall(writer, operand, memory, false)
         }
 
-        operands.filterIsInstance<StatusRegisterOperand<*>>().forEach {
+        operands.filterIsInstance<StatusOrControlRegisterOperand<*>>().forEach {
             it.readFields.toList().forEach {
                 writer.writeCall("tracer.traceRead", listOf(it.qualifiedName()))
             }
         }
 
         loop@ for (operand in operands) {
-            if (operand is StatusRegisterOperand<*>) continue@loop
+            if (operand is StatusOrControlRegisterOperand<*>) continue@loop
             writeTraceCall(writer, operand, memory, true)
         }
 
-        operands.filterIsInstance<StatusRegisterOperand<*>>().forEach {
+        operands.filterIsInstance<StatusOrControlRegisterOperand<*>>().forEach {
             it.alwaysWrittenFields.toList().forEach {
                 writer.writeCall("tracer.traceWrite", listOf(it.qualifiedName(), "true"))
             }
@@ -370,7 +371,7 @@ class InstructionGenerator(generator: Generator,
             is ImplicitImmediateOperand      -> operand.value.toString() + "L"
             is ImplicitRegisterOperand       -> operand.register.qualifiedName()
             is ImplicitMemoryOperand         -> "AddressExpression${operand.size.toInt()}(${operand.baseRegister.qualifiedName(true)}, ${operand.indexRegister?.qualifiedName(true) ?: "null"})"
-            is ExplicitImmediateOperand      -> parameter!!.name + if (operand.size != BitSize._64) ".toLong()" else ""
+            is ExplicitImmediateOperand      -> parameter!!.name + if (operand.size != BitSize.BITS_64) ".toLong()" else ""
             is ExplicitRegisterOperand       -> parameter!!.name
             is ExplicitMemoryRegisterOperand -> parameter!!.name
             else                             -> parameter!!.name
@@ -437,7 +438,7 @@ class InstructionGenerator(generator: Generator,
         }
 
         rex?.let {
-            val functionName = "RexPrefix." + rexVexEncodeFunctionSuffix() + (if (regOperand?.size == BitSize._8 || rmOperand?.size == BitSize._8) "8" else "") + ".encode" + when {
+            val functionName = "RexPrefix." + rexVexEncodeFunctionSuffix() + (if (regOperand?.size == BitSize.BITS_8 || rmOperand?.size == BitSize.BITS_8) "8" else "") + ".encode" + when {
                 it.mandatory -> "Mandatory"
                 else         -> ""
             }
@@ -572,7 +573,7 @@ class InstructionInterfaceGenerator(val operands: List<ExplicitOperand>) {
         }
 
         operands.mapNotNull { operand ->
-            val size = if (/*operand.size == BitSize._8 ||*/ operand is ExplicitImmediateOperand) {
+            val size = if (/*operand.size == BitSize.BITS_8 ||*/ operand is ExplicitImmediateOperand) {
                 operand.size.toInt().toString()
             } else {
                 ""
@@ -753,8 +754,8 @@ class InstructionParser(val generator: Generator, val row: List<String>) {
             val prefixName = it.first
 
             val prefixClassName = when (prefixName) {
-                "pref66"          -> "_66"
-                "pref67"          -> "_67"
+                "pref66"          -> "Pref66"
+                "pref67"          -> "Pref67"
                 "bt"              -> "BranchTaken"
                 "bnt"             -> "BranchNotTaken"
                 "lock"            -> "LockPrefix"

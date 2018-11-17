@@ -1134,9 +1134,6 @@ abstract class AbstractAssembler: InstructionTracer {
   fun jecxz(immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     JecxzRel8Rip.encode(buffer, immediate, options, tracer = this)
   }
-  fun je(immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    JeRel8Rip.encode(buffer, immediate, options, tracer = this)
-  }
   fun jg(immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     JgRel8Rip.encode(buffer, immediate, options, tracer = this)
   }
@@ -4739,6 +4736,453 @@ abstract class AbstractAssembler: InstructionTracer {
   }
   fun xtest(options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Xtest.encode(buffer, options, tracer = this)
+  }
+  fun emms(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Emms.encode(buffer, options, tracer = this)
+  }
+  fun f2xm1St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    F2xm1St0.encode(buffer, options, tracer = this)
+  }
+  fun fabsSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FabsSt0.encode(buffer, options, tracer = this)
+  }
+  fun faddSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FaddM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun faddSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FaddM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun faddSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FaddSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun faddpSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FaddpStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun faddpSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FaddpSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fiaddSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FiaddM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fiaddSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FiaddM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fbldSt0(addressExpression: AddressExpression80, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FbldM80decSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fbstp(addressExpression: AddressExpression80, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FbstpM80bcd.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fchsSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FchsSt0.encode(buffer, options, tracer = this)
+  }
+  fun fclex(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fclex.encode(buffer, options, tracer = this)
+  }
+  fun fnclex(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fnclex.encode(buffer, options, tracer = this)
+  }
+  fun fcmovbSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmovbSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcmoveSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmoveSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcmovbeSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmovbeSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcmovuSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmovuSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcmovnbSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmovnbSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcmovneSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmovneSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcmovnbeSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmovnbeSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcmovnuSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcmovnuSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcomSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcomM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fcomSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcomM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fcomSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcomStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fcomSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcomSt0.encode(buffer, options, tracer = this)
+  }
+  fun fcompSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcompM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fcompSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcompM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fcompSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcompStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fcompSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcompSt0.encode(buffer, options, tracer = this)
+  }
+  fun fcomppSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcomppSt0.encode(buffer, options, tracer = this)
+  }
+  fun fcomiSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcomiSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcomipSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcomipSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fucomiSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FucomiSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fucomipSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FucomipSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fcosSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FcosSt0.encode(buffer, options, tracer = this)
+  }
+  fun fdecstp(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fdecstp.encode(buffer, options, tracer = this)
+  }
+  fun fdivSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fdivSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fdivSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fdivpSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivpStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fdivpSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivpSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fidivSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FidivM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fidivSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FidivM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fdivrSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivrM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fdivrSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivrM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fdivrSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivrSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fdivrpSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivrpStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fdivrpSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FdivrpSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fidivrSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FidivrM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fidivrSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FidivrM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun ffree(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FfreeSti.encode(buffer, register, options, tracer = this)
+  }
+  fun ficomSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FicomM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun ficomSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FicomM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun ficompSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FicompM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun ficompSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FicompM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fildSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FildM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fildSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FildM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fildSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FildM64intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fincstp(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fincstp.encode(buffer, options, tracer = this)
+  }
+  fun finit(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Finit.encode(buffer, options, tracer = this)
+  }
+  fun fninit(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fninit.encode(buffer, options, tracer = this)
+  }
+  fun fistSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FistM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fistSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FistM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fistpSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FistpM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fistpSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FistpM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fistpSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FistpM64intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fisttpSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FisttpM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fisttpSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FisttpM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fisttpSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FisttpM64intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fldSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fldSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fldSt0(addressExpression: AddressExpression80, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldM80fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fldSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fld1St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fld1St0.encode(buffer, options, tracer = this)
+  }
+  fun fldl2tSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fldl2tSt0.encode(buffer, options, tracer = this)
+  }
+  fun fldl2eSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fldl2eSt0.encode(buffer, options, tracer = this)
+  }
+  fun fldpiSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldpiSt0.encode(buffer, options, tracer = this)
+  }
+  fun fldlg2St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fldlg2St0.encode(buffer, options, tracer = this)
+  }
+  fun fldln2St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fldln2St0.encode(buffer, options, tracer = this)
+  }
+  fun fldzSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldzSt0.encode(buffer, options, tracer = this)
+  }
+  fun fldcw(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldcwM2byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fldenv(addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FldenvM14/28byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fmulSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FmulM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fmulSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FmulM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fmulSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FmulSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fmulpSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FmulpStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fmulpSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FmulpSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fimulSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FimulM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fimulSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FimulM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fnop(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fnop.encode(buffer, options, tracer = this)
+  }
+  fun fpatanSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FpatanSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fpremSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FpremSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fprem1St0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fprem1St0St1.encode(buffer, options, tracer = this)
+  }
+  fun fptanSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FptanSt0.encode(buffer, options, tracer = this)
+  }
+  fun frndintSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FrndintSt0.encode(buffer, options, tracer = this)
+  }
+  fun frstorStxStxStxStxStxStxStxStx(addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FrstorM94/108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fsaveStxStxStxStxStxStxStxStx(addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsaveM94/108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fnsaveStxStxStxStxStxStxStxStx(addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FnsaveM94/108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fscaleSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FscaleSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fsinSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsinSt0.encode(buffer, options, tracer = this)
+  }
+  fun fsincosSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsincosSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fsqrtSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsqrtSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fstSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fstpSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstpM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstpSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstpM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstpSt0(addressExpression: AddressExpression80, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstpM80fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstpSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstpStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fstcw(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstcwM2byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fnstcw(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FnstcwM2byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstenv(addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstenvM14/28byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fnstenv(addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FnstenvM14/28byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstsw(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstswM2byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fstswAx(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FstswAx.encode(buffer, options, tracer = this)
+  }
+  fun fnstsw(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FnstswM2byte.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fnstswAx(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FnstswAx.encode(buffer, options, tracer = this)
+  }
+  fun fsubSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fsubSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fsubSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fsubpSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubpStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fsubpSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubpSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fisubSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FisubM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fisubSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FisubM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fsubrSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubrM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fsubrSt0(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubrM64fpSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fsubrSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubrSt0Sti.encode(buffer, register, options, tracer = this)
+  }
+  fun fsubrpSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubrpStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fsubrpSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FsubrpSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fisubrSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FisubrM32intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fisubrSt0(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FisubrM16intSt0.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun ftstSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FtstSt0.encode(buffer, options, tracer = this)
+  }
+  fun fucomSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FucomStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fucomSt1St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FucomSt1St0.encode(buffer, options, tracer = this)
+  }
+  fun fucompSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FucompStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fucompSt1St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FucompSt1St0.encode(buffer, options, tracer = this)
+  }
+  fun fucomppSt1St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FucomppSt1St0.encode(buffer, options, tracer = this)
+  }
+  fun fxamSt0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FxamSt0.encode(buffer, options, tracer = this)
+  }
+  fun fxchSt0(register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FxchStiSt0.encode(buffer, register, options, tracer = this)
+  }
+  fun fxchSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FxchSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fxrstorXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FxrstorM512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fxrstor64XmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fxrstor64M512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fxsaveXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FxsaveM512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fxsave64XmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fxsave64M512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+  }
+  fun fxtractSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    FxtractSt0St1.encode(buffer, options, tracer = this)
+  }
+  fun fyl2xSt1St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fyl2xSt1St0.encode(buffer, options, tracer = this)
+  }
+  fun fyl2xp1St1St0(options: EncodingOptions = EncodingOptions.DEFAULT)  {
+    Fyl2xp1St1St0.encode(buffer, options, tracer = this)
   }
   fun adc(addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     AdcRm8Imm8.encode(buffer, addressExpression, immediate, options, tracer = this)

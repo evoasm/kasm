@@ -223,8 +223,8 @@ object CpuId {
                             CpuFeature.RDTSCP,
                             CpuFeature.RESERVED,
                             CpuFeature.LM,
-                            CpuFeature._3DNOWEXT,
-                            CpuFeature._3DNOW
+                            CpuFeature.FEATURE_3DNOWEXT,
+                            CpuFeature.FEATURE_3DNOW
                                               ),
                     GpRegister32.ECX to listOf(
                             CpuFeature.LAHF_LM,

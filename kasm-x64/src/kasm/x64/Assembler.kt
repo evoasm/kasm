@@ -103,7 +103,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         return JumpLinkPoint(buffer, relative = true)
     }
 
-    fun jmp(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale._1): LinkPoint<Int> {
+    fun jmp(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale.X1): LinkPoint<Int> {
         jmp(AddressExpression64(base, index, scale, 0xdeadbeef.toInt()))
         return JumpLinkPoint(buffer, relative = false)
     }

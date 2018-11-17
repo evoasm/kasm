@@ -50,7 +50,7 @@ class Generator {
             writeInstructionTypes(writer)
         }
 
-        instructionGenerators.chunked(30).forEachIndexed { index, list ->
+        instructionGenerators.chunked(20).forEachIndexed { index, list ->
             getOutputFile("Instructions${index + 1}.kt").printWriter().use {
                 val writer = CodeWriter(it)
                 writePackageAndImports(writer)

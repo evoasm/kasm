@@ -228,6 +228,10 @@ abstract class R64R32mInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression32)
 }
+abstract class M4096Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression512Bytes)
+}
 abstract class R16R16mImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16, immediate: Byte)
@@ -249,6 +253,14 @@ abstract class MmR64mInstruction : Instruction() {
 abstract class Imm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, immediate: Byte)
+}
+abstract class M16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)
+}
+abstract class M80Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression80, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression80)
 }
 abstract class R32mXmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -548,6 +560,10 @@ abstract class XmmXmmM64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64)
 }
+abstract class X87Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: X87Register)
+}
 abstract class MmXmmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: XmmRegister)
@@ -588,6 +604,10 @@ abstract class XmmMmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: MmRegister)
 }
+abstract class M224Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression28Bytes)
+}
 abstract class XmmXmmR32mImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)
@@ -597,6 +617,10 @@ abstract class XmmXmmR32mImm8Instruction : Instruction() {
 abstract class YmmM64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression64)
+}
+abstract class M864Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression108Bytes)
 }
 abstract class R64mImm32Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -1103,7 +1127,7 @@ abstract class Instruction: AbstractInstruction() {
       JbRel8Rip,
       JbeRel8Rip,
       JecxzRel8Rip,
-      JeRel8Rip,
+      JaRel8RipD,
       JgRel8Rip,
       JgeRel8Rip,
       JlRel8Rip,
@@ -2370,7 +2394,162 @@ abstract class Instruction: AbstractInstruction() {
       XorpsXmmXmmm128,
       VxorpsXmmXmmXmmm128,
       VxorpsYmmYmmYmmm256,
-      Xtest    )
+      Xtest,
+      Emms,
+      F2xm1St0,
+      FabsSt0,
+      FaddM32fpSt0,
+      FaddM64fpSt0,
+      FaddSt0Sti,
+      FaddStiSt0,
+      FaddpStiSt0,
+      FaddpSt0St1,
+      FiaddM32intSt0,
+      FiaddM16intSt0,
+      FbldM80decSt0,
+      FbstpM80bcd,
+      FchsSt0,
+      Fclex,
+      Fnclex,
+      FcmovbSt0Sti,
+      FcmoveSt0Sti,
+      FcmovbeSt0Sti,
+      FcmovuSt0Sti,
+      FcmovnbSt0Sti,
+      FcmovneSt0Sti,
+      FcmovnbeSt0Sti,
+      FcmovnuSt0Sti,
+      FcomM32fpSt0,
+      FcomM64fpSt0,
+      FcomStiSt0,
+      FcomSt0,
+      FcompM32fpSt0,
+      FcompM64fpSt0,
+      FcompStiSt0,
+      FcompSt0,
+      FcomppSt0,
+      FcomiSt0Sti,
+      FcomipSt0Sti,
+      FucomiSt0Sti,
+      FucomipSt0Sti,
+      FcosSt0,
+      Fdecstp,
+      FdivM32fpSt0,
+      FdivM64fpSt0,
+      FdivSt0Sti,
+      FdivStiSt0,
+      FdivpStiSt0,
+      FdivpSt0St1,
+      FidivM32intSt0,
+      FidivM16intSt0,
+      FdivrM32fpSt0,
+      FdivrM64fpSt0,
+      FdivrSt0Sti,
+      FdivrStiSt0,
+      FdivrpStiSt0,
+      FdivrpSt0St1,
+      FidivrM32intSt0,
+      FidivrM16intSt0,
+      FfreeSti,
+      FicomM16intSt0,
+      FicomM32intSt0,
+      FicompM16intSt0,
+      FicompM32intSt0,
+      FildM16intSt0,
+      FildM32intSt0,
+      FildM64intSt0,
+      Fincstp,
+      Finit,
+      Fninit,
+      FistM16intSt0,
+      FistM32intSt0,
+      FistpM16intSt0,
+      FistpM32intSt0,
+      FistpM64intSt0,
+      FisttpM16intSt0,
+      FisttpM32intSt0,
+      FisttpM64intSt0,
+      FldM32fpSt0,
+      FldM64fpSt0,
+      FldM80fpSt0,
+      FldStiSt0,
+      Fld1St0,
+      Fldl2tSt0,
+      Fldl2eSt0,
+      FldpiSt0,
+      Fldlg2St0,
+      Fldln2St0,
+      FldzSt0,
+      FldcwM2byte,
+      FldenvM14/28byte,
+      FmulM32fpSt0,
+      FmulM64fpSt0,
+      FmulSt0Sti,
+      FmulStiSt0,
+      FmulpStiSt0,
+      FmulpSt0St1,
+      FimulM32intSt0,
+      FimulM16intSt0,
+      Fnop,
+      FpatanSt0St1,
+      FpremSt0St1,
+      Fprem1St0St1,
+      FptanSt0,
+      FrndintSt0,
+      FrstorM94/108byteStxStxStxStxStxStxStxStx,
+      FsaveM94/108byteStxStxStxStxStxStxStxStx,
+      FnsaveM94/108byteStxStxStxStxStxStxStxStx,
+      FscaleSt0St1,
+      FsinSt0,
+      FsincosSt0St1,
+      FsqrtSt0St1,
+      FstM32fpSt0,
+      FstM64fpSt0,
+      FstStiSt0,
+      FstpM32fpSt0,
+      FstpM64fpSt0,
+      FstpM80fpSt0,
+      FstpStiSt0,
+      FstcwM2byte,
+      FnstcwM2byte,
+      FstenvM14/28byte,
+      FnstenvM14/28byte,
+      FstswM2byte,
+      FstswAx,
+      FnstswM2byte,
+      FnstswAx,
+      FsubM32fpSt0,
+      FsubM64fpSt0,
+      FsubSt0Sti,
+      FsubStiSt0,
+      FsubpStiSt0,
+      FsubpSt0St1,
+      FisubM32intSt0,
+      FisubM16intSt0,
+      FsubrM32fpSt0,
+      FsubrM64fpSt0,
+      FsubrSt0Sti,
+      FsubrStiSt0,
+      FsubrpStiSt0,
+      FsubrpSt0St1,
+      FisubrM32intSt0,
+      FisubrM16intSt0,
+      FtstSt0,
+      FucomStiSt0,
+      FucomSt1St0,
+      FucompStiSt0,
+      FucompSt1St0,
+      FucomppSt1St0,
+      FxamSt0,
+      FxchStiSt0,
+      FxchSt0St1,
+      FxrstorM512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx,
+      Fxrstor64M512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx,
+      FxsaveM512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx,
+      Fxsave64M512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx,
+      FxtractSt0St1,
+      Fyl2xSt1St0,
+      Fyl2xp1St1St0    )
   }
 }
 interface ClfshInstruction
@@ -2398,9 +2577,11 @@ interface RdseedInstruction
 interface AdxInstruction
 interface ClflushoptInstruction
 interface ShaInstruction
+interface FpuInstruction
 interface Cx8Instruction
 interface CmovInstruction
 interface MmxInstruction
+interface FxsrInstruction
 interface LahfLmInstruction
 interface AbmInstruction
 interface PrfchwInstruction

@@ -2,9 +2,9 @@ package kasm.x64
 
 import java.util.*
 
-interface StatusField
+interface StatusOrControlField
 
-enum class RflagsField(isIgnored: Boolean = false) : StatusField {
+enum class RflagsField(isIgnored: Boolean = false) : StatusOrControlField {
     OF,
     SF,
     ZF,
@@ -21,38 +21,47 @@ enum class RflagsField(isIgnored: Boolean = false) : StatusField {
     AF(true),
 }
 
-enum class X87StatusField(val isControlField: Boolean = false, val isStatusField: Boolean = false) : StatusField {
-    IM(isControlField = true),
-    DM(isControlField = true),
-    ZM(isControlField = true),
-    OM(isControlField = true),
-    UM(isControlField = true),
-    PM(isControlField = true),
-    PC(isControlField = true),
-    RC(isControlField = true),
-    X(isControlField = true),
-    B(isStatusField = true),
-    C3(isStatusField = true),
-    TOP(isStatusField = true),
-    C2(isStatusField = true),
-    C1(isStatusField = true),
-    C0(isStatusField = true),
-    ES(isStatusField = true),
-    SF(isStatusField = true),
-    PE(isStatusField = true),
-    UE(isStatusField = true),
-    OE(isStatusField = true),
-    ZE(isStatusField = true),
-    DE(isStatusField = true),
-    IE(isStatusField = true),
-    TAG,
-    TAG_I;
-
-    val CONTROL_FIELDS = X87StatusField.values().filter { it.isControlField }
-    val STATUS_FIELDS = X87StatusField.values().filter { it.isStatusField }
+enum class X87ControlField : StatusOrControlField {
+    IM,
+    DM,
+    ZM,
+    OM,
+    UM,
+    PM,
+    PC,
+    RC,
+    X
 }
 
-enum class MxcsrField(isIgnored: Boolean = true) : StatusField {
+enum class X87StatusField : StatusOrControlField {
+    B,
+    C3,
+    TOP,
+    C2,
+    C1,
+    C0,
+    ES,
+    SF,
+    PE,
+    UE,
+    OE,
+    ZE,
+    DE,
+    IE,
+}
+
+enum class X87TagField : StatusOrControlField {
+    TAG0,
+    TAG1,
+    TAG2,
+    TAG3,
+    TAG4,
+    TAG5,
+    TAG6,
+    TAG7,
+}
+
+enum class MxcsrField(isIgnored: Boolean = true) : StatusOrControlField {
     PE,
     UE,
     OE,
@@ -93,86 +102,121 @@ enum class InstructionEncodingType {
 enum class BitRange {
 
 
-    _0_7 {
+    BITS_0_7 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 7
-        override val size = BitSize._8
+        override val size = BitSize.BITS_8
     },
-    _8_15 {
+    BITS_8_15 {
         override fun contains(bit: Int) = bit >= 8 && bit <= 15
-        override val size = BitSize._8
+        override val size = BitSize.BITS_8
     },
-    _0_15 {
+    BITS_0_15 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 15
-        override val size = BitSize._16
+        override val size = BitSize.BITS_16
     },
-    _0_31 {
+    BITS_0_31 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 31
-        override val size = BitSize._32
+        override val size = BitSize.BITS_32
     },
-    _0_63 {
+    BITS_0_63 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 63
-        override val size = BitSize._64
+        override val size = BitSize.BITS_64
     },
-    _0_80 {
+    BITS_0_79 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 79
-        override val size = BitSize._80
+        override val size = BitSize.BITS_80
     },
-    _64_127 {
+    BITS_64_127 {
         override fun contains(bit: Int) = bit >= 64 && bit <= 127
-        override val size = BitSize._64
+        override val size = BitSize.BITS_64
     },
-    _0_127 {
+    BITS_0_127 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 127
-        override val size = BitSize._128
+        override val size = BitSize.BITS_128
     },
-    _0_255 {
+    BITS_0_255 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 255
-        override val size = BitSize._256
+        override val size = BitSize.BITS_256
     },
 
     //FIXME: should rather be 0_VMAX instead
-    _0_511 {
+    BITS_0_511 {
         override fun contains(bit: Int) = bit >= 0 && bit <= 511
-        override val size = BitSize._512
-    };
+        override val size = BitSize.BITS_512
+    },
+
+    BYTES_0_27 {
+        override fun contains(bit: Int) = bit >= 0 && bit <= 223
+        override val size = BitSize.BYTES_28
+    },
+
+    BYTES_0_107 {
+        override fun contains(bit: Int) = bit >= 0 && bit <= 864
+        override val size = BitSize.BYTES_108
+    },
+
+    BYTES_0_511 {
+        override fun contains(bit: Int) = bit >= 0 && bit <= 4095
+        override val size = BitSize.BYTES_512
+    }
+
+    ;
 
     abstract fun contains(bit: Int): Boolean
     abstract val size: BitSize
 }
 
 enum class BitSize {
-    _8 {
-        override fun toBitRange() = BitRange._0_7
+    BITS_8 {
+        override fun toBitRange() = BitRange.BITS_0_7
         override fun toInt() = 8
     },
-    _16 {
-        override fun toBitRange() = BitRange._0_15
+    BITS_16 {
+        override fun toBitRange() = BitRange.BITS_0_15
         override fun toInt() = 16
     },
-    _32 {
-        override fun toBitRange() = BitRange._0_31
+    BITS_32 {
+        override fun toBitRange() = BitRange.BITS_0_31
         override fun toInt() = 32
     },
-    _64 {
-        override fun toBitRange() = BitRange._0_63
+    BITS_64 {
+        override fun toBitRange() = BitRange.BITS_0_63
         override fun toInt() = 64
     },
-    _80 {
-        override fun toBitRange() = BitRange._0_80
+    BITS_80 {
+        override fun toBitRange() = BitRange.BITS_0_79
         override fun toInt() = 80
     },
-    _128 {
-        override fun toBitRange() = BitRange._0_127
+    BITS_128 {
+        override fun toBitRange() = BitRange.BITS_0_127
         override fun toInt() = 128
     },
-    _256 {
-        override fun toBitRange() = BitRange._0_255
+    BITS_256 {
+        override fun toBitRange() = BitRange.BITS_0_255
         override fun toInt() = 256
     },
-    _512 {
-        override fun toBitRange() = BitRange._0_511
+    BITS_512 {
+        override fun toBitRange() = BitRange.BITS_0_511
         override fun toInt() = 256
-    };
+    },
+
+    BYTES_28 {
+        override fun toBitRange() = BitRange.BYTES_0_27
+        override fun toInt() = 224
+    },
+
+    BYTES_108 {
+        override fun toBitRange() = BitRange.BYTES_0_107
+        override fun toInt() = 864
+    },
+
+    BYTES_512 {
+        override fun toBitRange() = BitRange.BYTES_0_511
+        override fun toInt() = 4096
+    },
+
+
+    ;
 
     abstract fun toInt(): Int
     val byteSize get() = toInt() / 8
@@ -729,26 +773,26 @@ enum class ZmmRegister(override val code: Int) : Register, VectorRegister {
 }
 
 enum class RegisterType(val size: BitSize, val superRegisterType: RegisterType?, val topRegisterType: RegisterType?) {
-    IP(BitSize._64, null, null),
-    RFLAGS(BitSize._64, null, null),
-    MXCSR(BitSize._32, null, null),
-    GP64(BitSize._64, null, null),
-    GP32(BitSize._32, GP64, GP64),
-    GP16(BitSize._16, GP32, GP64),
-    GP8(BitSize._8, GP16, GP64),
-    MM(BitSize._64, null, null) {
+    IP(BitSize.BITS_64, null, null),
+    RFLAGS(BitSize.BITS_64, null, null),
+    MXCSR(BitSize.BITS_32, null, null),
+    GP64(BitSize.BITS_64, null, null),
+    GP32(BitSize.BITS_32, GP64, GP64),
+    GP16(BitSize.BITS_16, GP32, GP64),
+    GP8(BitSize.BITS_8, GP16, GP64),
+    MM(BitSize.BITS_64, null, null) {
         override val isVectorType = true
     },
-    ZMM(BitSize._512, null, null) {
+    ZMM(BitSize.BITS_512, null, null) {
         override val isVectorType = true
     },
-    YMM(BitSize._256, ZMM, ZMM) {
+    YMM(BitSize.BITS_256, ZMM, ZMM) {
         override val isVectorType = true
     },
-    XMM(BitSize._128, YMM, ZMM) {
+    XMM(BitSize.BITS_128, YMM, ZMM) {
         override val isVectorType = true
     },
-    X87(BitSize._80, null, null)
+    X87(BitSize.BITS_80, null, null)
     ;
 
     val isSubRegisterType = superRegisterType != null
@@ -863,8 +907,8 @@ enum class CpuFeature {
     RDTSCP,
     RESERVED,
     LM,
-    _3DNOWEXT,
-    _3DNOW,
+    FEATURE_3DNOWEXT,
+    FEATURE_3DNOW,
     LAHF_LM,
     CMP_LEGACY,
     SVM,

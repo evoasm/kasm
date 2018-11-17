@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Assertions.*
 internal class AssemblerTest {
 
     companion object {
-        private val NOP2_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66)
+        private val NOP2_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3.Pref66)
         private val NOP4_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._8)
         private val NOP5_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._8)
-        private val NOP6_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66, displacementSize = DisplacementSize._8)
+        private val NOP6_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3.Pref66, displacementSize = DisplacementSize._8)
         private val NOP7_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._32)
         private val NOP8_OPTIONS = EncodingOptions(displacementSize = DisplacementSize._32)
-        private val NOP9_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3._66, displacementSize = DisplacementSize._32)
+        private val NOP9_OPTIONS = EncodingOptions(legacyPrefix3 = LegacyPrefix.Group3.Pref66, displacementSize = DisplacementSize._32)
     }
 
     @Test
@@ -30,7 +30,7 @@ internal class AssemblerTest {
             buffer1.clear()
             buffer2.clear()
 
-            assembler1.nop(AddressExpression32(EAX, EAX, Scale._1, 0), NOP9_OPTIONS)
+            assembler1.nop(AddressExpression32(EAX, EAX, Scale.X1, 0), NOP9_OPTIONS)
             assembler2.nop(9)
 
             assertArrayEquals(buffer1.toArray(), buffer2.toArray())
@@ -40,7 +40,7 @@ internal class AssemblerTest {
             buffer1.clear()
             buffer2.clear()
 
-            assembler1.nop(AddressExpression32(EAX, EAX, Scale._1, 0), NOP8_OPTIONS)
+            assembler1.nop(AddressExpression32(EAX, EAX, Scale.X1, 0), NOP8_OPTIONS)
             assembler2.nop(8)
 
             assertArrayEquals(buffer1.toArray(), buffer2.toArray())
@@ -60,7 +60,7 @@ internal class AssemblerTest {
             buffer1.clear()
             buffer2.clear()
 
-            assembler1.nop(AddressExpression32(EAX, EAX, Scale._1, 0), NOP6_OPTIONS)
+            assembler1.nop(AddressExpression32(EAX, EAX, Scale.X1, 0), NOP6_OPTIONS)
             assembler2.nop(6)
 
             assertArrayEquals(buffer1.toArray(), buffer2.toArray())
@@ -70,7 +70,7 @@ internal class AssemblerTest {
             buffer1.clear()
             buffer2.clear()
 
-            assembler1.nop(AddressExpression32(EAX, EAX, Scale._1, 0), NOP5_OPTIONS)
+            assembler1.nop(AddressExpression32(EAX, EAX, Scale.X1, 0), NOP5_OPTIONS)
             assembler2.nop(5)
 
             assertArrayEquals(buffer1.toArray(), buffer2.toArray())

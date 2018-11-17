@@ -1,6 +1,7 @@
 package kasm.gen.x64
 
 import kasm.x64.*
+import java.lang.RuntimeException
 import java.util.*
 import java.util.regex.Matcher
 import kotlin.reflect.KClass
@@ -10,12 +11,13 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
     companion object {
 
         val IMM_OP_REGEXP = """^(imm|rel)(\d+)?$""".toRegex()
-        val MEM_OP_REGEXP = """^m(\d*)(?:fp|int|dec|bcd)?$""".toRegex()
+        val MEM_OP_REGEXP = """^m(?:\d+/)?(\d*)(fp|int|dec|bcd|byte)?$""".toRegex()
         val MOFFS_OP_REGEXP = """^moffs(\d+)$""".toRegex()
         val VSIB_OP_REGEXP = """^vm(?:\d+)(x|y)(\d+)$""".toRegex()
         val REG_OP_REGEXP = """^(?<reg1>xmm|ymm|zmm|mm)(?:\[(?<rangeMin>\d+)\.\.(?<rangeMax>\d+)\])?$|^(?<reg2>r)(?<regSize>8|16|32|64)$""".toRegex()
         val RM_OP_REGEXP = """^(?:(?<reg1>xmm|ymm|zmm|mm)|(?<reg2>r)(?<regSize>8|16|32|64)?)/m(?<memSize>\d+)$""".toRegex()
         val ST_OP_REGEXP = """^STi$""".toRegex()
+        val TAG_OP_REGEXP = """^TAGi$""".toRegex()
     }
 
     private var name = pair.first
@@ -26,90 +28,114 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
     private val isAlwaysWritten = !isSometimesWritten && "w" in pair.second
     private val isWritten = isAlwaysWritten || isSometimesWritten
 
-    private fun parseImplicitRegister(registerName: String): Generator.ImplicitRegister {
+    private fun parseImplicitRegister(registerName: String): List<Generator.ImplicitRegister> {
         var readBits: BitRange? = null
         var writtenBits: BitRange? = null
 
         val size = when (registerName) {
-            "RAX", "RCX", "RDX", "RBX", "RSP", "RBP", "RSI", "RDI", "RIP" -> BitSize._64
+            "RAX", "RCX", "RDX", "RBX", "RSP", "RBP", "RSI", "RDI", "RIP" -> BitSize.BITS_64
             "EAX", "ECX", "EDX", "EBX", "ESI", "EDI" -> {
-                writtenBits = BitRange._0_63
-                BitSize._32
+                writtenBits = BitRange.BITS_0_63
+                BitSize.BITS_32
             }
-            "AX", "CX", "DX", "SP", "BP", "SI", "DI" -> BitSize._16
-            "CL", "SIL", "DIL" -> BitSize._8
+            "AX", "CX", "DX", "SP", "BP", "SI", "DI" -> BitSize.BITS_16
+            "CL", "SIL", "DIL" -> BitSize.BITS_8
             "AL" -> {
-                readBits = BitRange._0_7
-                writtenBits = BitRange._0_7
-                BitSize._8
+                readBits = BitRange.BITS_0_7
+                writtenBits = BitRange.BITS_0_7
+                BitSize.BITS_8
             }
             "AH" -> {
-                readBits = BitRange._8_15
-                writtenBits = BitRange._8_15
-                BitSize._8
+                readBits = BitRange.BITS_8_15
+                writtenBits = BitRange.BITS_8_15
+                BitSize.BITS_8
+            }
+            "MMx" -> {
+                writtenBits = BitRange.BITS_0_63
+                BitSize.BITS_64
+            }
+            "XMMx" -> {
+                //FIXME: does FXRSTOR use YMM or ZMM ?
+                writtenBits = BitRange.BITS_0_127
+                BitSize.BITS_128
             }
             "XMM0" -> {
                 writtenBits = if (haveVex) {
-                    BitRange._0_511
+                    BitRange.BITS_0_511
                 } else {
-                    BitRange._0_127
+                    BitRange.BITS_0_127
                 }
-                BitSize._128
+                BitSize.BITS_128
             }
-            "ST0", "ST1" -> {
-                readBits = BitRange._0_63
-                writtenBits = BitRange._0_63
-                BitSize._64
+            "ST0", "ST1", "STx" -> {
+                readBits = BitRange.BITS_0_63
+                writtenBits = BitRange.BITS_0_63
+                BitSize.BITS_64
             }
             else -> throw IllegalArgumentException("unexpected register '$registerName'")
         }
 
-        val register: Register = when (registerName) {
-            "RAX" -> GpRegister64.RAX
-            "EAX" -> GpRegister32.EAX
-            "AX" -> GpRegister16.AX
-            "AL" -> GpRegister8.AL
-            "AH" -> GpRegister8.AL
-            "RCX" -> GpRegister64.RCX
-            "ECX" -> GpRegister32.ECX
-            "CX" -> GpRegister16.CX
-            "CL" -> GpRegister8.CL
-            "RDX" -> GpRegister64.RDX
-            "EDX" -> GpRegister32.EDX
-            "DX" -> GpRegister16.DX
-            "RBX" -> GpRegister64.RBX
-            "EBX" -> GpRegister32.EBX
-            "RSP" -> GpRegister64.RSP
-            "SP" -> GpRegister16.SP
-            "RBP" -> GpRegister64.RBP
-            "BP" -> GpRegister16.BP
-            "RSI" -> GpRegister64.RSI
-            "ESI" -> GpRegister32.ESI
-            "SI" -> GpRegister16.SI
-            "SIL" -> GpRegister8.SIL
-            "RDI" -> GpRegister64.RDI
-            "EDI" -> GpRegister32.EDI
-            "DI" -> GpRegister16.DI
-            "DIL" -> GpRegister8.DIL
-            "RIP" -> IpRegister.RIP
-            "XMM0" -> XmmRegister.XMM0
-            "ST0" -> X87Register.ST0
-            "ST1" -> X87Register.ST1
-            else -> throw IllegalArgumentException("unexpected register '$registerName'")
+
+        val registers : List<Register> = when (registerName) {
+            "STx" -> X87Register.values().toList()
+            "XMMx" -> XmmRegister.values().toList()
+            "MMx" -> MmRegister.values().toList()
+            else -> {
+                val register: Register = when (registerName) {
+                    "RAX" -> GpRegister64.RAX
+                    "EAX" -> GpRegister32.EAX
+                    "AX" -> GpRegister16.AX
+                    "AL" -> GpRegister8.AL
+                    "AH" -> GpRegister8.AL
+                    "RCX" -> GpRegister64.RCX
+                    "ECX" -> GpRegister32.ECX
+                    "CX" -> GpRegister16.CX
+                    "CL" -> GpRegister8.CL
+                    "RDX" -> GpRegister64.RDX
+                    "EDX" -> GpRegister32.EDX
+                    "DX" -> GpRegister16.DX
+                    "RBX" -> GpRegister64.RBX
+                    "EBX" -> GpRegister32.EBX
+                    "RSP" -> GpRegister64.RSP
+                    "SP" -> GpRegister16.SP
+                    "RBP" -> GpRegister64.RBP
+                    "BP" -> GpRegister16.BP
+                    "RSI" -> GpRegister64.RSI
+                    "ESI" -> GpRegister32.ESI
+                    "SI" -> GpRegister16.SI
+                    "SIL" -> GpRegister8.SIL
+                    "RDI" -> GpRegister64.RDI
+                    "EDI" -> GpRegister32.EDI
+                    "DI" -> GpRegister16.DI
+                    "DIL" -> GpRegister8.DIL
+                    "RIP" -> IpRegister.RIP
+                    "XMM0" -> XmmRegister.XMM0
+                    "ST0" -> X87Register.ST0
+                    "ST1" -> X87Register.ST1
+                    else -> throw IllegalArgumentException("unexpected register '$registerName'")
+                }
+                listOf(register)
+            }
         }
-        return Generator.ImplicitRegister(register, size, (readBits ?: size.toBitRange()).takeIf { isRead }, (writtenBits ?: size.toBitRange()).takeIf { isWritten })
+
+        return registers.map { register ->
+            Generator.ImplicitRegister(register, size, (readBits ?: size.toBitRange()).takeIf { isRead }, (writtenBits ?: size.toBitRange()).takeIf { isWritten })
+        }
     }
 
     fun toOperandSize(size: Int): BitSize {
         return when (size) {
-            8 -> BitSize._8
-            16 -> BitSize._16
-            32 -> BitSize._32
-            64 -> BitSize._64
-            80 -> BitSize._80
-            128 -> BitSize._128
-            256 -> BitSize._256
-            512 -> BitSize._512
+            8 -> BitSize.BITS_8
+            16 -> BitSize.BITS_16
+            32 -> BitSize.BITS_32
+            64 -> BitSize.BITS_64
+            80 -> BitSize.BITS_80
+            128 -> BitSize.BITS_128
+            256 -> BitSize.BITS_256
+            512 -> BitSize.BITS_512
+            224 -> BitSize.BYTES_28
+            864 -> BitSize.BYTES_108
+            4096 -> BitSize.BYTES_512
             else -> throw IllegalArgumentException("invalid size $size")
         }
     }
@@ -130,17 +156,17 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
 //    }
 
 
-    fun parse(): Operand {
+    fun parse(): List<Operand> {
 
         val nameAsInt = name.toIntOrNull()
         if (nameAsInt != null) {
-            return implicitImmediateOperand(nameAsInt)
+            return listOf(implicitImmediateOperand(nameAsInt))
         }
 
-        if (name.toUpperCase() == name) {
+        if (name.toUpperCase() == name || name == "STx" || name == "XMMx" || name == "MMx") {
             return parseImplicitOperand()
         } else {
-            return parseExplicitOperand()
+            return listOf(parseExplicitOperand())
         }
     }
 
@@ -151,9 +177,9 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
 
     private fun bitRangeFromRange(wordRange: IntRange): BitRange {
         return when (wordRange) {
-            (0..31) -> BitRange._0_31
-            (0..63) -> BitRange._0_63
-            (64..127) -> BitRange._64_127
+            (0..31) -> BitRange.BITS_0_31
+            (0..63) -> BitRange.BITS_0_63
+            (64..127) -> BitRange.BITS_64_127
             else -> throw IllegalArgumentException()
         }
     }
@@ -168,10 +194,10 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
                 64 -> RegisterType.GP64
                 else -> throw IllegalArgumentException()
             }
-            "xmm" -> BitSize._128 to RegisterType.XMM
-            "ymm" -> BitSize._256 to RegisterType.YMM
-            "zmm" -> BitSize._512 to RegisterType.ZMM
-            "mm" -> BitSize._64 to RegisterType.MM
+            "xmm" -> BitSize.BITS_128 to RegisterType.XMM
+            "ymm" -> BitSize.BITS_256 to RegisterType.YMM
+            "zmm" -> BitSize.BITS_512 to RegisterType.ZMM
+            "mm" -> BitSize.BITS_64 to RegisterType.MM
             else -> throw IllegalArgumentException("unexpected operand '$registerType'")
         }
     }
@@ -201,8 +227,8 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
             val writtenMemoryBits = accessedMemoryBits
             val writtenRegisterBits = when (type) {
             // 32-bit GP registers clear upper double word (i.e. write to it)
-                RegisterType.GP32 -> BitRange._0_63
-                RegisterType.XMM -> if (haveVex) BitRange._0_511 else accessedRegisterBits
+                RegisterType.GP32 -> BitRange.BITS_0_63
+                RegisterType.XMM -> if (haveVex) BitRange.BITS_0_511 else accessedRegisterBits
                 else -> accessedRegisterBits
             }
 
@@ -238,8 +264,8 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
 
             val readBits = accessedBits
             val writtenBits = when (type) {
-                RegisterType.GP32 -> BitRange._0_63
-                RegisterType.XMM -> if (haveVex) BitRange._0_511 else accessedBits
+                RegisterType.GP32 -> BitRange.BITS_0_63
+                RegisterType.XMM -> if (haveVex) BitRange.BITS_0_511 else accessedBits
                 else -> accessedBits
             }
 
@@ -254,7 +280,11 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
         }
 
         match(MEM_OP_REGEXP, name) {
-            val size = toOperandSize(it.group(1).toInt())
+            var sizeBits = it.group(1).toInt()
+            if(it.group(2) == "byte") {
+                sizeBits *= 8
+            }
+            val size = toOperandSize(sizeBits)
             val accessedBits = size.toBitRange()
 
             return ExplicitMemoryOperand(size,
@@ -285,7 +315,7 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
         }
 
         match(ST_OP_REGEXP, name) {
-            val size = BitSize._80
+            val size = BitSize.BITS_80
             val accessedBits = size.toBitRange()
             val type = RegisterType.X87
             return ExplicitRegisterOperand(size,
@@ -298,20 +328,29 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
                                            name)
         }
 
+
         throw IllegalArgumentException("unmatched operator '$name'")
     }
 
-    private fun parseImplicitOperand(): Operand {
+    private fun parseImplicitOperand(): List<ImplicitOperand> {
         val indirect = name.startsWith("[")
         val sanitizedOperandNames = name.replace("\\[|\\]".toRegex(), "").split("\\s*\\+\\s*".toRegex())
 
-        val baseRegister = parseImplicitRegister(sanitizedOperandNames[0])
-        val indexRegister = if (sanitizedOperandNames.size > 1) parseImplicitRegister(sanitizedOperandNames[1]) else {
-            null
-        }
+        val implicitRegisters = parseImplicitRegister(sanitizedOperandNames[0])
 
         return if (indirect) {
-            ImplicitMemoryOperand(baseRegister.size,
+            check(implicitRegisters.size == 1)
+            val baseRegister = implicitRegisters.first()
+
+            val indexRegister = if (sanitizedOperandNames.size > 1) {
+                parseImplicitRegister(sanitizedOperandNames[1]).also {
+                    check(it.size == 1)
+                }.first()
+            }else {
+                null
+            }
+
+            listOf(ImplicitMemoryOperand(baseRegister.size,
                     baseRegister.readBits,
                     baseRegister.writtenBits,
                     isAlwaysWritten,
@@ -319,16 +358,18 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
                     isRead,
                     baseRegister.register,
                     indexRegister?.register,
-                    name)
+                    name))
         } else {
-            ImplicitRegisterOperand(baseRegister.size,
-                    baseRegister.readBits,
-                    baseRegister.writtenBits,
-                    isAlwaysWritten,
-                    isSometimesWritten,
-                    isRead,
-                    baseRegister.register,
-                    name)
+            implicitRegisters.map {implicitRegister ->
+                ImplicitRegisterOperand(implicitRegister.size,
+                                        implicitRegister.readBits,
+                                        implicitRegister.writtenBits,
+                                        isAlwaysWritten,
+                                        isSometimesWritten,
+                                        isRead,
+                                        implicitRegister.register,
+                                        name)
+            }
         }
     }
 
@@ -348,59 +389,80 @@ class OperandsParser(val list: MutableList<Pair<String, String>>,
 
     fun parse(): List<Operand> {
 
-        list.map {
-            val operandName = it.first
-            var enumKey: Any? = findEnum(operandName, RflagsField::class.java)
-            if(operandName == "C1") {
-                println("AA")
-            }
-            if(enumKey == null) {
-                if(fpuInstruction) {
-                    enumKey = findEnum(operandName, X87StatusField::class.java) ?: findEnum(operandName, X87StatusField::class.java)
-                } else {
-                    enumKey = findEnum(operandName, MxcsrField::class.java)
+        list.flatMap { operand ->
+            val operandName = operand.first
+
+            when(operandName) {
+                "CONTROL" -> X87ControlField.values().map { Pair(it, operand.second) }
+                "STATUS" ->X87StatusField.values().map { Pair(it, operand.second) }
+                "TAG" ->X87TagField.values().map { Pair(it, operand.second) }
+                "MXCSR" -> MxcsrField.values().map { Pair(it, operand.second) }
+            else -> {
+                var enumKey: Any? = findEnum(operandName, RflagsField::class.java)
+                if(enumKey == null) {
+                    if(fpuInstruction) {
+                        enumKey = findEnum(operandName, X87StatusField::class.java) ?: findEnum(operandName, X87ControlField::class.java)
+                    } else {
+                        enumKey = findEnum(operandName, MxcsrField::class.java)
+                    }
                 }
+                if(enumKey == null) enumKey = operandName
+                listOf(Pair(enumKey, operand.second))
             }
-            if(enumKey == null) enumKey = operandName
-            Pair(enumKey, it.second)
-        }.partition { it.first is StatusField }.let {
-            return parseNonStatusFieldOperands(it.second as List<Pair<String, String>>) + parseStatusFieldOperands(it.first as List<Pair<StatusField, String>>)
+            }
+
+        }.partition { it.first is StatusOrControlField }.let {
+            return parseNonStatusFieldOperands(it.second as List<Pair<String, String>>) + parseStatusFieldOperands(it.first as List<Pair<StatusOrControlField, String>>)
         }
     }
 
     private fun parseNonStatusFieldOperands(nonFlagOperands: List<Pair<String, String>>): List<Operand> {
-        return nonFlagOperands.map {
-            OperandParser(it, haveVex).parse()
+        return nonFlagOperands.flatMap {
+            // FIXME: Handle TAGi for FFREE
+            if(it.first == "TAGi") {
+                emptyList()
+            } else {
+                OperandParser(it, haveVex).parse()
+            }
         }.also {
             loadOperandParameters(it)
         }
     }
 
-    private fun parseStatusFieldOperands(statusFieldOperands: List<Pair<StatusField, String>>): List<Operand> {
-        val (rFlagOperands, otherOperands) = statusFieldOperands.partition { it.first is RflagsField }
+    private fun parseStatusFieldOperands(statusFieldOperands: List<Pair<StatusOrControlField, String>>): List<Operand> {
+        val operandsByClass = statusFieldOperands.groupBy { it.first::class }
 
         val operands = mutableListOf<Operand>()
 
-        if (rFlagOperands.isNotEmpty()) {
-            val (readRflagsFields, alwaysWrittenRflagsFields, sometimesWrittenRflagsFields) = partitionStatusFieldOperands<RflagsField>(rFlagOperands as List<Pair<RflagsField, String>>,
-                                                                                                                                        RflagsField::class)
-            operands.add(RflagsOperand(readRflagsFields, alwaysWrittenRflagsFields, sometimesWrittenRflagsFields))
-        }
+        statusFieldOperands.groupBy { it.first::class }.forEach { klass, group ->
+            if(group.isNotEmpty()) {
 
-        if(fpuInstruction) {
-            if (otherOperands.isNotEmpty()) {
-                val (readX87Fields, alwaysWrittenX87Fields, sometimesWrittenX87Fields) = partitionStatusFieldOperands<X87StatusField>(
-                        otherOperands as List<Pair<X87StatusField, String>>,
-                        X87StatusField::class)
-                operands.add(X87StatusRegisterOperand(readX87Fields, alwaysWrittenX87Fields, sometimesWrittenX87Fields))
+                when(klass) {
+                    RflagsField::class                  -> {
+                        val (readFields, alwaysWrittenFields, sometimesWrittenFields) = partitionStatusFieldOperands(group as List<Pair<RflagsField, String>>, klass as KClass<RflagsField>)
+                        operands.add(RflagsOperand(readFields, alwaysWrittenFields, sometimesWrittenFields))
+                    }
+                    MxcsrField::class                   -> {
+                        val (readFields, alwaysWrittenFields, sometimesWrittenFields) = partitionStatusFieldOperands(group as List<Pair<MxcsrField, String>>, klass as KClass<MxcsrField>)
+                        operands.add(MxcsrOperand(readFields, alwaysWrittenFields, sometimesWrittenFields))
+                    }
+                    X87StatusField::class -> {
+                        val (readFields, alwaysWrittenFields, sometimesWrittenFields) = partitionStatusFieldOperands(group as List<Pair<X87StatusField, String>>, klass as KClass<X87StatusField>)
+                        operands.add(X87StatusRegisterOperand(readFields, alwaysWrittenFields, sometimesWrittenFields))
+                    }
+                    X87ControlField::class -> {
+                        val (readFields, alwaysWrittenFields, sometimesWrittenFields) = partitionStatusFieldOperands(group as List<Pair<X87ControlField, String>>, klass as KClass<X87ControlField>)
+                        operands.add(X87ControlRegisterOperand(readFields, alwaysWrittenFields, sometimesWrittenFields))
+                    }
+                    X87TagField::class -> {
+                        val (readFields, alwaysWrittenFields, sometimesWrittenFields) = partitionStatusFieldOperands(group as List<Pair<X87TagField, String>>, klass as KClass<X87TagField>)
+                        operands.add(X87TagRegisterOperand(readFields, alwaysWrittenFields, sometimesWrittenFields))
+                    }
+                    else -> throw RuntimeException("unknown field class $klass")
+                }
+
             }
-        } else {
-            if (otherOperands.isNotEmpty()) {
-                val (readMxcsrFields, alwaysWrittenMxcsrFields, sometimesWrittenMxcsrFields) = partitionStatusFieldOperands<MxcsrField>(
-                        otherOperands as List<Pair<MxcsrField, String>>,
-                        MxcsrField::class)
-                operands.add(MxcsrOperand(readMxcsrFields, alwaysWrittenMxcsrFields, sometimesWrittenMxcsrFields))
-            }
+
         }
 
         return operands
@@ -432,11 +494,11 @@ class OperandsParser(val list: MutableList<Pair<String, String>>,
 
     private fun numericTypeForSize(operandSize: BitSize): String {
         val type = when (operandSize) {
-            BitSize._64 -> "Long"
-            BitSize._32 -> "Int"
-            BitSize._16 -> "Short"
-            BitSize._8 -> "Byte"
-            else -> throw IllegalArgumentException(operandSize.toString())
+            BitSize.BITS_64 -> "Long"
+            BitSize.BITS_32 -> "Int"
+            BitSize.BITS_16 -> "Short"
+            BitSize.BITS_8  -> "Byte"
+            else            -> throw IllegalArgumentException(operandSize.toString())
         }
         return type
     }
@@ -462,15 +524,15 @@ class OperandsParser(val list: MutableList<Pair<String, String>>,
 
         fun registerOperandParameter(registerType: RegisterType, operandSize: BitSize): Operand.Parameter {
             val type = when (registerType) {
-                RegisterType.ZMM -> "ZmmRegister"
-                RegisterType.YMM -> "YmmRegister"
-                RegisterType.XMM -> "XmmRegister"
+                RegisterType.ZMM                                                          -> "ZmmRegister"
+                RegisterType.YMM                                                          -> "YmmRegister"
+                RegisterType.XMM                                                          -> "XmmRegister"
                 RegisterType.GP64, RegisterType.GP32, RegisterType.GP16, RegisterType.GP8 -> {
                     "GpRegister${operandSize.toInt()}"
                 }
-                RegisterType.MM -> "MmRegister"
-                RegisterType.X87 -> "X87Register"
-                else -> throw IllegalArgumentException(registerType.toString())
+                RegisterType.MM                                                           -> "MmRegister"
+                RegisterType.X87                                                          -> "X87Register"
+                else                                                                      -> throw IllegalArgumentException(registerType.toString())
             }
             val parameterName = "register${if (useRegisterCounter) (1 + registerCounter++).toString() else ""}"
             return Operand.Parameter(parameterName, type)
@@ -498,7 +560,13 @@ class OperandsParser(val list: MutableList<Pair<String, String>>,
                 }
 
                 is ExplicitMemoryOperand -> {
-                    Operand.Parameter("addressExpression", "AddressExpression" + operand.size.toInt())
+                    val sizeSuffix = when(operand.size) {
+                        BitSize.BYTES_512 -> "512Bytes"
+                        BitSize.BYTES_108 -> "108Bytes"
+                        BitSize.BYTES_28 -> "28Bytes"
+                        else -> operand.size.toInt().toString()
+                    }
+                    Operand.Parameter("addressExpression", "AddressExpression" + sizeSuffix)
                 }
 
                 is ExplicitImmediateOperand -> {

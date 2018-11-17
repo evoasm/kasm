@@ -39,7 +39,7 @@ abstract class ExplicitOperand : Operand(), SizedOperand {
     override val isImplicit : Boolean get() = false
 }
 
-abstract class StatusRegisterOperand<T: Enum<T>> : ImplicitOperand() {
+abstract class StatusOrControlRegisterOperand<T: Enum<T>> : ImplicitOperand() {
     abstract val readFields: EnumSet<T>
     abstract val alwaysWrittenFields: EnumSet<T>
     abstract val sometimesWrittenFields: EnumSet<T>
@@ -52,16 +52,20 @@ abstract class StatusRegisterOperand<T: Enum<T>> : ImplicitOperand() {
         get() = readFields.isNotEmpty()
 }
 
-data class RflagsOperand(override val readFields: EnumSet<RflagsField>, override val alwaysWrittenFields: EnumSet<RflagsField>, override val sometimesWrittenFields: EnumSet<RflagsField>) : StatusRegisterOperand<RflagsField>() {
+data class RflagsOperand(override val readFields: EnumSet<RflagsField>, override val alwaysWrittenFields: EnumSet<RflagsField>, override val sometimesWrittenFields: EnumSet<RflagsField>) : StatusOrControlRegisterOperand<RflagsField>() {
     override val name = "RFLAGS"
-
 }
-data class MxcsrOperand(override val readFields: EnumSet<MxcsrField>, override val alwaysWrittenFields: EnumSet<MxcsrField>, override val sometimesWrittenFields: EnumSet<MxcsrField>) : StatusRegisterOperand<MxcsrField>() {
+data class MxcsrOperand(override val readFields: EnumSet<MxcsrField>, override val alwaysWrittenFields: EnumSet<MxcsrField>, override val sometimesWrittenFields: EnumSet<MxcsrField>) : StatusOrControlRegisterOperand<MxcsrField>() {
     override val name = "MXCSR"
 }
-data class X87StatusRegisterOperand(override val readFields: EnumSet<X87StatusField>, override val alwaysWrittenFields: EnumSet<X87StatusField>, override val sometimesWrittenFields: EnumSet<X87StatusField>) : StatusRegisterOperand<X87StatusField>() {
-    override val name = "X87"
-
+data class X87StatusRegisterOperand(override val readFields: EnumSet<X87StatusField>, override val alwaysWrittenFields: EnumSet<X87StatusField>, override val sometimesWrittenFields: EnumSet<X87StatusField>) : StatusOrControlRegisterOperand<X87StatusField>() {
+    override val name = "X87Status"
+}
+data class X87ControlRegisterOperand(override val readFields: EnumSet<X87ControlField>, override val alwaysWrittenFields: EnumSet<X87ControlField>, override val sometimesWrittenFields: EnumSet<X87ControlField>) : StatusOrControlRegisterOperand<X87ControlField>() {
+    override val name = "X87Control"
+}
+data class X87TagRegisterOperand(override val readFields: EnumSet<X87TagField>, override val alwaysWrittenFields: EnumSet<X87TagField>, override val sometimesWrittenFields: EnumSet<X87TagField>) : StatusOrControlRegisterOperand<X87TagField>() {
+    override val name = "X87Tag"
 }
 
 data class ExplicitRegisterOperand(override val size: BitSize,

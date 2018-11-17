@@ -16,8 +16,13 @@ interface InstructionTracer {
 
     fun traceRead(rflagsField: RflagsField) {}
     fun traceWrite(rflagsField: RflagsField, always: Boolean) {}
-    fun traceRead(mxcsrField: MxcsrField, always: Boolean) {}
+    fun traceRead(mxcsrField: MxcsrField) {}
     fun traceWrite(mxcsrField: MxcsrField, always: Boolean) {}
+
+    fun traceRead(x87StatusField: X87StatusField) {}
+    fun traceWrite(x87StatusField: X87StatusField, always: Boolean) {}
+    fun traceRead(x87ControlField: X87ControlField) {}
+    fun traceWrite(x87ControlField: X87ControlField, always: Boolean) {}
 
     fun traceFeature(feature: CpuFeature) {}
 }
@@ -31,6 +36,7 @@ interface InstructionParameters {
     fun getXmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): XmmRegister
     fun getYmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): YmmRegister
     fun getZmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): ZmmRegister
+    fun getX87Register(index: Int, isRead: Boolean, isWritten: Boolean): X87Register
 
     fun getAddress8(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression8
     fun getAddress16(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression16
@@ -62,7 +68,7 @@ data class EncodingOptions(
         var legacyPrefix3: LegacyPrefix.Group3? = null,
         var legacyPrefix4: LegacyPrefix.Group4? = null,
         var lock: Boolean = false,
-        var addressSize: AddressSize = AddressSize._64,
+        var addressSize: AddressSize = AddressSize.BITS_64,
         var forceSib: Boolean = false,
         var displacementSize: DisplacementSize = DisplacementSize.AUTO,
         var forceLongVex: Boolean = false,
@@ -75,8 +81,8 @@ data class EncodingOptions(
 
     val encodedLegacyPrefix4: LegacyPrefix.Group4?
         get() {
-            return if (addressSize == AddressSize._32) {
-                LegacyPrefix.Group4._67
+            return if (addressSize == AddressSize.BITS_32) {
+                LegacyPrefix.Group4.Pref67
             } else {
                 legacyPrefix4
             }
@@ -87,15 +93,15 @@ data class EncodingOptions(
                                  val thirdGroup: LegacyPrefixGroup,
                                  val fourthGroup: LegacyPrefixGroup) {
         companion object {
-            val DEFAULT = LegacyPrefixOrder(LegacyPrefixGroup._1,
-                                            LegacyPrefixGroup._2,
-                                            LegacyPrefixGroup._3,
-                                            LegacyPrefixGroup._4)
+            val DEFAULT = LegacyPrefixOrder(LegacyPrefixGroup.GROUP_1,
+                                            LegacyPrefixGroup.GROUP_2,
+                                            LegacyPrefixGroup.GROUP_3,
+                                            LegacyPrefixGroup.GROUP_4)
 
-            val REVERSE = LegacyPrefixOrder(LegacyPrefixGroup._4,
-                                            LegacyPrefixGroup._3,
-                                            LegacyPrefixGroup._2,
-                                            LegacyPrefixGroup._1)
+            val REVERSE = LegacyPrefixOrder(LegacyPrefixGroup.GROUP_4,
+                                            LegacyPrefixGroup.GROUP_3,
+                                            LegacyPrefixGroup.GROUP_2,
+                                            LegacyPrefixGroup.GROUP_1)
 
         }
     }
@@ -147,10 +153,10 @@ object Encoding {
                                      legacyPrefix3: LegacyPrefix.Group3?,
                                      legacyPrefix4: LegacyPrefix.Group4?) {
         val legacyPrefix = when (legacyGroup) {
-            LegacyPrefixGroup._1 -> legacyPrefix1
-            LegacyPrefixGroup._2 -> legacyPrefix2
-            LegacyPrefixGroup._3 -> legacyPrefix3
-            LegacyPrefixGroup._4 -> legacyPrefix4
+            LegacyPrefixGroup.GROUP_1 -> legacyPrefix1
+            LegacyPrefixGroup.GROUP_2 -> legacyPrefix2
+            LegacyPrefixGroup.GROUP_3 -> legacyPrefix3
+            LegacyPrefixGroup.GROUP_4 -> legacyPrefix4
         }
 
         if (legacyPrefix != null) {
@@ -273,7 +279,7 @@ object ModRmSib {
     }
 
     private fun encodeRip(buffer: ByteBuffer, options: EncodingOptions, reg: Int, addressExpression: AddressExpression) {
-        if (addressExpression.index != null || addressExpression.scale != Scale._1) throw EncodingException("RIP base cannot have index or scale")
+        if (addressExpression.index != null || addressExpression.scale != Scale.X1) throw EncodingException("RIP base cannot have index or scale")
         encodeBaseOnly(buffer, options, reg, IpRegister.RIP, addressExpression.displacement)
     }
 

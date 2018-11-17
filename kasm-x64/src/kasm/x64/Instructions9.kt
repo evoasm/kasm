@@ -4,12 +4,12 @@ import java.nio.ByteBuffer
 import kasm.ext.*
 import kasm.x64.CpuFeature.*
 
-object CmpsbnorepSilSilDilDil : NullaryInstruction() {
+object CwdeEax : NullaryInstruction() {
   override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.Np.encode(buffer, options)
-    Encoding.encodeOpcode(buffer, 0xA6)
+    Encoding.encodeOpcode(buffer, 0x98)
   }
   private val features = enumSetOf<CpuFeature>()
   override fun isSupported(): Boolean  {
@@ -17,18 +17,8 @@ object CmpsbnorepSilSilDilDil : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister8.SIL, true, BitRange._0_7)
-    tracer.traceRead(AddressExpression8(kasm.x64.GpRegister64.RSI, null))
-    tracer.traceRead(kasm.x64.GpRegister8.DIL, true, BitRange._0_7)
-    tracer.traceRead(AddressExpression8(kasm.x64.GpRegister64.RDI, null))
-    tracer.traceWrite(kasm.x64.GpRegister8.SIL, true, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.GpRegister8.DIL, true, BitRange._0_7, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
+    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange.BITS_0_31)
+    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -38,80 +28,12 @@ object CmpsbnorepSilSilDilDil : NullaryInstruction() {
     trace(tracer)
   }
 }
-object CmpswnorepSiSiDiDi : NullaryInstruction() {
-  override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.Np.encode(buffer, options)
-    Encoding.encodeOpcode(buffer, 0xA7)
-  }
-  private val features = enumSetOf<CpuFeature>()
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer)  {
-    tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister16.SI, true, BitRange._0_15)
-    tracer.traceRead(AddressExpression16(kasm.x64.GpRegister64.RSI, null))
-    tracer.traceRead(kasm.x64.GpRegister16.DI, true, BitRange._0_15)
-    tracer.traceRead(AddressExpression16(kasm.x64.GpRegister64.RDI, null))
-    tracer.traceWrite(kasm.x64.GpRegister16.SI, true, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.GpRegister16.DI, true, BitRange._0_15, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, options, tracer)
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    trace(tracer)
-  }
-}
-object CmpsdnorepEsiEsiEdiEdi : NullaryInstruction() {
-  override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Np.encode(buffer, options)
-    Encoding.encodeOpcode(buffer, 0xA7)
-  }
-  private val features = enumSetOf<CpuFeature>()
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer)  {
-    tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister32.ESI, true, BitRange._0_31)
-    tracer.traceRead(AddressExpression32(kasm.x64.GpRegister64.RSI, null))
-    tracer.traceRead(kasm.x64.GpRegister32.EDI, true, BitRange._0_31)
-    tracer.traceRead(AddressExpression32(kasm.x64.GpRegister64.RDI, null))
-    tracer.traceWrite(kasm.x64.GpRegister32.ESI, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.GpRegister32.EDI, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, options, tracer)
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    trace(tracer)
-  }
-}
-object CmpsqnorepRsiRsiRdiRdi : NullaryInstruction() {
+object CdqeRax : NullaryInstruction() {
   override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.Np.encodeMandatory(buffer, options, 1)
-    Encoding.encodeOpcode(buffer, 0xA7)
+    Encoding.encodeOpcode(buffer, 0x98)
   }
   private val features = enumSetOf<CpuFeature>()
   override fun isSupported(): Boolean  {
@@ -119,18 +41,8 @@ object CmpsqnorepRsiRsiRdiRdi : NullaryInstruction() {
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister64.RSI, true, BitRange._0_63)
-    tracer.traceRead(AddressExpression64(kasm.x64.GpRegister64.RSI, null))
-    tracer.traceRead(kasm.x64.GpRegister64.RDI, true, BitRange._0_63)
-    tracer.traceRead(AddressExpression64(kasm.x64.GpRegister64.RDI, null))
-    tracer.traceWrite(kasm.x64.GpRegister64.RSI, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.GpRegister64.RDI, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
+    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange.BITS_0_63)
+    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -140,1446 +52,811 @@ object CmpsqnorepRsiRsiRdiRdi : NullaryInstruction() {
     trace(tracer)
   }
 }
-object CmpsdXmm0To63Xmmm64Imm8 : XmmXmmmImm8Instruction(), VectorInstruction, Sse2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, immediate)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xC2)
-    ModRmSib.encode(buffer, options, register1, register2)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE2)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register1, false, BitRange._0_63)
-    tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression, immediate)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xC2)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register, false, BitRange._0_63)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false), parameters.getByteImmediate(2), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), parameters.getByteImmediate(2), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false), parameters.getByteImmediate(2))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), parameters.getByteImmediate(2))
-    }
-  }
-}
-object VcmpsdXmmXmmXmmm64Imm8 : XmmXmmXmmmImm8Instruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, register3, immediate)
+object Clc : NullaryInstruction() {
+  override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 1, 0, 3, register1, register3, register2)
-    Encoding.encodeOpcode(buffer, 0xC2)
-    ModRmSib.encode(buffer, options, register1, register3)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  private val features = enumSetOf<CpuFeature>(AVX)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceRead(register3, false, BitRange._0_63)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, addressExpression, immediate)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 1, 0, 3, register1, addressExpression, register2)
-    Encoding.encodeOpcode(buffer, 0xC2)
-    ModRmSib.encode(buffer, options, register1, addressExpression)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false), parameters.getByteImmediate(3), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), parameters.getByteImmediate(3), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false), parameters.getByteImmediate(3))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), parameters.getByteImmediate(3))
-    }
-  }
-}
-object CmpssXmm0To31Xmmm32Imm8 : XmmXmmmImm8Instruction(), VectorInstruction, SseInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, immediate)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Rep, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xC2)
-    ModRmSib.encode(buffer, options, register1, register2)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE)
-    tracer.traceRead(register1, false, BitRange._0_31)
-    tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1, false, BitRange._0_31, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression, immediate)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Rep, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xC2)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE)
-    tracer.traceRead(register, false, BitRange._0_31)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register, false, BitRange._0_31, true)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false), parameters.getByteImmediate(2), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), parameters.getByteImmediate(2), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getAddress128(1, true, false), parameters.getByteImmediate(2))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, true, true), parameters.getXmmRegister(1, true, false), parameters.getByteImmediate(2))
-    }
-  }
-}
-object VcmpssXmmXmmXmmm32Imm8 : XmmXmmXmmmImm8Instruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, register3, immediate)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 1, 0, 2, register1, register3, register2)
-    Encoding.encodeOpcode(buffer, 0xC2)
-    ModRmSib.encode(buffer, options, register1, register3)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  private val features = enumSetOf<CpuFeature>(AVX)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceRead(register3, false, BitRange._0_31)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2, addressExpression, immediate)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRmVex.encode(buffer, options, options.rexW, 1, 0, 2, register1, addressExpression, register2)
-    Encoding.encodeOpcode(buffer, 0xC2)
-    ModRmSib.encode(buffer, options, register1, addressExpression)
-    Encoding.encodeImmediate8(buffer, immediate)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(immediate.toLong(), false, BitSize._8)
-    tracer.traceWrite(register1, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false), parameters.getByteImmediate(3), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), parameters.getByteImmediate(3), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getAddress128(2, true, false), parameters.getByteImmediate(3))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), parameters.getXmmRegister(2, true, false), parameters.getByteImmediate(3))
-    }
-  }
-}
-object CmpxchgRm8R8Al : R8mR8Instruction() {
-  override fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm8.encode(buffer, options, register2, register1)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB0)
-    ModRmSib.encode(buffer, options, register2, register1)
+    RexPrefix.Np.encode(buffer, options)
+    Encoding.encodeOpcode(buffer, 0xF8)
   }
   private val features = enumSetOf<CpuFeature>()
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
-  override fun trace(tracer: InstructionTracer, register1: GpRegister8, register2: GpRegister8)  {
+  override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
-    tracer.traceRead(register1, false, BitRange._0_7)
-    tracer.traceRead(register2, false, BitRange._0_7)
-    tracer.traceRead(kasm.x64.GpRegister8.AL, true, BitRange._0_7)
-    tracer.traceWrite(register1, false, BitRange._0_7, false)
-    tracer.traceWrite(kasm.x64.GpRegister8.AL, true, BitRange._0_7, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, register: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, addressExpression, register)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm8.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB0)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, register: GpRegister8)  {
-    tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(register, false, BitRange._0_7)
-    tracer.traceRead(kasm.x64.GpRegister8.AL, true, BitRange._0_7)
-    tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.GpRegister8.AL, true, BitRange._0_7, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getAddress8(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
-    }
+    encode(buffer, options, tracer)
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getAddress8(0, true, true), parameters.getGpRegister8(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getGpRegister8(0, true, true), parameters.getGpRegister8(1, true, false))
-    }
+    trace(tracer)
   }
 }
-object CmpxchgRm16R16Ax : R16mR16Instruction() {
+object Cld : NullaryInstruction() {
+  override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.Np.encode(buffer, options)
+    Encoding.encodeOpcode(buffer, 0xFC)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer)  {
+    tracer.beginTracing()
+    tracer.traceWrite(kasm.x64.RflagsField.DF, true)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer)
+  }
+}
+object ClflushM8 : M8Instruction(), ClfshInstruction {
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0xAE)
+    ModRmSib.encode(buffer, options, 7, addressExpression)
+  }
+  private val features = enumSetOf<CpuFeature>(CLFSH)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CLFSH)
+    tracer.traceWrite(addressExpression)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getAddress8(0, false, true), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getAddress8(0, false, true))
+  }
+}
+object ClflushoptM8 : M8Instruction(), ClflushoptInstruction {
+  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.Rm8.encode(buffer, options, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0xAE)
+    ModRmSib.encode(buffer, options, 7, addressExpression)
+  }
+  private val features = enumSetOf<CpuFeature>(CLFLUSHOPT)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CLFLUSHOPT)
+    tracer.traceWrite(addressExpression)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, parameters.getAddress8(0, false, true), options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer, parameters.getAddress8(0, false, true))
+  }
+}
+object Cmc : NullaryInstruction() {
+  override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.Np.encode(buffer, options)
+    Encoding.encodeOpcode(buffer, 0xF5)
+  }
+  private val features = enumSetOf<CpuFeature>()
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer)  {
+    tracer.beginTracing()
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    encode(buffer, options, tracer)
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    trace(tracer)
+  }
+}
+object CmovaR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register2, register1)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB1)
-    ModRmSib.encode(buffer, options, register2, register1)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x47)
+    ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>()
+  private val features = enumSetOf<CpuFeature>(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceRead(register1, false, BitRange._0_15)
-    tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
-    tracer.traceWrite(register1, false, BitRange._0_15, false)
-    tracer.traceWrite(kasm.x64.GpRegister16.AX, true, BitRange._0_15, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, addressExpression, register)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
+  override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB1)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x47)
     ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16)  {
+  override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceRead(register, false, BitRange._0_15)
-    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange._0_15)
-    tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.GpRegister16.AX, true, BitRange._0_15, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(parameters.useSibd()) {
-      encode(buffer, parameters.getAddress16(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
     if(parameters.useSibd()) {
-      trace(tracer, parameters.getAddress16(0, true, true), parameters.getGpRegister16(1, true, false))
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false))
     }
     else {
-      trace(tracer, parameters.getGpRegister16(0, true, true), parameters.getGpRegister16(1, true, false))
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false))
     }
   }
 }
-object CmpxchgRm32R32Eax : R32mR32Instruction() {
+object CmovaR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register2, register1)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB1)
-    ModRmSib.encode(buffer, options, register2, register1)
+    RexPrefix.RegRm.encode(buffer, options, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x47)
+    ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>()
+  private val features = enumSetOf<CpuFeature>(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
-    tracer.traceRead(register1, false, BitRange._0_31)
-    tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
-    tracer.traceWrite(register1, false, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, addressExpression, register)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB1)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: GpRegister32)  {
-    tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(register, false, BitRange._0_31)
-    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
-    tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getAddress32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getAddress32(0, true, true), parameters.getGpRegister32(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false))
-    }
-  }
-}
-object CmpxchgRm64R64Rax : R64mR64Instruction() {
-  override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register2, register1)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB1)
-    ModRmSib.encode(buffer, options, register2, register1)
-  }
-  private val features = enumSetOf<CpuFeature>()
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
-    tracer.beginTracing()
-    tracer.traceRead(register1, false, BitRange._0_63)
-    tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_63)
-    tracer.traceWrite(register1, false, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, addressExpression, register)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xB1)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: GpRegister64)  {
-    tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(register, false, BitRange._0_63)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_63)
-    tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getAddress64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getAddress64(0, true, true), parameters.getGpRegister64(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false))
-    }
-  }
-}
-object Cmpxchg8bM64EdxEaxEcxEbx : M64Instruction(), Cx8Instruction {
-  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm.encode(buffer, options, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xC7)
-    ModRmSib.encode(buffer, options, 1, addressExpression)
-  }
-  private val features = enumSetOf<CpuFeature>(CX8)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.CX8)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister32.EDX, true, BitRange._0_31)
-    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
-    tracer.traceRead(kasm.x64.GpRegister32.ECX, true, BitRange._0_31)
-    tracer.traceRead(kasm.x64.GpRegister32.EBX, true, BitRange._0_31)
-    tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.GpRegister32.EDX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, parameters.getAddress64(0, true, true), options, tracer)
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    trace(tracer, parameters.getAddress64(0, true, true))
-  }
-}
-object Cmpxchg16bM128RdxRaxRcxRbx : M128Instruction(), Cx16Instruction {
-  override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Rm.encodeMandatory(buffer, options, 1, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xC7)
-    ModRmSib.encode(buffer, options, 1, addressExpression)
-  }
-  private val features = enumSetOf<CpuFeature>(CX16)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.CX16)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister64.RDX, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.GpRegister64.RCX, true, BitRange._0_63)
-    tracer.traceRead(kasm.x64.GpRegister64.RBX, true, BitRange._0_63)
-    tracer.traceWrite(addressExpression)
-    tracer.traceWrite(kasm.x64.GpRegister64.RDX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange._0_63, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, parameters.getAddress128(0, true, true), options, tracer)
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    trace(tracer, parameters.getAddress128(0, true, true))
-  }
-}
-object ComisdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x2F)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE2)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register1, false, BitRange._0_127)
-    tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x2F)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register, false, BitRange._0_127)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false))
-    }
-  }
-}
-object VcomisdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 1, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x2F)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(AVX)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register1, false, BitRange._0_127)
-    tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 1, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x2F)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register, false, BitRange._0_127)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false))
-    }
-  }
-}
-object ComissXmmXmmm32 : XmmXmmmInstruction(), VectorInstruction, SseInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x2F)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE)
-    tracer.traceRead(register1, false, BitRange._0_127)
-    tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x2F)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE)
-    tracer.traceRead(register, false, BitRange._0_127)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false))
-    }
-  }
-}
-object VcomissXmmXmmm32 : XmmXmmmInstruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 0, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x2F)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(AVX)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register1, false, BitRange._0_127)
-    tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 0, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x2F)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register, false, BitRange._0_127)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(kasm.x64.RflagsField.OF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.SF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.AF, true)
-    tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.PF, false)
-    tracer.traceWrite(kasm.x64.RflagsField.CF, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.DE, false)
-    tracer.traceWrite(kasm.x64.MxcsrField.IE, false)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getAddress128(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, true, false), parameters.getXmmRegister(1, true, false))
-    }
-  }
-}
-object CpuidEaxEbxEcxEdx : NullaryInstruction() {
-  override fun encode(buffer: ByteBuffer, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.Np.encode(buffer, options)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xA2)
-  }
-  private val features = enumSetOf<CpuFeature>()
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer)  {
-    tracer.beginTracing()
-    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange._0_31)
-    tracer.traceWrite(kasm.x64.GpRegister32.EAX, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.GpRegister32.EBX, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.GpRegister32.ECX, true, BitRange._0_63, true)
-    tracer.traceWrite(kasm.x64.GpRegister32.EDX, true, BitRange._0_63, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    encode(buffer, options, tracer)
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    trace(tracer)
-  }
-}
-object Crc32R32Rm8 : R32R8mInstruction(), Sse4_2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm8.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF0)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE4_2)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister8)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register1, false, BitRange._0_31)
-    tracer.traceRead(register2, false, BitRange._0_7)
-    tracer.traceWrite(register1, false, BitRange._0_63, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm8.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF0)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression8)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register, false, BitRange._0_31)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getAddress8(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getAddress8(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister8(1, true, false))
-    }
-  }
-}
-object Crc32R32Rm16 : R32R16mInstruction(), Sse4_2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF1)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE4_2)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister16)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register1, false, BitRange._0_31)
-    tracer.traceRead(register2, false, BitRange._0_15)
-    tracer.traceWrite(register1, false, BitRange._0_63, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3._66, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF1)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression16)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register, false, BitRange._0_31)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getAddress16(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister16(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getAddress16(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister16(1, true, false))
-    }
-  }
-}
-object Crc32R32Rm32 : R32R32mInstruction(), Sse4_2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF1)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE4_2)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register1, false, BitRange._0_31)
-    tracer.traceRead(register2, false, BitRange._0_31)
-    tracer.traceWrite(register1, false, BitRange._0_63, true)
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF1)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x47)
     ModRmSib.encode(buffer, options, register, addressExpression)
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register, false, BitRange._0_31)
+    tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_63, true)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(parameters.useSibd()) {
-      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getAddress32(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false), options, tracer)
     }
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
     if(parameters.useSibd()) {
-      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getAddress32(1, true, false))
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false))
     }
     else {
-      trace(tracer, parameters.getGpRegister32(0, true, true), parameters.getGpRegister32(1, true, false))
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false))
     }
   }
 }
-object Crc32R64Rm8 : R64R8mInstruction(), Sse4_2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm8.encodeMandatory(buffer, options, 1, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF0)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(SSE4_2)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister8)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register1, false, BitRange._0_63)
-    tracer.traceRead(register2, false, BitRange._0_7)
-    tracer.traceWrite(register1, false, BitRange._0_63, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression8, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    RexPrefix.RegRm8.encodeMandatory(buffer, options, 1, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF0)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression8)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register, false, BitRange._0_63)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_63, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getAddress8(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister8(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getAddress8(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister8(1, true, false))
-    }
-  }
-}
-object Crc32R64Rm64 : R64R64mInstruction(), Sse4_2Instruction {
+object CmovaR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF1)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x47)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(SSE4_2)
+  private val features = enumSetOf<CpuFeature>(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register1, false, BitRange._0_63)
-    tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(register1, false, BitRange._0_63, true)
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Repne, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x38, 0xF1)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x47)
     ModRmSib.encode(buffer, options, register, addressExpression)
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE4_2)
-    tracer.traceRead(register, false, BitRange._0_63)
+    tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_63, true)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(parameters.useSibd()) {
-      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getAddress64(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
     if(parameters.useSibd()) {
-      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getAddress64(1, true, false))
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false))
     }
     else {
-      trace(tracer, parameters.getGpRegister64(0, true, true), parameters.getGpRegister64(1, true, false))
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false))
     }
   }
 }
-object Cvtdq2pdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+object CmovaeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Rep, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xE6)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(SSE2)
+  private val features = enumSetOf<CpuFeature>(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
+  override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(register1, false, BitRange._0_127, true)
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+  override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Rep, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0xE6)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
+  override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
+    tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_127, true)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
     if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false))
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false))
     }
     else {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false))
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false))
     }
   }
 }
-object Vcvtdq2pdXmmXmmm64 : XmmXmmmInstruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 2, register1, register2)
-    Encoding.encodeOpcode(buffer, 0xE6)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(AVX)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_63)
-    tracer.traceWrite(register1, false, BitRange._0_511, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 2, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0xE6)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_511, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false))
-    }
-  }
-}
-object Vcvtdq2pdYmmXmmm128 : YmmXmmmInstruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 1, 2, register1, register2)
-    Encoding.encodeOpcode(buffer, 0xE6)
-    ModRmSib.encode(buffer, options, register1, register2)
-  }
-  private val features = enumSetOf<CpuFeature>(AVX)
-  override fun isSupported(): Boolean  {
-    return CpuId.features.containsAll(features)
-  }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: XmmRegister)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceWrite(register1, false, BitRange._0_255, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 1, 2, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0xE6)
-    ModRmSib.encode(buffer, options, register, addressExpression)
-  }
-  override fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression128)  {
-    tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_255, true)
-    tracer.endTracing()
-  }
-  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
-    if(parameters.useSibd()) {
-      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
-    }
-    else {
-      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
-    }
-  }
-  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
-    if(parameters.useSibd()) {
-      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getAddress128(1, true, false))
-    }
-    else {
-      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getXmmRegister(1, true, false))
-    }
-  }
-}
-object Cvtdq2psXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+object CmovaeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encode(buffer, options, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x5B)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(SSE2)
+  private val features = enumSetOf<CpuFeature>(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
+  override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceWrite(register1, false, BitRange._0_127, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.PE, false)
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+  override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
     RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x0F, 0x5B)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
+  override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.SSE2)
+    tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_127, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.PE, false)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false), options, tracer)
     }
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
     if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false))
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false))
     }
     else {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false))
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false))
     }
   }
 }
-object Vcvtdq2psXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+object CmovaeR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 0, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x5B)
+    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(AVX)
+  private val features = enumSetOf<CpuFeature>(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
-  override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
+  override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_127)
-    tracer.traceWrite(register1, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.PE, false)
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
+  override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, addressExpression)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 0, 0, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x5B)
+    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
+  override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
+    tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_511, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.PE, false)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(parameters.useSibd()) {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false), options, tracer)
     }
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
     if(parameters.useSibd()) {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getAddress128(1, true, false))
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false))
     }
     else {
-      trace(tracer, parameters.getXmmRegister(0, false, true), parameters.getXmmRegister(1, true, false))
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false))
     }
   }
 }
-object Vcvtdq2psYmmYmmm256 : YmmYmmmInstruction(), VectorInstruction, AvxInstruction {
-  override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
+object CmovcR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 1, 0, register1, register2)
-    Encoding.encodeOpcode(buffer, 0x5B)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x42)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(AVX)
+  private val features = enumSetOf<CpuFeature>(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
-  override fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister)  {
+  override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
-    tracer.traceRead(register2, false, BitRange._0_255)
-    tracer.traceWrite(register1, false, BitRange._0_255, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.PE, false)
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
-  override fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions, tracer: InstructionTracer?)  {
+  override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register, addressExpression)
-    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
-    VexPrefix.RegRm.encode(buffer, options, options.rexW, 1, 1, 0, register, addressExpression)
-    Encoding.encodeOpcode(buffer, 0x5B)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x42)
     ModRmSib.encode(buffer, options, register, addressExpression)
   }
-  override fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256)  {
+  override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
-    tracer.traceFeature(CpuFeature.AVX)
+    tracer.traceFeature(CpuFeature.CMOV)
     tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange._0_255, true)
-    tracer.traceWrite(kasm.x64.MxcsrField.PE, false)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(parameters.useSibd()) {
-      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getAddress256(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false), options, tracer)
     }
     else {
-      encode(buffer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false), options, tracer)
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false), options, tracer)
     }
   }
   override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
     if(parameters.useSibd()) {
-      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getAddress256(1, true, false))
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false))
     }
     else {
-      trace(tracer, parameters.getYmmRegister(0, false, true), parameters.getYmmRegister(1, true, false))
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false))
+    }
+  }
+}
+object CmovcR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x42)
+    ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(CMOV)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x42)
+    ModRmSib.encode(buffer, options, register, addressExpression)
+  }
+  override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(addressExpression)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false), options, tracer)
+    }
+    else {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false))
+    }
+  }
+}
+object CmovcR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x42)
+    ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(CMOV)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x42)
+    ModRmSib.encode(buffer, options, register, addressExpression)
+  }
+  override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(addressExpression)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false), options, tracer)
+    }
+    else {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false))
+    }
+  }
+}
+object CmovbeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x46)
+    ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(CMOV)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x46)
+    ModRmSib.encode(buffer, options, register, addressExpression)
+  }
+  override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(addressExpression)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false), options, tracer)
+    }
+    else {
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false))
+    }
+  }
+}
+object CmovbeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x46)
+    ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(CMOV)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x46)
+    ModRmSib.encode(buffer, options, register, addressExpression)
+  }
+  override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(addressExpression)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false), options, tracer)
+    }
+    else {
+      encode(buffer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getAddress32(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister32(0, false, true), parameters.getGpRegister32(1, true, false))
+    }
+  }
+}
+object CmovbeR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x46)
+    ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(CMOV)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encodeMandatory(buffer, options, 1, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x46)
+    ModRmSib.encode(buffer, options, register, addressExpression)
+  }
+  override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(addressExpression)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceRead(kasm.x64.RflagsField.CF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false), options, tracer)
+    }
+    else {
+      encode(buffer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getAddress64(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister64(0, false, true), parameters.getGpRegister64(1, true, false))
+    }
+  }
+}
+object CmoveR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+  override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register1, register2)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register1, register2)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x44)
+    ModRmSib.encode(buffer, options, register1, register2)
+  }
+  private val features = enumSetOf<CpuFeature>(CMOV)
+  override fun isSupported(): Boolean  {
+    return CpuId.features.containsAll(features)
+  }
+  override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(tracer != null) trace(tracer, register, addressExpression)
+    Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
+    RexPrefix.RegRm.encode(buffer, options, register, addressExpression)
+    Encoding.encodeOpcode(buffer, 0x0F, 0x44)
+    ModRmSib.encode(buffer, options, register, addressExpression)
+  }
+  override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
+    tracer.beginTracing()
+    tracer.traceFeature(CpuFeature.CMOV)
+    tracer.traceRead(addressExpression)
+    tracer.traceRead(kasm.x64.RflagsField.ZF)
+    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
+    tracer.endTracing()
+  }
+  override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
+    if(parameters.useSibd()) {
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false), options, tracer)
+    }
+    else {
+      encode(buffer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false), options, tracer)
+    }
+  }
+  override fun trace(tracer: InstructionTracer, parameters: InstructionParameters)  {
+    if(parameters.useSibd()) {
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getAddress16(1, true, false))
+    }
+    else {
+      trace(tracer, parameters.getGpRegister16(0, false, true), parameters.getGpRegister16(1, true, false))
     }
   }
 }
