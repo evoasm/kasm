@@ -5,7 +5,7 @@ It allows to assemble and execute machine code at runtime.
 
 
 ## Features
-* x86-64 up to AVX2 (no FPU)
+* x86-64 up to AVX2
 * Allows *save* code execution, handling segmentation faults and zero divisions etc.
 * Support for automatic CPU feature detection (see `CpuId`)
 * Contains a Kotlin DSL (see `Assembler`)

@@ -19,6 +19,9 @@ interface InstructionTracer {
     fun traceRead(mxcsrField: MxcsrField) {}
     fun traceWrite(mxcsrField: MxcsrField, always: Boolean) {}
 
+    fun traceRead(x87TagField: X87TagField) {}
+    fun traceWrite(x87TagField: X87TagField, always: Boolean) {}
+
     fun traceRead(x87StatusField: X87StatusField) {}
     fun traceWrite(x87StatusField: X87StatusField, always: Boolean) {}
     fun traceRead(x87ControlField: X87ControlField) {}
@@ -38,13 +41,18 @@ interface InstructionParameters {
     fun getZmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): ZmmRegister
     fun getX87Register(index: Int, isRead: Boolean, isWritten: Boolean): X87Register
 
-    fun getAddress8(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression8
-    fun getAddress16(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression16
-    fun getAddress32(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression32
-    fun getAddress64(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression64
-    fun getAddress128(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression128
-    fun getAddress256(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression256
-    fun getAddress512(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512
+    fun getAddressExpression8(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression8
+    fun getAddressExpression16(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression16
+    fun getAddressExpression32(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression32
+    fun getAddressExpression64(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression64
+    fun getAddressExpression80(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression80
+    fun getAddressExpression128(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression128
+    fun getAddressExpression256(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression256
+    fun getAddressExpression512(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512
+
+    fun getAddressExpression28Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression28Bytes
+    fun getAddressExpression108Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression108Bytes
+    fun getAddressExpression512Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512Bytes
 
     fun getVectorAddress(index: Int, isRead: Boolean, isWritten: Boolean): VectorAddressExpression
 

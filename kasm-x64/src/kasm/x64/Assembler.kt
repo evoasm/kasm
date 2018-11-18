@@ -359,6 +359,8 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
 
     inline fun emitStackFrame(action: Assembler.() -> Unit) {
         pushed(SYSV_CALLEE_SAVED_REGISTERS, action = action)
+        emms()
+        cld()
         ret()
     }
 

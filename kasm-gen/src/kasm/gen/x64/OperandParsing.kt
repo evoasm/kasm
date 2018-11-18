@@ -280,8 +280,10 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
         }
 
         match(MEM_OP_REGEXP, name) {
-            var sizeBits = it.group(1).toInt()
-            if(it.group(2) == "byte") {
+            val sizeGroup = it.group(1)
+            var sizeBits = sizeGroup.toInt()
+            val suffixGroup = it.group(2) ?: ""
+            if(suffixGroup == "byte") {
                 sizeBits *= 8
             }
             val size = toOperandSize(sizeBits)
@@ -293,7 +295,7 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
                     isAlwaysWritten,
                     isSometimesWritten,
                     isRead,
-                    name)
+                    "m$sizeGroup$suffixGroup")
         }
 
         match(MOFFS_OP_REGEXP, name) {
@@ -380,6 +382,19 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
 class OperandsParser(val list: MutableList<Pair<String, String>>,
                      val haveVex: Boolean,
                      val fpuInstruction: Boolean) {
+
+    companion object {
+        internal fun getAddressExpressionClassName(operand: SizedOperand): String {
+            val sizeSuffix = when (operand.size) {
+                BitSize.BYTES_512 -> "512Bytes"
+                BitSize.BYTES_108 -> "108Bytes"
+                BitSize.BYTES_28  -> "28Bytes"
+                else              -> operand.size.toInt().toString()
+            }
+            val addressExpressionClassName = "AddressExpression" + sizeSuffix
+            return addressExpressionClassName
+        }
+    }
 
     private fun <T : Enum<T>> findEnum(name: String, enumClass: Class<T>): T? {
         return enumClass.enumConstants.find {
@@ -560,13 +575,8 @@ class OperandsParser(val list: MutableList<Pair<String, String>>,
                 }
 
                 is ExplicitMemoryOperand -> {
-                    val sizeSuffix = when(operand.size) {
-                        BitSize.BYTES_512 -> "512Bytes"
-                        BitSize.BYTES_108 -> "108Bytes"
-                        BitSize.BYTES_28 -> "28Bytes"
-                        else -> operand.size.toInt().toString()
-                    }
-                    Operand.Parameter("addressExpression", "AddressExpression" + sizeSuffix)
+                    val addressExpressionClassName = getAddressExpressionClassName(operand)
+                    Operand.Parameter("addressExpression", addressExpressionClassName)
                 }
 
                 is ExplicitImmediateOperand -> {

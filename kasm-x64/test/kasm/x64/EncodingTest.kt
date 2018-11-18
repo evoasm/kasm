@@ -2,6 +2,7 @@ package kasm.x64
 
 import kasm.ByteBuffers
 import kasm.toArray
+import kasm.toByteString
 import org.junit.jupiter.api.Test
 import kotlin.test.*
 
@@ -607,6 +608,38 @@ internal class EncodingTest {
         buffer.clear()
         VpgatherddYmmVm32y32Ymm.encode(buffer, YMM12, VectorAddressExpression(RDI, YMM1, Scale.X8), YMM2)
         assertDisassemblesTo("vpgatherdd ymm12, dword ptr [rdi + ymm1*8], ymm2", buffer.toArray())
+    }
+
+    @Test
+    fun x87() {
+
+        buffer.clear()
+        FsubpSt0St1.encode(buffer)
+        assertDisassemblesTo("fsubp st(1)", buffer.toArray())
+
+        buffer.clear()
+        FsubpStiSt0.encode(buffer, X87Register.ST2)
+        assertDisassemblesTo("fsubp st(2)", buffer.toArray())
+
+        buffer.clear()
+        FsubStiSt0.encode(buffer, X87Register.ST2)
+        assertDisassemblesTo("fsub st(2), st(0)", buffer.toArray())
+
+        buffer.clear()
+        FsubSt0Sti.encode(buffer, X87Register.ST2)
+        assertDisassemblesTo("fsub st(2)", buffer.toArray())
+
+        buffer.clear()
+        Fld1St0.encode(buffer)
+        assertDisassemblesTo("fld1 ", buffer.toArray())
+
+        buffer.clear()
+        FldM80fpSt0.encode(buffer, AddressExpression80(RAX, RBX, Scale.X2))
+        assertDisassemblesTo("fld xword ptr [rax + rbx*2]", buffer.toArray())
+
+        buffer.clear()
+        FiaddM32intSt0.encode(buffer, AddressExpression32(R10, R11, Scale.X4))
+        assertDisassemblesTo("fiadd dword ptr [r10 + r11*4]", buffer.toArray())
     }
 
 }

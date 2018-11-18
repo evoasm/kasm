@@ -123,6 +123,11 @@ class AddressExpression64(base: AddressRegister?, index: AddressRegister?, scale
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale.X1, displacement)
 }
 
+class AddressExpression80(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale.X1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
+    constructor(displacement: Int) : this(null, null, Scale.X1, displacement)
+    constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale.X1, displacement)
+}
+
 class AddressExpression128(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale.X1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale.X1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale.X1, displacement)
@@ -134,6 +139,21 @@ class AddressExpression256(base: AddressRegister?, index: AddressRegister?, scal
 }
 
 class AddressExpression512(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale.X1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
+    constructor(displacement: Int) : this(null, null, Scale.X1, displacement)
+    constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale.X1, displacement)
+}
+
+class AddressExpression512Bytes(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale.X1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
+    constructor(displacement: Int) : this(null, null, Scale.X1, displacement)
+    constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale.X1, displacement)
+}
+
+class AddressExpression108Bytes(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale.X1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
+    constructor(displacement: Int) : this(null, null, Scale.X1, displacement)
+    constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale.X1, displacement)
+}
+
+class AddressExpression28Bytes(base: AddressRegister?, index: AddressRegister?, scale: Scale = Scale.X1, displacement: Int = 0) : AddressExpression(base, index, scale, displacement) {
     constructor(displacement: Int) : this(null, null, Scale.X1, displacement)
     constructor(base: AddressRegister, displacement: Int = 0) : this(base, null, Scale.X1, displacement)
 }

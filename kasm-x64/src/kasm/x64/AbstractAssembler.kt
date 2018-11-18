@@ -4987,7 +4987,7 @@ abstract class AbstractAssembler: InstructionTracer {
     FldcwM2byte.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fldenv(addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    FldenvM14/28byte.encode(buffer, addressExpression, options, tracer = this)
+    FldenvM28byte.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fmulSt0(addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     FmulM32fpSt0.encode(buffer, addressExpression, options, tracer = this)
@@ -5029,13 +5029,13 @@ abstract class AbstractAssembler: InstructionTracer {
     FrndintSt0.encode(buffer, options, tracer = this)
   }
   fun frstorStxStxStxStxStxStxStxStx(addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    FrstorM94/108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+    FrstorM108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fsaveStxStxStxStxStxStxStxStx(addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    FsaveM94/108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+    FsaveM108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fnsaveStxStxStxStxStxStxStxStx(addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    FnsaveM94/108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
+    FnsaveM108byteStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fscaleSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
     FscaleSt0St1.encode(buffer, options, tracer = this)
@@ -5077,10 +5077,10 @@ abstract class AbstractAssembler: InstructionTracer {
     FnstcwM2byte.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fstenv(addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    FstenvM14/28byte.encode(buffer, addressExpression, options, tracer = this)
+    FstenvM28byte.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fnstenv(addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    FnstenvM14/28byte.encode(buffer, addressExpression, options, tracer = this)
+    FnstenvM28byte.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fstsw(addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     FstswM2byte.encode(buffer, addressExpression, options, tracer = this)
@@ -5163,16 +5163,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun fxchSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {
     FxchSt0St1.encode(buffer, options, tracer = this)
   }
-  fun fxrstorXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun fxrstor(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     FxrstorM512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
   }
-  fun fxrstor64XmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun fxrstor64(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Fxrstor64M512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
   }
-  fun fxsaveXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun fxsave(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     FxsaveM512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
   }
-  fun fxsave64XmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun fxsave64(addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Fxsave64M512byteXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxXmmxMmxMmxMmxMmxMmxMmxMmxMmxStxStxStxStxStxStxStxStx.encode(buffer, addressExpression, options, tracer = this)
   }
   fun fxtractSt0St1(options: EncodingOptions = EncodingOptions.DEFAULT)  {

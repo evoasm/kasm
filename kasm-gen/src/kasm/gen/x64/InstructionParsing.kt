@@ -21,7 +21,7 @@ class InstructionGenerator(generator: Generator,
 
 
     companion object {
-        val UNAMBIGUOUS_MNEMONICS = setOf("CPUID", "RET")
+        val UNAMBIGUOUS_MNEMONICS = setOf("CPUID", "RET", "FXRSTOR", "FXRSTOR64", "FXSAVE", "FXSAVE64")
     }
 
     var className: String
@@ -218,14 +218,15 @@ class InstructionGenerator(generator: Generator,
         writer.writeCall("trace", parameters)
     }
 
+
     private fun getExplicitOperandsParametersMethodNames(memory: Boolean): List<String> {
         val methodNames = explicitOperands.mapIndexed { index, operand ->
             val operandSize = operand.size.toInt()
             val argumentList = "($index, ${operand.isRead}, ${operand.isWritten})"
             when (operand) {
-                is ExplicitMemoryRegisterOperand -> if (memory) "parameters.getAddress$operandSize$argumentList" else getParametersMethodName(
+                is ExplicitMemoryRegisterOperand -> if (memory) "parameters.get${OperandsParser.getAddressExpressionClassName(operand)}$argumentList" else getParametersMethodName(
                         operand.type) + argumentList
-                is ExplicitMemoryOperand         -> "parameters.getAddress$operandSize$argumentList"
+                is ExplicitMemoryOperand         -> "parameters.get${OperandsParser.getAddressExpressionClassName(operand)}$argumentList"
                 is ExplicitVectorMemoryOperand   -> "parameters.getVectorAddress$argumentList"
                 is ExplicitRegisterOperand       -> getParametersMethodName(operand.type) + argumentList
                 is ExplicitImmediateOperand      -> "parameters." + when (operand.size) {
@@ -468,7 +469,7 @@ class InstructionGenerator(generator: Generator,
 
 
         run {
-            val byteRegex = "^([0-9A-F]{2})(\\+r[bwdq])?$".toRegex()
+            val byteRegex = "^([0-9A-F]{2})(\\+(?:r[bwdq]|i))?$".toRegex()
             val opcodeBytes = opcode.split(" ").mapNotNull {
                 byteRegex.matchEntire(it)?.let { matchResult ->
                     matchResult.groups[1]?.value
