@@ -60,7 +60,7 @@ buffer.execute() // will throw kasm.ZeroDivisionException
 
 ```kotlin
 Assembler(buffer).emitStackFrame {
-  mov(RBX, Address(0x0))
+  mov(RBX, AddressExpression(0x0))
 }
   
 buffer.execute() // will throw kasm.SegmentationFaultException
@@ -73,10 +73,10 @@ buffer.execute() // will throw kasm.SegmentationFaultException
 val buffer = NativeBuffer(1024)
   
 // add eax, [ebx]
-AddR32Rm32.encode(buffer, EAX, Address32(EBX))
+AddR32Rm32.encode(buffer, EAX, AddressExpression32(EBX))
   
 // add [ebx], eax
-AddRmR32.encode(buffer, Address32(EBX), EAX)
+AddRmR32.encode(buffer, AddressExpression32(EBX), EAX)
 ```
 
 ### `CpuId`
