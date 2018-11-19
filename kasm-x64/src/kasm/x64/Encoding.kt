@@ -394,7 +394,7 @@ object ModRmSib {
                                         indexRegister: Register,
                                         scale: Scale,
                                         displacement: Int) {
-        putModrmSibDisplacement(buffer, options, reg, GpRegister64.RSP, displacement) {
+        putModrmSibDisplacement(buffer, options, reg, GpRegister64.RSP, baseRegister, displacement) {
             val scaleCode = scale.code
             val index = indexRegister.unextendedCode
             val base = baseRegister.unextendedCode
@@ -407,7 +407,7 @@ object ModRmSib {
                                         reg: Int,
                                         baseRegister: AddressRegister,
                                         displacement: Int) {
-        putModrmSibDisplacement(buffer, options, reg, GpRegister64.RSP, displacement) {
+        putModrmSibDisplacement(buffer, options, reg, GpRegister64.RSP, baseRegister, displacement) {
             val scaleCode = options.sibScale
             val index = GpRegister64.RSP.unextendedCode
             val base = baseRegister.unextendedCode
@@ -420,20 +420,28 @@ object ModRmSib {
                                      reg: Int,
                                      baseRegister: AddressRegister,
                                      displacement: Int) {
-        putModrmSibDisplacement(buffer, options, reg, baseRegister, displacement) {}
+        putModrmSibDisplacement(buffer, options, reg, baseRegister, null, displacement) {}
     }
 
     private inline fun putModrmSibDisplacement(buffer: ByteBuffer,
                                                options: EncodingOptions,
                                                reg: Int,
                                                rmRegister: Register,
+                                               baseRegister: AddressRegister?,
                                                displacement: Int,
                                                sibAction: () -> Unit) {
         val rm = rmRegister.unextendedCode
 
         val displacementSize = options.displacementSize
-        if (displacement == 0 && displacementSize == DisplacementSize.AUTO && !GpRegister.isBp(rmRegister) && !GpRegister.isR13(
-                rmRegister)) {
+        val canEncodeDisplacementWithMod00 = displacement == 0 && displacementSize == DisplacementSize.AUTO
+
+        // ModRM cannot encode BP and R13 (use for RIP addressing). Use mod01 and put base-only SIB
+        val canEncodeRmWithMod00 = !GpRegister.isBp(rmRegister) && !GpRegister.isR13(rmRegister)
+
+        // SIB cannot encode BP and R13 with mod00. Use mod01 and put a dummy zero displacement
+        val canEncodeBaseWithMod00 = baseRegister == null || (!GpRegister.isBp(baseRegister) && !GpRegister.isR13(baseRegister))
+
+        if (canEncodeDisplacementWithMod00 && canEncodeRmWithMod00 && canEncodeBaseWithMod00) {
             val mod = 0b00
             putModRm(buffer, mod, reg, rm)
             sibAction()

@@ -248,12 +248,50 @@ internal class EncodingTest {
 
     @Test
     fun baseOnly() {
+
+        buffer.clear()
         AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBX))
         assertDisassemblesTo("add rax, qword ptr [rbx]", buffer.toArray())
 
         buffer.clear()
         AddRm64R64.encode(buffer, AddressExpression64(RBX), RAX)
         assertDisassemblesTo("add qword ptr [rbx], rax", buffer.toArray())
+
+
+        buffer.clear()
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBP))
+        assertDisassemblesTo("add rax, qword ptr [rbp]", buffer.toArray())
+
+        buffer.clear()
+        AddRm64R64.encode(buffer, AddressExpression64(RBP), RAX)
+        assertDisassemblesTo("add qword ptr [rbp], rax", buffer.toArray())
+
+
+        buffer.clear()
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(R13))
+        assertDisassemblesTo("add rax, qword ptr [r13]", buffer.toArray())
+
+        buffer.clear()
+        AddRm64R64.encode(buffer, AddressExpression64(R13), RAX)
+        assertDisassemblesTo("add qword ptr [r13], rax", buffer.toArray())
+
+
+        buffer.clear()
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(RSP))
+        assertDisassemblesTo("add rax, qword ptr [rsp]", buffer.toArray())
+
+        buffer.clear()
+        AddRm64R64.encode(buffer, AddressExpression64(RSP), RAX)
+        assertDisassemblesTo("add qword ptr [rsp], rax", buffer.toArray())
+
+
+        buffer.clear()
+        AddR64Rm64.encode(buffer, RAX, AddressExpression64(R12))
+        assertDisassemblesTo("add rax, qword ptr [r12]", buffer.toArray())
+
+        buffer.clear()
+        AddRm64R64.encode(buffer, AddressExpression64(R12), RAX)
+        assertDisassemblesTo("add qword ptr [r12], rax", buffer.toArray())
 
 
         buffer.clear()
@@ -312,6 +350,17 @@ internal class EncodingTest {
 
 
         buffer.clear()
+        assertFailsWith(IllegalIndexException::class) {
+            AddRm64R64.encode(buffer, AddressExpression64(null, RSP, Scale.X1, 0x10), R11)
+        }
+
+
+        buffer.clear()
+        AddRm64R64.encode(buffer, AddressExpression64(null, RBP, Scale.X2, 0x08), R9)
+        assertDisassemblesTo("add qword ptr [rbp*2 + 8], r9", buffer.toArray())
+
+
+        buffer.clear()
         AddR32Rm32.encode(buffer, EAX, AddressExpression32(null, EBX, Scale.X2))
         assertDisassemblesTo("add eax, dword ptr [rbx*2]", buffer.toArray())
 
@@ -327,10 +376,15 @@ internal class EncodingTest {
         buffer.clear()
         AddRm16R16.encode(buffer, AddressExpression16(null, RBX, Scale.X4), AX)
         assertDisassemblesTo("add word ptr [rbx*4], ax", buffer.toArray())
+
     }
 
     @Test
     fun baseIndexScale() {
+
+        buffer.clear()
+        AddRm64R64.encode(buffer, AddressExpression64(R13, R12, Scale.X4), RAX)
+        assertDisassemblesTo("add qword ptr [r13 + r12*4], rax", buffer.toArray())
 
         buffer.clear()
         AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBX, RCX, Scale.X4))
@@ -347,6 +401,14 @@ internal class EncodingTest {
         buffer.clear()
         AddR64Rm64.encode(buffer, RAX, AddressExpression64(RBX, RCX, Scale.X8))
         assertDisassemblesTo("add rax, qword ptr [rbx + rcx*8]", buffer.toArray())
+
+        buffer.clear()
+        MovRm64R64.encode(buffer, AddressExpression64(R13, R12, Scale.X8), RAX)
+        assertDisassemblesTo("mov qword ptr [r13 + r12*8], rax", buffer.toArray())
+
+        buffer.clear()
+        AddRm64R64.encode(buffer, AddressExpression64(RSP, RBP, Scale.X4), RAX)
+        assertDisassemblesTo("add qword ptr [rsp + rbp*4], rax", buffer.toArray())
     }
 
     @Test
