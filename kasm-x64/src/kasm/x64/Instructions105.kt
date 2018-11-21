@@ -154,7 +154,7 @@ object VpgatherqqYmmVm64y64Ymm : YmmVmYmmInstruction(), VectorInstruction, Avx2I
     trace(tracer, parameters.getYmmRegister(0, true, true), parameters.getVectorAddress(1, true, false), parameters.getYmmRegister(2, true, true))
   }
 }
-object Vinsertf128YmmYmmXmmm128Imm8 : YmmYmmXmmmImm8Instruction(), VectorInstruction, AvxInstruction {
+object Vinsertf128YmmYmmXmmm128Imm8 : YmmYmmXmmm128Imm8Instruction(), VectorInstruction, AvxInstruction {
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2, register3, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -210,7 +210,7 @@ object Vinsertf128YmmYmmXmmm128Imm8 : YmmYmmXmmmImm8Instruction(), VectorInstruc
     }
   }
 }
-object Vinserti128YmmYmmXmmm128Imm8 : YmmYmmXmmmImm8Instruction(), VectorInstruction, Avx2Instruction {
+object Vinserti128YmmYmmXmmm128Imm8 : YmmYmmXmmm128Imm8Instruction(), VectorInstruction, Avx2Instruction {
   override fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2, register3, immediate)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

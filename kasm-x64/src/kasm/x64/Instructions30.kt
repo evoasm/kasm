@@ -185,7 +185,7 @@ object LoopneRel8Rcx : Imm8Instruction() {
     trace(tracer, parameters.getByteImmediate(0))
   }
 }
-object LzcntR16Rm16 : R16R16mInstruction(), AbmInstruction {
+object LzcntR16Rm16 : R16R16m16Instruction(), AbmInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Rep, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
@@ -247,7 +247,7 @@ object LzcntR16Rm16 : R16R16mInstruction(), AbmInstruction {
     }
   }
 }
-object LzcntR32Rm32 : R32R32mInstruction(), AbmInstruction {
+object LzcntR32Rm32 : R32R32m32Instruction(), AbmInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Rep, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -309,7 +309,7 @@ object LzcntR32Rm32 : R32R32mInstruction(), AbmInstruction {
     }
   }
 }
-object LzcntR64Rm64 : R64R64mInstruction(), AbmInstruction {
+object LzcntR64Rm64 : R64R64m64Instruction(), AbmInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, kasm.x64.LegacyPrefix.Group1.Rep, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -454,7 +454,7 @@ object MaskmovqMmMmRdiRdi : MmMmInstruction(), VectorInstruction, MoveInstructio
     trace(tracer, parameters.getMmRegister(0, true, false), parameters.getMmRegister(1, true, false))
   }
 }
-object MaxpdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instruction {
+object MaxpdXmmXmmm128 : XmmXmmm128Instruction(), VectorInstruction, Sse2Instruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
@@ -510,7 +510,7 @@ object MaxpdXmmXmmm128 : XmmXmmmInstruction(), VectorInstruction, Sse2Instructio
     }
   }
 }
-object VmaxpdXmmXmmXmmm128 : XmmXmmXmmmInstruction(), VectorInstruction, AvxInstruction {
+object VmaxpdXmmXmmXmmm128 : XmmXmmXmmm128Instruction(), VectorInstruction, AvxInstruction {
   override fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2, register3)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

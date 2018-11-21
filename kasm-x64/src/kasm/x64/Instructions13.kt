@@ -4,7 +4,7 @@ import java.nio.ByteBuffer
 import kasm.ext.*
 import kasm.x64.CpuFeature.*
 
-object CmoveR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+object CmoveR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -56,7 +56,7 @@ object CmoveR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmoveR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+object CmoveR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -108,7 +108,7 @@ object CmoveR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovgR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+object CmovgR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
@@ -164,7 +164,7 @@ object CmovgR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovgR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+object CmovgR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -220,7 +220,7 @@ object CmovgR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovgR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+object CmovgR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -276,7 +276,7 @@ object CmovgR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovgeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+object CmovgeR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
@@ -330,7 +330,7 @@ object CmovgeR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovgeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+object CmovgeR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -384,7 +384,7 @@ object CmovgeR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovgeR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+object CmovgeR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -438,7 +438,7 @@ object CmovgeR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovlR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+object CmovlR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
@@ -492,7 +492,7 @@ object CmovlR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovlR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+object CmovlR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -546,7 +546,7 @@ object CmovlR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovlR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+object CmovlR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -600,7 +600,7 @@ object CmovlR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovleR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+object CmovleR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)
@@ -656,7 +656,7 @@ object CmovleR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovleR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
+object CmovleR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -712,7 +712,7 @@ object CmovleR32Rm32 : R32R32mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovleR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
+object CmovleR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)
@@ -768,7 +768,7 @@ object CmovleR64Rm64 : R64R64mInstruction(), MoveInstruction, CmovInstruction {
     }
   }
 }
-object CmovneR16Rm16 : R16R16mInstruction(), MoveInstruction, CmovInstruction {
+object CmovneR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register1, register2)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, kasm.x64.LegacyPrefix.Group3.Pref66, options.encodedLegacyPrefix4)

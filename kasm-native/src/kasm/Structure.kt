@@ -4,17 +4,7 @@ import java.nio.ByteBuffer
 import kotlin.reflect.KProperty
 
 @ExperimentalUnsignedTypes
-open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAllocator()) {
-
-    interface BufferAllocator {
-        fun allocate(size: Int) : ByteBuffer
-    }
-
-    class DefaultBufferAllocator : BufferAllocator {
-        override fun allocate(size: Int): ByteBuffer {
-            return ByteBuffers.allocateLittleEndianDirect(size)
-        }
-    }
+open class Structure( var codeModel: CodeModel? = null) {
 
     abstract class Field(val structure: Structure,
                             val index : Int,
@@ -71,6 +61,19 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
             return offset + getRelativeElementOffset(*indices)
         }
 
+        internal fun getAbsoluteElementOffset(index0: Int, index1: Int): Int {
+            return offset + getRelativeElementOffset(index0, index1)
+        }
+
+        internal fun getRelativeElementOffset(index0: Int, index1: Int): Int {
+            assert(dimensions.size == 2)
+            val dimension0 = dimensions[0]
+            val dimension1 = dimensions[1]
+            assert(index0 < dimension0)
+            assert(index1 < dimension1)
+            return (index0 * dimension1 + index1) * elementSize
+        }
+
         internal fun getRelativeElementOffset(vararg indices: Int): Int {
             if (indices.size != this.dimensions.size) {
                 throw IllegalArgumentException("field is of dimension ${this.dimensions.size} but only ${indices.size} indices given")
@@ -85,8 +88,8 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
         }
 
         internal fun getAbsoluteElementOffset(index: Int) : Int {
-            check(dimensions.size == 1)
-            check(index < dimensions.first())
+            assert(dimensions.size == 1)
+            assert(index < dimensions.first())
             return offset + index * elementSize
         }
 
@@ -121,6 +124,10 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
 
         operator fun get(index: Int): T {
             return read(getAbsoluteElementOffset(index))
+        }
+
+        operator fun get(index0: Int, index1: Int): T {
+            return read(getAbsoluteElementOffset(index0, index1))
         }
 
         operator fun get(vararg indices: Int): T {
@@ -313,73 +320,257 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
                                                             aliasOffset) {
 
 
-        private val shortBuffer by lazy(LazyThreadSafetyMode.NONE) {  buffer.asShortBuffer() }
-        private val intBuffer by lazy(LazyThreadSafetyMode.NONE) { buffer.asIntBuffer() }
-        private val longBuffer by lazy(LazyThreadSafetyMode.NONE) {  buffer.asLongBuffer() }
-
-        fun readByteArray(offset: Int, array: ByteArray) {
-            buffer.position(offset)
-            buffer.get(array, 0, elementSize)
+        companion object {
+            const val DOUBLE_SIZE_BYTES = 8
+            const val FLOAT_SIZE_BYTES = 4
         }
 
-        fun readShortArray(offset: Int, array: ShortArray) {
-            shortBuffer.position(offset)
-            shortBuffer.get(array, 0, elementSize / 2)
+        private fun readByte(offset: Int, vectorElementIndex: Int) : Byte {
+            return buffer.get(offset + vectorElementIndex * Byte.SIZE_BYTES)
         }
 
-        fun readIntArray(offset: Int, array: IntArray) {
-            intBuffer.position(offset)
-            intBuffer.get(array, 0, elementSize / 4)
+        private fun readShort(offset: Int, vectorElementIndex: Int) : Short {
+            return buffer.getShort(offset + vectorElementIndex * Short.SIZE_BYTES)
         }
 
-        fun readLongArray(offset: Int, array: LongArray) {
-            longBuffer.position(offset)
-            longBuffer.get(array, 0, elementSize / 8)
+        private fun readInt(offset: Int, vectorElementIndex: Int) : Int {
+            return buffer.getInt(offset + vectorElementIndex * Int.SIZE_BYTES)
         }
+        
+        private fun readLong(offset: Int, vectorElementIndex: Int) : Long {
+            return buffer.getLong(offset + vectorElementIndex * Long.SIZE_BYTES)
+        }
+        
+        private fun readFloat(offset: Int, vectorElementIndex: Int) : Float {
+            return buffer.getFloat(offset + vectorElementIndex * FLOAT_SIZE_BYTES)
+        }
+
+        private fun readDouble(offset: Int, vectorElementIndex: Int) : Double {
+            return buffer.getDouble(offset + vectorElementIndex * DOUBLE_SIZE_BYTES)
+        }
+
+        private fun writeByte(offset: Int, vectorElementIndex: Int, value: Byte) {
+            buffer.put(offset + vectorElementIndex * Byte.SIZE_BYTES, value)
+        }
+
+        private fun writeShort(offset: Int, vectorElementIndex: Int, value: Short) {
+            buffer.putShort(offset + vectorElementIndex * Short.SIZE_BYTES, value)
+        }
+
+        private fun writeInt(offset: Int, vectorElementIndex: Int, value : Int)  {
+            buffer.putInt(offset + vectorElementIndex * Int.SIZE_BYTES, value)
+        }
+
+        private fun writeLong(offset: Int, vectorElementIndex: Int, value: Long) {
+            buffer.putLong(offset + vectorElementIndex * Long.SIZE_BYTES, value)
+        }
+
+        private fun writeFloat(offset: Int, vectorElementIndex: Int, value: Float)  {
+            buffer.putFloat(offset + vectorElementIndex * FLOAT_SIZE_BYTES, value)
+        }
+
+        private fun writeDouble(offset: Int, vectorElementIndex: Int, value: Double)  {
+            buffer.putDouble(offset + vectorElementIndex * DOUBLE_SIZE_BYTES, value)
+        }
+
+        private fun readByteArray(offset: Int, array: ByteArray) {
+            for (i in 0 until elementSize / Byte.SIZE_BYTES) {
+                array[i] = buffer.get(offset + i * Byte.SIZE_BYTES)
+            }
+        }
+
+        private fun readShortArray(offset: Int, array: ShortArray) {
+            for (i in 0 until elementSize / Short.SIZE_BYTES) {
+                array[i] = buffer.getShort(offset + i * Short.SIZE_BYTES)
+            }
+        }
+
+        private fun readIntArray(offset: Int, array: IntArray) {
+            for (i in 0 until elementSize / Int.SIZE_BYTES) {
+                array[i] = buffer.getInt(offset + i * Int.SIZE_BYTES)
+            }
+        }
+
+        private fun readLongArray(offset: Int, array: LongArray) {
+            for (i in 0 until elementSize / Long.SIZE_BYTES) {
+                array[i] = buffer.getLong(offset + i * Long.SIZE_BYTES)
+            }
+        }
+
+        private fun readFloatArray(offset: Int, array: FloatArray) {
+            for (i in 0 until elementSize / FLOAT_SIZE_BYTES) {
+                array[i] = buffer.getFloat(offset + i * FLOAT_SIZE_BYTES)
+            }
+        }
+
+        private fun readDoubleArray(offset: Int, array: DoubleArray) {
+            for (i in 0 until elementSize / DOUBLE_SIZE_BYTES) {
+                array[i] = buffer.getDouble(offset + i * DOUBLE_SIZE_BYTES)
+            }
+        }
+
+        private fun writeByteArray(offset: Int, array: ByteArray) {
+            for (i in 0 until elementSize / Byte.SIZE_BYTES) {
+               buffer.put(offset + i * Byte.SIZE_BYTES, array[i])
+            }
+        }
+
+        private fun writeShortArray(offset: Int, array: ShortArray) {
+            for (i in 0 until elementSize / Short.SIZE_BYTES) {
+                buffer.putShort(offset + i * Short.SIZE_BYTES, array[i])
+            }
+        }
+
+        private fun writeIntArray(offset: Int, array: IntArray) {
+            for (i in 0 until elementSize / Int.SIZE_BYTES) {
+                buffer.putInt(offset + i * Int.SIZE_BYTES, array[i])
+            }
+        }
+
+        private fun writeLongArray(offset: Int, array: LongArray) {
+            for (i in 0 until elementSize / Long.SIZE_BYTES) {
+                buffer.putLong(offset + i * Long.SIZE_BYTES, array[i])
+            }
+        }
+
+        private fun writeFloatArray(offset: Int, array: FloatArray) {
+            for (i in 0 until elementSize / FLOAT_SIZE_BYTES) {
+                buffer.putFloat(offset + i * FLOAT_SIZE_BYTES, array[i])
+            }
+        }
+
+        private fun writeDoubleArray(offset: Int, array: DoubleArray) {
+            for (i in 0 until elementSize / DOUBLE_SIZE_BYTES) {
+                buffer.putDouble(offset + i * DOUBLE_SIZE_BYTES, array[i])
+            }
+        }
+
+
+        fun getByte(vararg indices: Int, vectorElementIndex: Int) : Byte {
+            return readByte(getAbsoluteElementOffset(*indices), vectorElementIndex)
+        }
+
+        fun getShort(vararg indices: Int, vectorElementIndex: Int) : Short {
+            return readShort(getAbsoluteElementOffset(*indices), vectorElementIndex)
+        }
+
+        fun getInt(vararg indices: Int, vectorElementIndex: Int) : Int {
+            return readInt(getAbsoluteElementOffset(*indices), vectorElementIndex)
+        }
+
+        fun getLong(vararg indices: Int, vectorElementIndex: Int) : Long {
+            return readLong(getAbsoluteElementOffset(*indices), vectorElementIndex)
+        }
+
+        fun getFloat(vararg indices: Int, vectorElementIndex: Int) : Float {
+            return readFloat(getAbsoluteElementOffset(*indices), vectorElementIndex)
+        }
+
+        fun getDouble(vararg indices: Int, vectorElementIndex: Int) : Double {
+            return readDouble(getAbsoluteElementOffset(*indices), vectorElementIndex)
+        }
+
+        fun getByte(index: Int, vectorElementIndex: Int) : Byte {
+            return readByte(getAbsoluteElementOffset(index), vectorElementIndex)
+        }
+
+        fun getShort(index: Int, vectorElementIndex: Int) : Short {
+            return readShort(getAbsoluteElementOffset(index), vectorElementIndex)
+        }
+
+        fun getInt(index: Int, vectorElementIndex: Int) : Int {
+            return readInt(getAbsoluteElementOffset(index), vectorElementIndex)
+        }
+
+        fun getLong(index: Int, vectorElementIndex: Int) : Long {
+            return readLong(getAbsoluteElementOffset(index), vectorElementIndex)
+        }
+
+        fun getFloat(index: Int, vectorElementIndex: Int) : Float {
+            return readFloat(getAbsoluteElementOffset(index), vectorElementIndex)
+        }
+
+        fun getDouble(index: Int, vectorElementIndex: Int) : Double {
+            return readDouble(getAbsoluteElementOffset(index), vectorElementIndex)
+        }
+
+
+
+        fun setByte(vararg indices: Int, vectorElementIndex: Int, value: Byte) {
+            writeByte(getAbsoluteElementOffset(*indices), vectorElementIndex, value)
+        }
+
+        fun setShort(vararg indices: Int, vectorElementIndex: Int, value: Short) {
+            writeShort(getAbsoluteElementOffset(*indices), vectorElementIndex, value)
+        }
+
+        fun setInt(vararg indices: Int, vectorElementIndex: Int, value: Int) {
+            writeInt(getAbsoluteElementOffset(*indices), vectorElementIndex, value)
+        }
+
+        fun setLong(vararg indices: Int, vectorElementIndex: Int, value: Long)  {
+            writeLong(getAbsoluteElementOffset(*indices), vectorElementIndex, value)
+        }
+
+        fun setFloat(vararg indices: Int, vectorElementIndex: Int, value: Float) {
+            writeFloat(getAbsoluteElementOffset(*indices), vectorElementIndex, value)
+        }
+
+        fun setDouble(vararg indices: Int, vectorElementIndex: Int, value: Double)  {
+            writeDouble(getAbsoluteElementOffset(*indices), vectorElementIndex, value)
+        }
+
+        fun setByte(index: Int, vectorElementIndex: Int, value: Byte) {
+            writeByte(getAbsoluteElementOffset(index), vectorElementIndex, value)
+        }
+
+        fun setShort(index: Int, vectorElementIndex: Int, value: Short) {
+            writeShort(getAbsoluteElementOffset(index), vectorElementIndex, value)
+        }
+
+        fun setInt(index: Int, vectorElementIndex: Int, value: Int) {
+            writeInt(getAbsoluteElementOffset(index), vectorElementIndex, value)
+        }
+
+        fun setLong(index: Int, vectorElementIndex: Int, value: Long)  {
+            writeLong(getAbsoluteElementOffset(index), vectorElementIndex, value)
+        }
+
+        fun setFloat(index: Int, vectorElementIndex: Int, value: Float) {
+            writeFloat(getAbsoluteElementOffset(index), vectorElementIndex, value)
+        }
+
+        fun setDouble(index: Int, vectorElementIndex: Int, value: Double)  {
+            writeDouble(getAbsoluteElementOffset(index), vectorElementIndex, value)
+        }
+
+
 
         fun getByteArray(vararg indices: Int, array: ByteArray? = null) : ByteArray {
-            val array_ = if(array != null) array else ByteArray(elementSize)
-            readByteArray(getAbsoluteElementOffset(*indices), array_)
-            return array_
+            val actualArray = if(array != null) array else ByteArray(elementSize)
+            readByteArray(getAbsoluteElementOffset(*indices), actualArray)
+            return actualArray
         }
 
         fun getShortArray(vararg indices: Int, array: ShortArray? = null) : ShortArray {
-            val array_ = if(array != null) array else ShortArray(elementSize / 2)
-            readShortArray(getAbsoluteElementOffset(*indices), array_)
-            return array_
+            val actualArray = if(array != null) array else ShortArray(elementSize / 2)
+            readShortArray(getAbsoluteElementOffset(*indices), actualArray)
+            return actualArray
         }
 
         fun getIntArray(vararg indices: Int, array: IntArray? = null): IntArray {
-            val array_ = if(array != null) array else IntArray(elementSize / 4)
-            readIntArray(getAbsoluteElementOffset(*indices), array_)
-            return array_
+            val actualArray = if(array != null) array else IntArray(elementSize / 4)
+            readIntArray(getAbsoluteElementOffset(*indices), actualArray)
+            return actualArray
         }
 
         fun getLongArray(vararg indices: Int, array: LongArray? = null): LongArray {
-            val array_ = if(array != null) array else LongArray(elementSize / 8)
-            readLongArray(getAbsoluteElementOffset(*indices), array_)
-            return array_
+            val actualArray = if(array != null) array else LongArray(elementSize / 8)
+            readLongArray(getAbsoluteElementOffset(*indices), actualArray)
+            return actualArray
         }
 
-        fun writeByteArray(offset: Int, array: ByteArray) {
-            buffer.position(offset)
-            buffer.put(array, 0, elementSize)
-        }
 
-        fun writeShortArray(offset: Int, array: ShortArray) {
-            shortBuffer.position(offset)
-            shortBuffer.put(array, 0, elementSize / 2)
-        }
-
-        fun writeIntArray(offset: Int, array: IntArray) {
-            intBuffer.position(offset)
-            intBuffer.put(array, 0, elementSize / 4)
-        }
-
-        fun writeLongArray(offset: Int, array: LongArray) {
-            longBuffer.position(offset)
-            longBuffer.put(array, 0, elementSize / 8)
-        }
 
         fun contentEquals(other: VectorField) : Boolean {
             if(size != other.size) return false
@@ -419,7 +610,7 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
     private val _fields = mutableListOf<Field>()
     val fields get() = _fields.toList()
     private var _buffer: ByteBuffer? = null
-
+    private var nativeBuffer: NativeBuffer? = null
 
     private var fieldOffsets : IntArray? = null
 
@@ -433,6 +624,7 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
 
     fun allocate() = allocateIfNeeded()
 
+
     private fun allocateIfNeeded() {
         if(_buffer != null) return;
 
@@ -441,7 +633,12 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
             size += it.size + it.alignment - 1
         }
 
-        _buffer = bufferAllocator.allocate(size)
+        _buffer = if(codeModel == null) {
+            ByteBuffers.allocateLittleEndianDirect(size)
+        } else {
+            nativeBuffer = NativeBuffer(size.toLong(), codeModel)
+            nativeBuffer!!.byteBuffer
+        }
 
         val fieldOffsets = IntArray(_fields.size)
         this.fieldOffsets = fieldOffsets
@@ -507,21 +704,28 @@ open class Structure( var bufferAllocator: BufferAllocator = DefaultBufferAlloca
         return addField(DoubleField(this, _fields.size, dimensions, alignment, alias, aliasOffset))
     }
 
+    internal fun vectorField(dimensions: IntArray,
+                             alignment: Int,
+                             alias: Field?,
+                             aliasOffset: Int,
+                             elementSize: Int): VectorField {
+        return addField(VectorField(this, _fields.size, dimensions, alignment, alias, aliasOffset, elementSize))
+    }
 
     fun vector64Field(vararg dimensions: Int, alignment: Int = 8, alias: Field? = null, aliasOffset: Int = 0): VectorField {
-        return addField(VectorField(this, _fields.size, dimensions, alignment, alias, aliasOffset, 8))
+        return vectorField(dimensions, alignment, alias, aliasOffset, 8)
     }
 
     fun vector128Field(vararg dimensions: Int, alignment: Int = 16, alias: Field? = null, aliasOffset: Int = 0): VectorField {
-        return addField(VectorField(this, _fields.size, dimensions, alignment, alias, aliasOffset, 16))
+        return vectorField(dimensions, alignment, alias, aliasOffset, 16)
     }
 
     fun vector256Field(vararg dimensions: Int, alignment: Int = 32, alias: Field? = null, aliasOffset: Int = 0): VectorField {
-        return addField(VectorField(this, _fields.size, dimensions, alignment, alias, aliasOffset, 32))
+        return vectorField(dimensions, alignment, alias, aliasOffset, 32)
     }
 
     fun vector512Field(vararg dimensions: Int, alignment: Int = 32, alias: Field? = null, aliasOffset: Int = 0): VectorField {
-        return addField(VectorField(this, _fields.size, dimensions, alignment, alias, aliasOffset, 64))
+        return vectorField(dimensions, alignment, alias, aliasOffset, 64)
     }
 
 }

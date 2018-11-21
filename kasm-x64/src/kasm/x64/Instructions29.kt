@@ -54,7 +54,7 @@ object JmpRel32Rip : Imm32Instruction(), JumpInstruction {
     trace(tracer, parameters.getIntImmediate(0))
   }
 }
-object JmpRm64Rip : R64mInstruction(), JumpInstruction {
+object JmpRm64Rip : R64m64Instruction(), JumpInstruction {
   override fun encode(buffer: ByteBuffer, register: GpRegister64, options: EncodingOptions, tracer: InstructionTracer?)  {
     if(tracer != null) trace(tracer, register)
     Encoding.encodeLegacyPrefixes(buffer, options.legacyPrefixOrder, options.legacyPrefix1, options.legacyPrefix2, options.legacyPrefix3, options.encodedLegacyPrefix4)

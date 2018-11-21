@@ -4,47 +4,35 @@ import java.nio.ByteBuffer
 import kasm.ext.*
 import kasm.x64.CpuFeature.*
 
-abstract class XmmmYmmImm8Instruction : Instruction() {
+abstract class YmmM32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression32)
+}
+abstract class Xmmm128YmmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: YmmRegister, immediate: Byte)
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register: YmmRegister, immediate: Byte)
 }
-abstract class YmmM32Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression32)
-}
 abstract class Imm32Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, immediate: Int)
-}
-abstract class R64R64mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)
 }
 abstract class XmmM64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)
 }
-abstract class MmmMmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: MmRegister)
+abstract class MmXmmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression64)
 }
-abstract class R64R64mR64Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, addressExpression: AddressExpression64, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, addressExpression: AddressExpression64, register2: GpRegister64)
-}
-abstract class YmmYmmXmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128)
+abstract class YmmYmmm256Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256)
 }
 abstract class R32MmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: MmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -58,65 +46,65 @@ abstract class M256YmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression256, register: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression256, register: YmmRegister)
 }
-abstract class R32R32mImm32Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, immediate: Int)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Int)
+abstract class R64R64m64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)
 }
 abstract class M64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64)
 }
-abstract class XmmR64mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister64, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte)
+abstract class XmmXmmR32m8Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression8, immediate: Byte)
 }
-abstract class R64mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, immediate: Byte)
+abstract class R64R32m32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression32)
 }
-abstract class MmR32mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: GpRegister32, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression32, immediate: Byte)
+abstract class R32R32m32Imm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, immediate: Int)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Int)
 }
 abstract class R64Imm64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister64, immediate: Long, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: GpRegister64, immediate: Long)
 }
-abstract class XmmXmmR64mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64)
-}
-abstract class XmmXmmR32mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32)
+abstract class R32m32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32)
 }
 abstract class R8Imm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: GpRegister8, immediate: Byte)
 }
-abstract class XmmmXmmInstruction : Instruction() {
+abstract class Xmmm64XmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: XmmRegister)
 }
-abstract class R64mXmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte)
+abstract class R64R8m8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister8)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression8)
+}
+abstract class MmMmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression64)
 }
 abstract class M128Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -126,27 +114,21 @@ abstract class M128XmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register: XmmRegister)
 }
+abstract class XmmXmmm64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte)
+}
 abstract class YmmYmmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, immediate: Byte)
 }
-abstract class R16mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, immediate: Byte)
-}
-abstract class XmmR64mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)
-}
-abstract class R32XmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression128)
+abstract class R16R8m8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister8)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression8)
 }
 abstract class MmMmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -160,99 +142,135 @@ abstract class R32MmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: MmRegister)
 }
-abstract class XmmR32mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression32)
-}
-abstract class XmmXmmXmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)
-}
-abstract class R64mR64Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: GpRegister64)
-}
-abstract class XmmYmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: YmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression256)
-}
-abstract class R64mXmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: XmmRegister)
-}
-abstract class R16mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister16)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)
-}
-abstract class R32mImm32Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, immediate: Int)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, immediate: Int)
-}
-abstract class YmmYmmYmmmImm8Instruction : Instruction() {
+abstract class YmmYmmYmmm256Imm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, immediate: Byte)
   abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, immediate: Byte)
 }
-abstract class R16R16mImm16Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16, immediate: Short)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Short)
+abstract class MmR32m16Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression16, immediate: Byte)
+}
+abstract class XmmXmmXmmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)
+}
+abstract class R32m32R32Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: GpRegister32, immediate: Byte)
+}
+abstract class R32Xmmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression64)
+}
+abstract class R32m32Imm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, immediate: Int)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, immediate: Int)
+}
+abstract class R64Xmmm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression32)
+}
+abstract class XmmXmmXmmm64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte)
+}
+abstract class XmmXmmR32m16Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression16, immediate: Byte)
+}
+abstract class YmmYmmXmmm128Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, immediate: Byte)
 }
 abstract class Imm16Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, immediate: Short)
 }
-abstract class MmMmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression64, immediate: Byte)
+abstract class XmmXmmXmmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64)
 }
-abstract class R64R32mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression32)
+abstract class YmmYmmYmmm256YmmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, register4: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, register4: YmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, register3: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, register3: YmmRegister)
 }
 abstract class M4096Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression512Bytes, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression512Bytes)
 }
-abstract class R16R16mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Byte)
+abstract class R16R16m16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)
 }
-abstract class R32mR32Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: GpRegister32)
+abstract class XmmXmmm32Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte)
 }
-abstract class MmR64mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression64)
+abstract class XmmXmmm16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression16)
+}
+abstract class XmmXmmR64m64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte)
+}
+abstract class XmmR32m16Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression16, immediate: Byte)
+}
+abstract class R64m64R64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: GpRegister64, immediate: Byte)
+}
+abstract class R16m16Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, immediate: Byte)
 }
 abstract class Imm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, immediate: Byte)
+}
+abstract class XmmXmmXmmm128XmmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, register4: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, register4: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, register3: XmmRegister)
 }
 abstract class M16Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -262,27 +280,57 @@ abstract class M80Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression80, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression80)
 }
-abstract class R32mXmmInstruction : Instruction() {
+abstract class XmmXmmXmmm32Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte)
+}
+abstract class XmmR64m64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister64, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte)
+}
+abstract class MmR32m32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression32)
+}
+abstract class YmmXmmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression64)
+}
+abstract class R32m32XmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: XmmRegister)
 }
-abstract class R64R16mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister16)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression16)
-}
 abstract class YmmVmYmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, vectorAddressExpression: VectorAddressExpression, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, vectorAddressExpression: VectorAddressExpression, register2: YmmRegister)
 }
-abstract class R32R32mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)
+abstract class XmmXmmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)
+}
+abstract class YmmYmmm256Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte)
+}
+abstract class XmmXmmXmmm128Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)
 }
 abstract class M32Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -292,49 +340,73 @@ abstract class M64MmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: MmRegister)
 }
+abstract class R64R16m16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister16)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression16)
+}
+abstract class R16m16R16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16)
+}
+abstract class R16m16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister16)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)
+}
+abstract class R8m8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister8)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)
+}
 abstract class Imm64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, offset: Long, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, offset: Long)
 }
-abstract class R64mMmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: MmRegister)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: MmRegister)
+abstract class YmmYmmXmmm128Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128)
 }
-abstract class R32R32mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Byte)
+abstract class R64R64m64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Byte)
+}
+abstract class R64m64Imm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, immediate: Int)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, immediate: Int)
+}
+abstract class R8m8R8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister8, register2: GpRegister8)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, register: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, register: GpRegister8)
 }
 abstract class MmXmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: XmmRegister)
 }
-abstract class R32R16mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister16)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression16)
+abstract class YmmYmmYmmm256Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)
 }
-abstract class XmmXmmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)
-}
-abstract class R32R8mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister8)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression8)
-}
-abstract class R32mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, immediate: Byte)
+abstract class Mmm64MmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: MmRegister)
 }
 abstract class R32XmmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -344,6 +416,12 @@ abstract class XmmVmXmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, vectorAddressExpression: VectorAddressExpression, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, vectorAddressExpression: VectorAddressExpression, register2: XmmRegister)
 }
+abstract class R64m64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64)
+}
 abstract class M64XmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: XmmRegister)
@@ -352,113 +430,119 @@ abstract class YmmYmmM256Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)
 }
-abstract class XmmR32mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte)
+abstract class R32m16XmmImm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: XmmRegister, immediate: Byte)
 }
-abstract class R8mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister8, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, immediate: Byte)
+abstract class XmmXmmR64m64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64)
 }
 abstract class XmmXmmM128Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)
 }
-abstract class XmmXmmR64mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister64, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte)
-}
-abstract class R16mR16Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16)
-}
-abstract class XmmXmmXmmmXmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, register4: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, register4: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, register3: XmmRegister)
+abstract class XmmMmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: MmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)
 }
 abstract class NullaryInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer)
 }
-abstract class R32mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32)
-}
-abstract class R32XmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)
-}
-abstract class R16mR16Imm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16, immediate: Byte)
-}
-abstract class M16R16Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16)
-}
-abstract class XmmXmmXmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128)
-}
-abstract class R64XmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression128)
-}
-abstract class R32R32R32mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, addressExpression: AddressExpression32)
-}
-abstract class YmmmYmmInstruction : Instruction() {
+abstract class Ymmm256YmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister)
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression256, register: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression256, register: YmmRegister)
 }
-abstract class MmR32mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression32)
+abstract class R32XmmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)
+}
+abstract class R16m16R16Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16, immediate: Byte)
+}
+abstract class XmmXmmR32m32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32)
+}
+abstract class R64m64MmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: MmRegister)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: MmRegister)
+}
+abstract class XmmXmmm128Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)
+}
+abstract class M16R16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, register: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, register: GpRegister16)
+}
+abstract class Xmmm64XmmImm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte)
+}
+abstract class R32R8m8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister8)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression8)
 }
 abstract class XmmXmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
 }
-abstract class R16mImm16Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, immediate: Short)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, immediate: Short)
+abstract class R32Xmmm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)
 }
-abstract class R64R64mImm32Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, immediate: Int)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Int)
+abstract class XmmXmmXmmm128Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)
 }
 abstract class YmmM256Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256)
+}
+abstract class R64m64XmmImm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte)
+}
+abstract class Xmmm32XmmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: XmmRegister)
+}
+abstract class R32m32XmmImm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte)
 }
 abstract class R16Imm16Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -480,73 +564,97 @@ abstract class MmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: MmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: MmRegister, immediate: Byte)
 }
-abstract class R64R64mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Byte)
+abstract class R32m32R32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: GpRegister32)
+}
+abstract class XmmXmmXmmm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32)
+}
+abstract class Xmmm128XmmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register: XmmRegister)
 }
 abstract class XmmM32Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression32)
 }
-abstract class YmmYmmXmmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: XmmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, immediate: Byte)
-}
-abstract class MmMmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression64)
+abstract class XmmR64m64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)
 }
 abstract class XmmM128Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)
 }
-abstract class XmmmXmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register: XmmRegister, immediate: Byte)
+abstract class R32m32MmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: MmRegister)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: MmRegister)
+}
+abstract class R64m64XmmInstruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: XmmRegister)
+}
+abstract class XmmXmmm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression32)
+}
+abstract class YmmXmmm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression32)
+}
+abstract class R32m32Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, immediate: Byte)
+}
+abstract class MmMmm64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression64, immediate: Byte)
 }
 abstract class R32YmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: YmmRegister)
 }
-abstract class R8mR8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister8, register2: GpRegister8)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, register: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, register: GpRegister8)
-}
-abstract class R8mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister8)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)
-}
-abstract class XmmXmmXmmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: XmmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte)
+abstract class R64m64R64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: GpRegister64)
 }
 abstract class M128XmmXmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register1: XmmRegister, register2: XmmRegister)
 }
-abstract class R64mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64)
-}
 abstract class M256YmmYmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression256, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression256, register1: YmmRegister, register2: YmmRegister)
+}
+abstract class R32R16m16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister16)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression16)
 }
 abstract class R64M64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -564,41 +672,47 @@ abstract class X87Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: X87Register, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: X87Register)
 }
-abstract class MmXmmmInstruction : Instruction() {
+abstract class XmmXmmR32m32Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte)
+}
+abstract class R32R32m32Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32, immediate: Byte)
+}
+abstract class MmXmmm128Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: XmmRegister)
   abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression128)
 }
-abstract class R64R64R64mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64)
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, addressExpression: AddressExpression64)
+abstract class XmmR32m8Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression8, immediate: Byte)
 }
-abstract class R32mXmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte)
+abstract class R64Xmmm64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)
 }
-abstract class YmmXmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression128)
+abstract class MmR64m64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression64)
 }
-abstract class R64mR64Imm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, register: GpRegister64, immediate: Byte)
-}
-abstract class R32R32mR32Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32)
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, addressExpression: AddressExpression32, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, addressExpression: AddressExpression32, register2: GpRegister32)
+abstract class XmmXmmm128Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)
 }
 abstract class XmmMmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -608,11 +722,11 @@ abstract class M224Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression28Bytes, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression28Bytes)
 }
-abstract class XmmXmmR32mImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, register3: GpRegister32, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte)
+abstract class XmmR32m32Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte)
 }
 abstract class YmmM64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -622,103 +736,115 @@ abstract class M864Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression108Bytes, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression108Bytes)
 }
-abstract class R64mImm32Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, immediate: Int)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, immediate: Int)
+abstract class R64R64m64Imm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, immediate: Int)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Int, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64, immediate: Int)
 }
-abstract class XmmXmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)
-}
-abstract class R8R8mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister8, register2: GpRegister8)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister8, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister8, addressExpression: AddressExpression8)
-}
-abstract class R32mMmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: MmRegister)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: MmRegister)
+abstract class XmmR32m32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression32)
 }
 abstract class YmmM128Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression128)
 }
-abstract class YmmYmmmImm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte)
+abstract class R16R16m16Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Byte)
 }
-abstract class R16R16mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)
-}
-abstract class R32mR32Imm8Instruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, immediate: Byte)
-  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: GpRegister32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: GpRegister32, immediate: Byte)
-}
-abstract class XmmMmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: MmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression64)
-}
-abstract class R16R8mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister8)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression8)
-}
-abstract class YmmYmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression256)
+abstract class R64R64m64R64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, addressExpression: AddressExpression64, register2: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, addressExpression: AddressExpression64, register2: GpRegister64)
 }
 abstract class M32XmmInstruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, register: XmmRegister)
 }
+abstract class R32R32R32m32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, addressExpression: AddressExpression32)
+}
+abstract class R32R32m32R32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32, register3: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, addressExpression: AddressExpression32, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, addressExpression: AddressExpression32, register2: GpRegister32)
+}
 abstract class R16Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: GpRegister16)
 }
-abstract class R64R8mInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister8)
-  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression8)
+abstract class R64R64R64m64Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, register3: GpRegister64)
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64, addressExpression: AddressExpression64)
 }
-abstract class YmmYmmYmmmYmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, register4: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, register4: YmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, register3: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, register3: YmmRegister)
+abstract class YmmXmmm128Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: XmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: YmmRegister, addressExpression: AddressExpression128)
+}
+abstract class R8m8Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister8, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, immediate: Byte)
+}
+abstract class XmmYmmm256Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: YmmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression256)
+}
+abstract class R8R8m8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister8, register2: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister8, register2: GpRegister8)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister8, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister8, addressExpression: AddressExpression8)
 }
 abstract class R16M16Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)
 }
-abstract class YmmYmmYmmmInstruction : Instruction() {
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, register3: YmmRegister)
-  abstract fun encode(buffer: ByteBuffer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
-  abstract fun trace(tracer: InstructionTracer, register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256)
+abstract class R32m8XmmImm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: XmmRegister, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, register: XmmRegister, immediate: Byte)
+}
+abstract class R16m16Imm16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, immediate: Short)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, immediate: Short)
+}
+abstract class R32R32m32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)
 }
 abstract class R64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register: GpRegister64)
+}
+abstract class R16R16m16Imm16Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: GpRegister16, register2: GpRegister16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16, immediate: Short)
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Short, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16, immediate: Short)
 }
 abstract class XmmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
@@ -727,6 +853,18 @@ abstract class XmmImm8Instruction : Instruction() {
 abstract class XmmXmmImm8Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, register1: XmmRegister, register2: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
   abstract fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister, immediate: Byte)
+}
+abstract class MmMmm32Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register1: MmRegister, register2: MmRegister, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register1: MmRegister, register2: MmRegister)
+  abstract fun encode(buffer: ByteBuffer, register: MmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: MmRegister, addressExpression: AddressExpression32)
+}
+abstract class R64m64Imm8Instruction : Instruction() {
+  abstract fun encode(buffer: ByteBuffer, register: GpRegister64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, register: GpRegister64, immediate: Byte)
+  abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)
+  abstract fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, immediate: Byte)
 }
 abstract class M64R64Instruction : Instruction() {
   abstract fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, register: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT, tracer: InstructionTracer? = null)

@@ -5298,16 +5298,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vaddps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VaddpsYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun addsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun addsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     AddsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vaddsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vaddsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VaddsdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun addss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun addss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     AddssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vaddss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vaddss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VaddssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun addsubpd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -5823,16 +5823,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vcmpps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VcmppsYmmYmmYmmm256Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
-  fun cmpsd(register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cmpsd(register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     CmpsdXmm0To63Xmmm64Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun vcmpsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcmpsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VcmpsdXmmXmmXmmm64Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
-  fun cmpss(register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cmpss(register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     CmpssXmm0To31Xmmm32Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun vcmpss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcmpss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VcmpssXmmXmmXmmm32Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
   fun cmpxchgAl(addressExpression: AddressExpression8, register: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -5847,16 +5847,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun cmpxchgRax(addressExpression: AddressExpression64, register: GpRegister64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     CmpxchgRm64R64Rax.encode(buffer, addressExpression, register, options, tracer = this)
   }
-  fun comisd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun comisd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     ComisdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcomisd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcomisd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VcomisdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun comiss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun comiss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     ComissXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcomiss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcomiss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VcomissXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun crc32(register: GpRegister32, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -5874,10 +5874,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun crc32(register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Crc32R64Rm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvtdq2pd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtdq2pd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtdq2pdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtdq2pd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtdq2pd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtdq2pdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vcvtdq2pd(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -5928,34 +5928,34 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vcvtps2dq(register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtps2dqYmmYmmm256.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvtps2pd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtps2pd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtps2pdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtps2pd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtps2pd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtps2pdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vcvtps2pd(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtps2pdYmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvtps2pi(register: MmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtps2pi(register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtps2piMmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvtsd2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtsd2si(register: GpRegister32, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtsd2siR32Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvtsd2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtsd2si(register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtsd2siR64Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtsd2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtsd2si(register: GpRegister32, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtsd2siR32Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtsd2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtsd2si(register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtsd2siR64Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvtsd2ss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtsd2ss(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtsd2ssXmm0To31Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtsd2ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtsd2ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtsd2ssXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun cvtsi2sd(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -5982,22 +5982,22 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vcvtsi2ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtsi2ssXmmXmmRm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun cvtss2sd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtss2sd(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtss2sdXmm0To63Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtss2sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtss2sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtss2sdXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun cvtss2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtss2si(register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtss2siR32Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvtss2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvtss2si(register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvtss2siR64Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtss2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtss2si(register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtss2siR32Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtss2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtss2si(register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtss2siR64Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun cvttpd2dq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6021,31 +6021,31 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vcvttps2dq(register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvttps2dqYmmYmmm256.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvttps2pi(register: MmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvttps2pi(register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvttps2piMmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvttsd2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvttsd2si(register: GpRegister32, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvttsd2siR32Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvttsd2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvttsd2si(register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvttsd2siR64Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvttsd2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvttsd2si(register: GpRegister32, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvttsd2siR32Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvttsd2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvttsd2si(register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvttsd2siR64Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvttss2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvttss2si(register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvttss2siR32Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun cvttss2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun cvttss2si(register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Cvttss2siR64Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvttss2si(register: GpRegister32, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvttss2si(register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvttss2siR32Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvttss2si(register: GpRegister64, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvttss2si(register: GpRegister64, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvttss2siR64Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun dec(addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6090,16 +6090,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vdivps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VdivpsYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun divsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun divsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     DivsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vdivsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vdivsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VdivsdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun divss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun divss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     DivssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vdivss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vdivss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VdivssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun dppd(register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6222,10 +6222,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun inc(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     IncRm64.encode(buffer, addressExpression, options, tracer = this)
   }
-  fun insertps(register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun insertps(register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     InsertpsXmmXmmm32Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun vinsertps(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vinsertps(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VinsertpsXmmXmmXmmm32Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
   fun jmp(addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6258,16 +6258,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vmaxps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmaxpsYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun maxsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun maxsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MaxsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vmaxsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vmaxsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmaxsdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun maxss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun maxss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MaxssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vmaxss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vmaxss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmaxssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun minpd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6288,16 +6288,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vminps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VminpsYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun minsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun minsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MinsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vminsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vminsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VminsdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun minss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun minss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MinssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vminss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vminss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VminssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun mov(addressExpression: AddressExpression8, register: GpRegister8, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6408,10 +6408,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vmovq(addressExpression: AddressExpression64, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmovqRm64Xmm.encode(buffer, addressExpression, register, options, tracer = this)
   }
-  fun movddup(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun movddup(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MovddupXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vmovddup(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vmovddup(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmovddupXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vmovddup(register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6453,22 +6453,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vmovdqu(addressExpression: AddressExpression256, register: YmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmovdquYmmm256Ymm.encode(buffer, addressExpression, register, options, tracer = this)
   }
-  fun movq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    MovqXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
-  }
-  fun vmovq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    VmovqXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
-  }
-  fun movq(addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    MovqXmmm64Xmm.encode(buffer, addressExpression, register, options, tracer = this)
-  }
-  fun vmovq(addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
-    VmovqXmmm64Xmm.encode(buffer, addressExpression, register, options, tracer = this)
-  }
-  fun movsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun movsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MovsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun movsd(addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun movsd(addressExpression: AddressExpression64, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MovsdXmmm64Xmm.encode(buffer, addressExpression, register, options, tracer = this)
   }
   fun movshdup(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6489,10 +6477,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vmovsldup(register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmovsldupYmmYmmm256.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun movss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun movss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MovssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun movss(addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun movss(addressExpression: AddressExpression32, register: XmmRegister, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MovssXmmm32Xmm.encode(buffer, addressExpression, register, options, tracer = this)
   }
   fun movsx(register: GpRegister16, addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -6603,16 +6591,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vmulps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmulpsYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun mulsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun mulsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MulsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vmulsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vmulsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmulsdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun mulss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun mulss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     MulssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vmulss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vmulss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VmulssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun mulxEdx(register1: GpRegister32, register2: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7095,7 +7083,7 @@ abstract class AbstractAssembler: InstructionTracer {
   fun pext(register1: GpRegister64, register2: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PextR64R64Rm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun pextrb(addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pextrb(addressExpression: AddressExpression8, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PextrbR32m8XmmImm8.encode(buffer, addressExpression, register, immediate, options, tracer = this)
   }
   fun pextrd(addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7104,7 +7092,7 @@ abstract class AbstractAssembler: InstructionTracer {
   fun pextrq(addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PextrqRm64XmmImm8.encode(buffer, addressExpression, register, immediate, options, tracer = this)
   }
-  fun vpextrb(addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpextrb(addressExpression: AddressExpression8, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpextrbR32m8XmmImm8.encode(buffer, addressExpression, register, immediate, options, tracer = this)
   }
   fun vpextrd(addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7113,10 +7101,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vpextrq(addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpextrqRm64XmmImm8.encode(buffer, addressExpression, register, immediate, options, tracer = this)
   }
-  fun pextrw(addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pextrw(addressExpression: AddressExpression16, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PextrwR32m16XmmImm8.encode(buffer, addressExpression, register, immediate, options, tracer = this)
   }
-  fun vpextrw(addressExpression: AddressExpression32, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpextrw(addressExpression: AddressExpression16, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpextrwR32m16XmmImm8.encode(buffer, addressExpression, register, immediate, options, tracer = this)
   }
   fun phaddw(register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7197,7 +7185,7 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vphsubsw(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VphsubswYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun pinsrb(register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pinsrb(register: XmmRegister, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PinsrbXmmR32m8Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
   fun pinsrd(register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7206,7 +7194,7 @@ abstract class AbstractAssembler: InstructionTracer {
   fun pinsrq(register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PinsrqXmmRm64Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun vpinsrb(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpinsrb(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpinsrbXmmXmmR32m8Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
   fun vpinsrd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7215,13 +7203,13 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vpinsrq(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpinsrqXmmXmmRm64Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
-  fun pinsrw(register: MmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pinsrw(register: MmRegister, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PinsrwMmR32m16Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun pinsrw(register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pinsrw(register: XmmRegister, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PinsrwXmmR32m16Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun vpinsrw(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpinsrw(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression16, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpinsrwXmmXmmR32m16Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
   fun pmaddubsw(register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7368,109 +7356,109 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vpminud(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpminudYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun pmovsxbw(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovsxbw(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovsxbwXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovsxbd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovsxbd(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovsxbdXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovsxbq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovsxbq(register: XmmRegister, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovsxbqXmmXmmm16.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovsxwd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovsxwd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovsxwdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovsxwq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovsxwq(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovsxwqXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovsxdq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovsxdq(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovsxdqXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxbw(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxbw(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxbwXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxbd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxbd(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxbdXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxbq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxbq(register: XmmRegister, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxbqXmmXmmm16.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxwd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxwd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxwdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxwq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxwq(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxwqXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxdq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxdq(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxdqXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vpmovsxbw(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxbwYmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxbd(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxbd(register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxbdYmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxbq(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxbq(register: YmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxbqYmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vpmovsxwd(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxwdYmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovsxwq(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovsxwq(register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxwqYmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vpmovsxdq(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovsxdqYmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovzxbw(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovzxbw(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovzxbwXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovzxbd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovzxbd(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovzxbdXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovzxbq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovzxbq(register: XmmRegister, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovzxbqXmmXmmm16.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovzxwd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovzxwd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovzxwdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovzxwq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovzxwq(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovzxwqXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun pmovzxdq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun pmovzxdq(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PmovzxdqXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxbw(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxbw(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxbwXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxbd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxbd(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxbdXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxbq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxbq(register: XmmRegister, addressExpression: AddressExpression16, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxbqXmmXmmm16.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxwd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxwd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxwdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxwq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxwq(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxwqXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxdq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxdq(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxdqXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vpmovzxbw(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxbwYmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxbd(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxbd(register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxbdYmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxbq(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxbq(register: YmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxbqYmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vpmovzxwd(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxwdYmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpmovzxwq(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpmovzxwq(register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpmovzxwqYmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vpmovzxdq(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -7917,19 +7905,19 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vpunpckhqdq(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpunpckhqdqYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun punpcklbw(register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun punpcklbw(register: MmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PunpcklbwMmMmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun punpcklbw(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PunpcklbwXmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun punpcklwd(register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun punpcklwd(register: MmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PunpcklwdMmMmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun punpcklwd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PunpcklwdXmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun punpckldq(register: MmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun punpckldq(register: MmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     PunpckldqMmMmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun punpckldq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8133,10 +8121,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vrcpps(register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VrcppsYmmYmmm256.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun rcpss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun rcpss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     RcpssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vrcpss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vrcpss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VrcpssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun rorx(register: GpRegister32, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8163,16 +8151,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vroundps(register: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VroundpsYmmYmmm256Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun roundsd(register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun roundsd(register: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     RoundsdXmm0To63Xmmm64Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun vroundsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vroundsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VroundsdXmmXmmXmmm64Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
-  fun roundss(register: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun roundss(register: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     RoundssXmm0To31Xmmm32Imm8.encode(buffer, register, addressExpression, immediate, options, tracer = this)
   }
-  fun vroundss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vroundss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VroundssXmmXmmXmmm32Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
   fun rsqrtps(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8184,10 +8172,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vrsqrtps(register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VrsqrtpsYmmYmmm256.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun rsqrtss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun rsqrtss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     RsqrtssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vrsqrtss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vrsqrtss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VrsqrtssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun sal(addressExpression: AddressExpression8, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8502,16 +8490,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vsqrtps(register: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VsqrtpsYmmYmmm256.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun sqrtsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun sqrtsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     SqrtsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vsqrtsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vsqrtsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VsqrtsdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun sqrtss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun sqrtss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     SqrtssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vsqrtss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vsqrtss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VsqrtssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun sub(addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8577,16 +8565,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vsubps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VsubpsYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun subsd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun subsd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     SubsdXmm0To63Xmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vsubsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vsubsd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VsubsdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun subss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun subss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     SubssXmm0To31Xmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vsubss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vsubss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VsubssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun test(addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8622,16 +8610,16 @@ abstract class AbstractAssembler: InstructionTracer {
   fun tzcnt(register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     TzcntR64Rm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun ucomisd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun ucomisd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     UcomisdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vucomisd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vucomisd(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VucomisdXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun ucomiss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun ucomiss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     UcomissXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vucomiss(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vucomiss(register: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VucomissXmmXmmm32.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun unpckhpd(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8670,13 +8658,13 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vunpcklps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VunpcklpsYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vcvtph2ps(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtph2ps(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtph2psXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vcvtph2ps(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtph2psYmmXmmm128.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vcvtps2ph(addressExpression: AddressExpression128, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vcvtps2ph(addressExpression: AddressExpression64, register: XmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vcvtps2phXmmm64XmmImm8.encode(buffer, addressExpression, register, immediate, options, tracer = this)
   }
   fun vcvtps2ph(addressExpression: AddressExpression128, register: YmmRegister, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8724,22 +8712,22 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vfmadd231ps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmadd231psYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmadd132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmadd132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmadd132sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmadd213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmadd213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmadd213sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmadd231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmadd231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmadd231sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmadd132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmadd132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmadd132ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmadd213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmadd213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmadd213ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmadd231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmadd231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmadd231ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun vfmaddsub132pd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8850,22 +8838,22 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vfmsub231ps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmsub231psYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmsub132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmsub132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmsub132sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmsub213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmsub213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmsub213sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmsub231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmsub231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmsub231sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmsub132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmsub132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmsub132ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmsub213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmsub213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmsub213ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfmsub231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfmsub231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfmsub231ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun vfnmadd132pd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8904,22 +8892,22 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vfnmadd231ps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmadd231psYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmadd132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmadd132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmadd132sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmadd213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmadd213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmadd213sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmadd231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmadd231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmadd231sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmadd132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmadd132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmadd132ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmadd213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmadd213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmadd213ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmadd231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmadd231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmadd231ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun vfnmsub132pd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8958,22 +8946,22 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vfnmsub231ps(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmsub231psYmmYmmYmmm256.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmsub132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmsub132sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmsub132sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmsub213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmsub213sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmsub213sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmsub231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmsub231sd(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmsub231sdXmmXmmXmmm64.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmsub132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmsub132ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmsub132ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmsub213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmsub213ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmsub213ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
-  fun vfnmsub231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vfnmsub231ss(register1: XmmRegister, register2: XmmRegister, addressExpression: AddressExpression32, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     Vfnmsub231ssXmmXmmXmmm32.encode(buffer, register1, register2, addressExpression, options, tracer = this)
   }
   fun vinsertf128(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression128, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
@@ -8988,10 +8976,10 @@ abstract class AbstractAssembler: InstructionTracer {
   fun vpblendd(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpblenddYmmYmmYmmm256Imm8.encode(buffer, register1, register2, addressExpression, immediate, options, tracer = this)
   }
-  fun vpbroadcastq(register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpbroadcastq(register: XmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpbroadcastqXmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
-  fun vpbroadcastq(register: YmmRegister, addressExpression: AddressExpression128, options: EncodingOptions = EncodingOptions.DEFAULT)  {
+  fun vpbroadcastq(register: YmmRegister, addressExpression: AddressExpression64, options: EncodingOptions = EncodingOptions.DEFAULT)  {
     VpbroadcastqYmmXmmm64.encode(buffer, register, addressExpression, options, tracer = this)
   }
   fun vperm2f128(register1: YmmRegister, register2: YmmRegister, addressExpression: AddressExpression256, immediate: Byte, options: EncodingOptions = EncodingOptions.DEFAULT)  {

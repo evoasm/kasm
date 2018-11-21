@@ -30,6 +30,9 @@ interface RegisterOperand : SizedOperand {
     val type: RegisterType
 }
 interface MemoryOperand : SizedOperand
+interface MemoryOrMemoryRegisterOperand {
+    val memorySize : BitSize
+}
 
 abstract class ImplicitOperand : Operand() {
    override val isImplicit : Boolean get() = true
@@ -81,6 +84,7 @@ data class ExplicitRegisterOperand(override val size: BitSize,
 }
 
 data class ExplicitMemoryRegisterOperand(override val size: BitSize,
+                                         override val memorySize: BitSize,
                                          val readMemoryBits: BitRange?,
                                          val readRegisterBits: BitRange?,
                                          val writtenMemoryBits: BitRange?,
@@ -89,7 +93,7 @@ data class ExplicitMemoryRegisterOperand(override val size: BitSize,
                                          override val isSometimesWritten: Boolean,
                                          override val isRead: Boolean,
                                          override val type: RegisterType,
-                                         override val name: String) : ExplicitOperand(), RegisterOperand {
+                                         override val name: String) : ExplicitOperand(), RegisterOperand, MemoryOrMemoryRegisterOperand {
 
     override val identifierName = super.identifierName.replace("/", "")
 }
@@ -100,7 +104,10 @@ data class ExplicitMemoryOperand(override val size: BitSize,
                                  override val isAlwaysWritten: Boolean,
                                  override val isSometimesWritten: Boolean,
                                  override val isRead: Boolean,
-                                 override val name: String) : ExplicitOperand(), MemoryOperand
+                                 override val name: String) : ExplicitOperand(), MemoryOperand, MemoryOrMemoryRegisterOperand {
+    override val memorySize: BitSize
+        get() = size
+}
 
 data class ExplicitVectorMemoryOperand(override val size: BitSize,
                                        val readBits: BitRange?,
@@ -131,8 +138,9 @@ data class ImplicitMemoryOperand(override val size: BitSize,
                                  override val isRead: Boolean,
                                  val baseRegister: Register,
                                  val indexRegister: Register?,
-                                 override val name: String) : ImplicitOperand(), MemoryOperand {
+                                 override val name: String) : ImplicitOperand(), MemoryOperand, MemoryOrMemoryRegisterOperand {
     override val identifierName = super.identifierName.split("\\[|\\]|\\s+\\+\\s+".toRegex()).joinToString("") { it.capitalize() }
+    override val memorySize: BitSize get() = size
 }
 
 data class ExplicitImmediateOperand(override val size: BitSize,

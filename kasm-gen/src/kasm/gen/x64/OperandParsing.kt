@@ -236,6 +236,7 @@ class OperandParser(val pair: Pair<String, String>, val haveVex: Boolean) {
             val readRegisterBits = accessedRegisterBits
 
             return ExplicitMemoryRegisterOperand(size,
+                    toOperandSize(indirectSize),
                     readMemoryBits.takeIf { isRead },
                     readRegisterBits.takeIf { isRead },
                     writtenMemoryBits.takeIf { isWritten },
@@ -384,12 +385,12 @@ class OperandsParser(val list: MutableList<Pair<String, String>>,
                      val fpuInstruction: Boolean) {
 
     companion object {
-        internal fun getAddressExpressionClassName(operand: SizedOperand): String {
-            val sizeSuffix = when (operand.size) {
+        internal fun getAddressExpressionClassName(operand: MemoryOrMemoryRegisterOperand): String {
+            val sizeSuffix = when (operand.memorySize) {
                 BitSize.BYTES_512 -> "512Bytes"
                 BitSize.BYTES_108 -> "108Bytes"
                 BitSize.BYTES_28  -> "28Bytes"
-                else              -> operand.size.toInt().toString()
+                else              -> operand.memorySize.toInt().toString()
             }
             val addressExpressionClassName = "AddressExpression" + sizeSuffix
             return addressExpressionClassName
@@ -564,7 +565,8 @@ class OperandsParser(val list: MutableList<Pair<String, String>>,
 
                 is ExplicitMemoryRegisterOperand -> {
                     if (memory) {
-                        Operand.Parameter("addressExpression", "AddressExpression" + operand.size.toInt())
+                        val addressExpressionClassName = getAddressExpressionClassName(operand)
+                        Operand.Parameter("addressExpression", addressExpressionClassName)
                     } else {
                         registerOperandParameter(operand.type, operand.size)
                     }

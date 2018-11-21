@@ -584,7 +584,7 @@ class InstructionInterfaceGenerator(val operands: List<ExplicitOperand>) {
 
             when (operand) {
                 is ExplicitMemoryOperand         -> "M" + operand.size.toInt()
-                is ExplicitMemoryRegisterOperand -> registerAbbreviation(operand.type, operand.size) + "m"
+                is ExplicitMemoryRegisterOperand -> registerAbbreviation(operand.type, operand.size) + "m" + operand.memorySize.toInt()
                 is ExplicitRegisterOperand       -> registerAbbreviation(operand.type, operand.size)
                 is ExplicitVectorMemoryOperand   -> "Vm"
                 is ExplicitImmediateOperand      -> "Imm"
