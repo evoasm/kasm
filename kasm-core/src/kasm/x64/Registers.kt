@@ -713,44 +713,125 @@ enum class YmmRegister(override val code: Int,
                        override val topLevelRegister: ZmmRegister) : Register,
         VectorRegister,
         SubRegister<ZmmRegister, ZmmRegister> {
-    YMM0(0, ZmmRegister.ZMM0, ZmmRegister.ZMM0),
-    YMM1(1, ZmmRegister.ZMM1, ZmmRegister.ZMM1),
-    YMM2(2, ZmmRegister.ZMM2, ZmmRegister.ZMM2),
-    YMM3(3, ZmmRegister.ZMM3, ZmmRegister.ZMM3),
-    YMM4(4, ZmmRegister.ZMM4, ZmmRegister.ZMM4),
-    YMM5(5, ZmmRegister.ZMM5, ZmmRegister.ZMM5),
-    YMM6(6, ZmmRegister.ZMM6, ZmmRegister.ZMM6),
-    YMM7(7, ZmmRegister.ZMM7, ZmmRegister.ZMM7),
-    YMM8(8, ZmmRegister.ZMM8, ZmmRegister.ZMM8),
-    YMM9(9, ZmmRegister.ZMM9, ZmmRegister.ZMM9),
-    YMM10(10, ZmmRegister.ZMM10, ZmmRegister.ZMM10),
-    YMM11(11, ZmmRegister.ZMM11, ZmmRegister.ZMM11),
-    YMM12(12, ZmmRegister.ZMM12, ZmmRegister.ZMM12),
-    YMM13(13, ZmmRegister.ZMM13, ZmmRegister.ZMM13),
-    YMM14(14, ZmmRegister.ZMM14, ZmmRegister.ZMM14),
-    YMM15(15, ZmmRegister.ZMM15, ZmmRegister.ZMM15);
+    YMM0(0, ZmmRegister.ZMM0, ZmmRegister.ZMM0) {
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM0
+    },
+    YMM1(1, ZmmRegister.ZMM1, ZmmRegister.ZMM1){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM1
+    },
+    YMM2(2, ZmmRegister.ZMM2, ZmmRegister.ZMM2){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM2
+    },
+    YMM3(3, ZmmRegister.ZMM3, ZmmRegister.ZMM3){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM3
+    },
+    YMM4(4, ZmmRegister.ZMM4, ZmmRegister.ZMM4){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM4
+    },
+    YMM5(5, ZmmRegister.ZMM5, ZmmRegister.ZMM5){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM5
+    },
+    YMM6(6, ZmmRegister.ZMM6, ZmmRegister.ZMM6){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM6
+    },
+    YMM7(7, ZmmRegister.ZMM7, ZmmRegister.ZMM7){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM7
+    },
+    YMM8(8, ZmmRegister.ZMM8, ZmmRegister.ZMM8){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM8
+    },
+    YMM9(9, ZmmRegister.ZMM9, ZmmRegister.ZMM9){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM9
+    },
+    YMM10(10, ZmmRegister.ZMM10, ZmmRegister.ZMM10){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM10
+    },
+    YMM11(11, ZmmRegister.ZMM11, ZmmRegister.ZMM11){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM11
+    },
+    YMM12(12, ZmmRegister.ZMM12, ZmmRegister.ZMM12){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM12
+    },
+    YMM13(13, ZmmRegister.ZMM13, ZmmRegister.ZMM13){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM13
+    },
+    YMM14(14, ZmmRegister.ZMM14, ZmmRegister.ZMM14){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM14
+    },
+    YMM15(15, ZmmRegister.ZMM15, ZmmRegister.ZMM15){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM15
+    };
 
     override val type = RegisterType.YMM
+    abstract val subRegisterXmm: XmmRegister
 
 }
 
 enum class ZmmRegister(override val code: Int) : Register, VectorRegister {
-    ZMM0(0),
-    ZMM1(1),
-    ZMM2(2),
-    ZMM3(3),
-    ZMM4(4),
-    ZMM5(5),
-    ZMM6(6),
-    ZMM7(7),
-    ZMM8(8),
-    ZMM9(9),
-    ZMM10(10),
-    ZMM11(11),
-    ZMM12(12),
-    ZMM13(13),
-    ZMM14(14),
-    ZMM15(15),
+    ZMM0(0) {
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM0
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM0
+    },
+    ZMM1(1){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM1
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM1
+    },
+    ZMM2(2){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM2
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM2
+    },
+    ZMM3(3){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM3
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM3
+    },
+    ZMM4(4){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM4
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM4
+    },
+    ZMM5(5){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM5
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM5
+    },
+    ZMM6(6){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM6
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM6
+    },
+    ZMM7(7){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM7
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM7
+    },
+    ZMM8(8){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM8
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM8
+    },
+    ZMM9(9){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM9
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM9
+    },
+    ZMM10(10){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM10
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM10
+    },
+    ZMM11(11){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM11
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM11
+    },
+    ZMM12(12){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM12
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM12
+    },
+    ZMM13(13){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM13
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM13
+    },
+    ZMM14(14){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM14
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM14
+    },
+    ZMM15(15){
+        override val subRegisterXmm: XmmRegister get() = XmmRegister.XMM15
+        override val subRegisterYmm: YmmRegister get() = YmmRegister.YMM15
+    },
     ZMM16(16),
     ZMM17(17),
     ZMM18(18),
@@ -769,6 +850,9 @@ enum class ZmmRegister(override val code: Int) : Register, VectorRegister {
     ZMM31(31);
 
     override val type = RegisterType.ZMM
+
+    open val subRegisterXmm: XmmRegister? = null
+    open val subRegisterYmm: YmmRegister? = null
 
 }
 
