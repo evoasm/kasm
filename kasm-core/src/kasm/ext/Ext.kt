@@ -73,6 +73,10 @@ fun Long.alignUp(alignment: Int): Long {
     return (this + alignment - 1).alignDown(alignment)
 }
 
+fun log2(value: Int) : Int {
+  return (31 - Integer.numberOfLeadingZeros(value))
+}
+
 @ExperimentalUnsignedTypes
 fun ULong.alignDown(alignment: UInt): ULong {
     return this - (this.rem(alignment))

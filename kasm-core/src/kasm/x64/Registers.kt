@@ -879,8 +879,19 @@ enum class RegisterType(val size: BitSize, val superRegisterType: RegisterType?,
     X87(BitSize.BITS_80, null, null)
     ;
 
-    val isSubRegisterType = superRegisterType != null
+    val isSubRegisterType get() = superRegisterType != null
     open val isVectorType = false
+}
+
+enum class VectorRegisterType(val size: BitSize, val alignment: Int) {
+    MM(BitSize.BITS_64, 8),
+    XMM(BitSize.BITS_128, 16),
+    YMM(BitSize.BITS_256, 32),
+    ZMM(BitSize.BITS_512, 32)
+
+    ;
+
+    val byteSize get() = size.toInt() / 8
 }
 
 enum class CpuException {

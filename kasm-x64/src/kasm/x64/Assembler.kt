@@ -65,13 +65,25 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         }
     }
 
+    class Label(buffer: ByteBuffer) {
+        val offset = buffer.position()
+    }
+
 
     fun ifEqual(ifBlock: Assembler.() -> Unit) {
-        jne(0xdeadbeef.toInt())
+        je(0xdeadbeef.toInt())
         val offset1 = buffer.position()
         ifBlock()
         val offset2 = buffer.position()
 
+        buffer.putInt(offset1 - 4, offset2 - offset1)
+    }
+
+    fun ifNotEqual(ifBlock: Assembler.() -> Unit) {
+        jne(0xdeadbeef.toInt())
+        val offset1 = buffer.position()
+        ifBlock()
+        val offset2 = buffer.position()
         buffer.putInt(offset1 - 4, offset2 - offset1)
     }
 
@@ -88,14 +100,41 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         buffer.putInt(offset2 - 4, offset3 - offset2)
     }
 
+    fun ifNotEqual(ifBlock: Assembler.() -> Unit, elseBlock: Assembler.() -> Unit) {
+        jne(0xdeadbeef.toInt())
+        val offset1 = buffer.position()
+        elseBlock()
+        jmp(0xdeadbeef.toInt())
+        val offset2 = buffer.position()
+        ifBlock()
+        val offset3 = buffer.position()
+
+        buffer.putInt(offset1 - 4, offset2 - offset1)
+        buffer.putInt(offset2 - 4, offset3 - offset2)
+    }
+
     fun mov(register: GpRegister64) : LongLinkPoint {
         mov(register, 0xdeadbeefdeadbeefU.toLong())
         return LongLinkPoint(buffer)
     }
 
+    fun label() : Label {
+        return Label(buffer)
+    }
+
     fun je(): JumpLinkPoint {
         je(0xdeadbeef.toInt())
         return JumpLinkPoint(buffer, relative = true)
+    }
+
+    fun jne(): JumpLinkPoint {
+        jne(0xdeadbeef.toInt())
+        return JumpLinkPoint(buffer, relative = true)
+    }
+
+    fun jne(label: Label) {
+        val instructionSize = 5
+        jne(label.offset - (buffer.position() + instructionSize))
     }
 
     fun jmp(): JumpLinkPoint {
@@ -136,6 +175,26 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         push(register)
         action()
         pop(register)
+    }
+
+    fun mov(register: GpRegister64, address: Address) {
+        mov(register, address.toLong())
+    }
+
+    fun movDouble(register: XmmRegister, addressExpression: AddressExpression64) {
+        if(VmovsdXmmM64.isSupported()) {
+            vmovsd(register, addressExpression)
+        } else {
+            movsd(register, addressExpression)
+        }
+    }
+
+    fun movDouble(addressExpression: AddressExpression64, register: XmmRegister) {
+        if(VmovsdXmmM64.isSupported()) {
+            vmovsd(addressExpression, register)
+        } else {
+            movsd(addressExpression, register)
+        }
     }
 
     fun load(address: Address, register: GpRegister64) {
