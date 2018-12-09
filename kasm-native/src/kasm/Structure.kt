@@ -386,6 +386,13 @@ open class Structure( var codeModel: CodeModel? = null) {
         fun getFloat(vararg indices: Int, vectorElementIndex: Int) : Float = readFloat(getElementOffset(*indices), vectorElementIndex)
         fun getDouble(vararg indices: Int, vectorElementIndex: Int) : Double = readDouble(getElementOffset(*indices), vectorElementIndex)
 
+        fun getByte(vectorElementIndex: Int) : Byte = readByte(offset, vectorElementIndex)
+        fun getShort(vectorElementIndex: Int) : Short = readShort(offset, vectorElementIndex)
+        fun getInt(vectorElementIndex: Int) : Int = readInt(offset, vectorElementIndex)
+        fun getLong(vectorElementIndex: Int) : Long = readLong(offset, vectorElementIndex)
+        fun getFloat(vectorElementIndex: Int) : Float = readFloat(offset, vectorElementIndex)
+        fun getDouble(vectorElementIndex: Int) : Double = readDouble(offset, vectorElementIndex)
+
         fun getByte(index: Int, vectorElementIndex: Int) : Byte = readByte(getElementOffset(index), vectorElementIndex)
         fun getShort(index: Int, vectorElementIndex: Int) : Short = readShort(getElementOffset(index), vectorElementIndex)
         fun getInt(index: Int, vectorElementIndex: Int) : Int = readInt(getElementOffset(index), vectorElementIndex)
@@ -406,6 +413,13 @@ open class Structure( var codeModel: CodeModel? = null) {
         fun setLong(vararg indices: Int, vectorElementIndex: Int, value: Long) = writeLong(getElementOffset(*indices), vectorElementIndex, value)
         fun setFloat(vararg indices: Int, vectorElementIndex: Int, value: Float) = writeFloat(getElementOffset(*indices), vectorElementIndex, value)
         fun setDouble(vararg indices: Int, vectorElementIndex: Int, value: Double) = writeDouble(getElementOffset(*indices), vectorElementIndex, value)
+
+        fun setByte(vectorElementIndex: Int, value: Byte) = writeByte(offset, vectorElementIndex, value)
+        fun setShort(vectorElementIndex: Int, value: Short) = writeShort(offset, vectorElementIndex, value)
+        fun setInt(vectorElementIndex: Int, value: Int) = writeInt(offset, vectorElementIndex, value)
+        fun setLong(vectorElementIndex: Int, value: Long) = writeLong(offset, vectorElementIndex, value)
+        fun setFloat(vectorElementIndex: Int, value: Float) = writeFloat(offset, vectorElementIndex, value)
+        fun setDouble(vectorElementIndex: Int, value: Double) = writeDouble(offset, vectorElementIndex, value)
 
         fun setByte(index: Int, vectorElementIndex: Int, value: Byte) = writeByte(getElementOffset(index), vectorElementIndex, value)
         fun setShort(index: Int, vectorElementIndex: Int, value: Short) = writeShort(getElementOffset(index), vectorElementIndex, value)
@@ -448,17 +462,16 @@ open class Structure( var codeModel: CodeModel? = null) {
         fun getFloatArray(vararg indices: Int, array: Array<Float>? = null) = readArray(getElementOffset(*indices), array, 0f)
         fun getDoubleArray(vararg indices: Int, array: Array<Double>? = null) = readArray(getElementOffset(*indices), array, 0.0)
 
-
         fun contentEquals(other: VectorField) : Boolean {
             if(size != other.size) return false
             for(i in 0 until size) {
-                if(getByte(i) != other.getByte(i)) return false
+                if(readByte(i) != other.readByte(i)) return false
             }
             return true
         }
 
-        protected fun getByte(byteIndex: Int) : Byte {
-            require(byteIndex < size)
+        protected fun readByte(byteIndex: Int) : Byte {
+            assert(byteIndex < size)
             return buffer.get(offset + byteIndex)
         }
 

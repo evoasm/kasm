@@ -50,7 +50,9 @@ internal class CpuStateTest {
                     is Structure.VectorField -> {
                         val array = ByteArray(it.elementSize)
                         random.nextBytes(array)
-                        it.setByteArray(array)
+                        for(i in array.indices) {
+                            it.setByte(i, array[i])
+                        }
                     }
                 }
             }
