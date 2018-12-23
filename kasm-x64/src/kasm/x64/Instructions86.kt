@@ -18,10 +18,10 @@ object SalRm161M : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_15)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(register, 0, BitRange.BITS_0_15)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -39,10 +39,10 @@ object SalRm161M : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -82,10 +82,10 @@ object SalRm16ClM : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_15)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(register, 0, BitRange.BITS_0_15)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -103,10 +103,10 @@ object SalRm16ClM : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -146,10 +146,10 @@ object SalRm321M : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister32)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_31)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(register, 0, BitRange.BITS_0_31)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -167,10 +167,10 @@ object SalRm321M : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -210,10 +210,10 @@ object SalRm641M : R64m64Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister64)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_63)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(register, 0, BitRange.BITS_0_63)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -231,10 +231,10 @@ object SalRm641M : R64m64Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -274,10 +274,10 @@ object SalRm32ClM : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister32)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_31)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(register, 0, BitRange.BITS_0_31)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -295,10 +295,10 @@ object SalRm32ClM : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -338,10 +338,10 @@ object SalRm64ClM : R64m64Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister64)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_63)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(register, 0, BitRange.BITS_0_63)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -359,10 +359,10 @@ object SalRm64ClM : R64m64Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -402,10 +402,10 @@ object ShrRm81 : R8m8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister8)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_7)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(register, 0, BitRange.BITS_0_7)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_7, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_7, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -423,10 +423,10 @@ object ShrRm81 : R8m8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -466,10 +466,10 @@ object ShrRm8Cl : R8m8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister8)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_7)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(register, 0, BitRange.BITS_0_7)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_7, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_7, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -487,10 +487,10 @@ object ShrRm8Cl : R8m8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -531,10 +531,10 @@ object ShrRm8Imm8 : R8m8Imm8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister8, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_7)
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
+    tracer.traceRead(register, 0, BitRange.BITS_0_7)
+    tracer.traceRead(immediate, 1, BitSize.BITS_8)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_7, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_7, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -553,10 +553,10 @@ object ShrRm8Imm8 : R8m8Imm8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceRead(immediate, 1, BitSize.BITS_8)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -596,10 +596,10 @@ object ShrRm161 : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_15)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(register, 0, BitRange.BITS_0_15)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -617,10 +617,10 @@ object ShrRm161 : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -660,10 +660,10 @@ object ShrRm16Cl : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister16)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_15)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(register, 0, BitRange.BITS_0_15)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -681,10 +681,10 @@ object ShrRm16Cl : R16m16Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -725,10 +725,10 @@ object ShrRm16Imm8 : R16m16Imm8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister16, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_15)
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
+    tracer.traceRead(register, 0, BitRange.BITS_0_15)
+    tracer.traceRead(immediate, 1, BitSize.BITS_8)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -747,10 +747,10 @@ object ShrRm16Imm8 : R16m16Imm8Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceRead(immediate, 1, BitSize.BITS_8)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -790,10 +790,10 @@ object ShrRm321 : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister32)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_31)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(register, 0, BitRange.BITS_0_31)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -811,10 +811,10 @@ object ShrRm321 : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -854,10 +854,10 @@ object ShrRm641 : R64m64Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister64)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_63)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(register, 0, BitRange.BITS_0_63)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -875,10 +875,10 @@ object ShrRm641 : R64m64Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(1L, true, null)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -918,10 +918,10 @@ object ShrRm32Cl : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister32)  {
     tracer.beginTracing()
-    tracer.traceRead(register, false, BitRange.BITS_0_31)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(register, 0, BitRange.BITS_0_31)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)
@@ -939,10 +939,10 @@ object ShrRm32Cl : R32m32Instruction() {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.GpRegister8.CL, true, BitRange.BITS_0_7)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.CL, BitRange.BITS_0_7)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.RflagsField.OF, false)
     tracer.traceWrite(kasm.x64.RflagsField.SF, false)
     tracer.traceWrite(kasm.x64.RflagsField.ZF, false)

@@ -12,14 +12,14 @@ object ClflushoptM8 : M8Instruction(), ClflushoptInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0xAE)
     ModRmSib.encode(buffer, options, 7, addressExpression)
   }
-  private val features = enumSetOf<CpuFeature>(CLFLUSHOPT)
+  private val features = enumSetOf(CLFLUSHOPT)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CLFLUSHOPT)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -61,17 +61,17 @@ object CmovaR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x47)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_15)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -84,10 +84,10 @@ object CmovaR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -115,17 +115,17 @@ object CmovaR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x47)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_31)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -138,10 +138,10 @@ object CmovaR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -169,17 +169,17 @@ object CmovaR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x47)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -192,10 +192,10 @@ object CmovaR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -223,16 +223,16 @@ object CmovaeR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction 
     Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_15)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -245,9 +245,9 @@ object CmovaeR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction 
   override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -275,16 +275,16 @@ object CmovaeR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction 
     Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_31)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -297,9 +297,9 @@ object CmovaeR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction 
   override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -327,16 +327,16 @@ object CmovaeR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction 
     Encoding.encodeOpcode(buffer, 0x0F, 0x43)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -349,9 +349,9 @@ object CmovaeR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction 
   override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -379,16 +379,16 @@ object CmovcR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x42)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_15)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -401,9 +401,9 @@ object CmovcR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -431,16 +431,16 @@ object CmovcR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x42)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_31)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -453,9 +453,9 @@ object CmovcR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -483,16 +483,16 @@ object CmovcR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x42)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -505,9 +505,9 @@ object CmovcR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -535,17 +535,17 @@ object CmovbeR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction 
     Encoding.encodeOpcode(buffer, 0x0F, 0x46)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_15)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -558,10 +558,10 @@ object CmovbeR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction 
   override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -589,17 +589,17 @@ object CmovbeR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction 
     Encoding.encodeOpcode(buffer, 0x0F, 0x46)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister32, register2: GpRegister32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_31)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_31)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -612,10 +612,10 @@ object CmovbeR32Rm32 : R32R32m32Instruction(), MoveInstruction, CmovInstruction 
   override fun trace(tracer: InstructionTracer, register: GpRegister32, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -643,17 +643,17 @@ object CmovbeR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction 
     Encoding.encodeOpcode(buffer, 0x0F, 0x46)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister64, register2: GpRegister64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_63)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -666,10 +666,10 @@ object CmovbeR64Rm64 : R64R64m64Instruction(), MoveInstruction, CmovInstruction 
   override fun trace(tracer: InstructionTracer, register: GpRegister64, addressExpression: AddressExpression64)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -697,16 +697,16 @@ object CmoveR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
     Encoding.encodeOpcode(buffer, 0x0F, 0x44)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(CMOV)
+  private val features = enumSetOf(CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: GpRegister16, register2: GpRegister16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register2, false, BitRange.BITS_0_15)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_15)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: GpRegister16, addressExpression: AddressExpression16, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -719,9 +719,9 @@ object CmoveR16Rm16 : R16R16m16Instruction(), MoveInstruction, CmovInstruction {
   override fun trace(tracer: InstructionTracer, register: GpRegister16, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 1)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, false)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, false)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

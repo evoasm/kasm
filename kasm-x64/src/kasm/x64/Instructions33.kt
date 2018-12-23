@@ -18,8 +18,8 @@ object MovabsRaxMoffs64 : Imm64Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, offset: Long)  {
     tracer.beginTracing()
-    tracer.traceRead(offset, false, BitSize.BITS_64)
-    tracer.traceWrite(kasm.x64.GpRegister64.RAX, true, BitRange.BITS_0_63, true)
+    tracer.traceRead(offset, 0, BitSize.BITS_64)
+    tracer.traceImplicitWrite(kasm.x64.GpRegister64.RAX, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -43,8 +43,8 @@ object MovabsMoffs8Al : Imm8Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, offset: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(offset.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.GpRegister8.AL, true, BitRange.BITS_0_7)
+    tracer.traceRead(offset, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.GpRegister8.AL, BitRange.BITS_0_7)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -67,8 +67,8 @@ object MovabsMoffs16Ax : Imm16Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, offset: Short)  {
     tracer.beginTracing()
-    tracer.traceRead(offset.toLong(), false, BitSize.BITS_16)
-    tracer.traceRead(kasm.x64.GpRegister16.AX, true, BitRange.BITS_0_15)
+    tracer.traceRead(offset, 0, BitSize.BITS_16)
+    tracer.traceImplicitRead(kasm.x64.GpRegister16.AX, BitRange.BITS_0_15)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -92,8 +92,8 @@ object MovabsMoffs32Eax : Imm32Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, offset: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(offset.toLong(), false, BitSize.BITS_32)
-    tracer.traceRead(kasm.x64.GpRegister32.EAX, true, BitRange.BITS_0_31)
+    tracer.traceRead(offset, 0, BitSize.BITS_32)
+    tracer.traceImplicitRead(kasm.x64.GpRegister32.EAX, BitRange.BITS_0_31)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -117,8 +117,8 @@ object MovabsMoffs64Rax : Imm64Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, offset: Long)  {
     tracer.beginTracing()
-    tracer.traceRead(offset, false, BitSize.BITS_64)
-    tracer.traceRead(kasm.x64.GpRegister64.RAX, true, BitRange.BITS_0_63)
+    tracer.traceRead(offset, 0, BitSize.BITS_64)
+    tracer.traceImplicitRead(kasm.x64.GpRegister64.RAX, BitRange.BITS_0_63)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -142,8 +142,8 @@ object MovR8Imm8 : R8Imm8Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister8, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceWrite(register, false, BitRange.BITS_0_7, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_8)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_7, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -167,8 +167,8 @@ object MovR16Imm16 : R16Imm16Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister16, immediate: Short)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_16)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_16)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -192,8 +192,8 @@ object MovR32Imm32 : R32Imm32Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister32, immediate: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_32)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_32)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -217,8 +217,8 @@ object MovR64Imm64 : R64Imm64Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister64, immediate: Long)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate, false, BitSize.BITS_64)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_64)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -243,8 +243,8 @@ object MovRm8Imm8 : R8m8Imm8Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister8, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceWrite(register, false, BitRange.BITS_0_7, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_8)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_7, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression8, immediate: Byte, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -257,8 +257,8 @@ object MovRm8Imm8 : R8m8Imm8Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression8, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceWrite(addressExpression)
+    tracer.traceRead(immediate, 1, BitSize.BITS_8)
+    tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -293,8 +293,8 @@ object MovRm16Imm16 : R16m16Imm16Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister16, immediate: Short)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_16)
-    tracer.traceWrite(register, false, BitRange.BITS_0_15, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_16)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_15, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression16, immediate: Short, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -307,8 +307,8 @@ object MovRm16Imm16 : R16m16Imm16Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16, immediate: Short)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_16)
-    tracer.traceWrite(addressExpression)
+    tracer.traceRead(immediate, 1, BitSize.BITS_16)
+    tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -343,8 +343,8 @@ object MovRm32Imm32 : R32m32Imm32Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister32, immediate: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_32)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_32)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression32, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -357,8 +357,8 @@ object MovRm32Imm32 : R32m32Imm32Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32, immediate: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_32)
-    tracer.traceWrite(addressExpression)
+    tracer.traceRead(immediate, 1, BitSize.BITS_32)
+    tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -393,8 +393,8 @@ object MovRm64Imm32 : R64m64Imm32Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, register: GpRegister64, immediate: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_32)
-    tracer.traceWrite(register, false, BitRange.BITS_0_63, true)
+    tracer.traceRead(immediate, 1, BitSize.BITS_32)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression64, immediate: Int, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -407,8 +407,8 @@ object MovRm64Imm32 : R64m64Imm32Instruction(), MoveInstruction {
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression64, immediate: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_32)
-    tracer.traceWrite(addressExpression)
+    tracer.traceRead(immediate, 1, BitSize.BITS_32)
+    tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -436,15 +436,15 @@ object MovapdXmmXmmm128 : XmmXmmm128Instruction(), VectorInstruction, MoveInstru
     Encoding.encodeOpcode(buffer, 0x0F, 0x28)
     ModRmSib.encode(buffer, options, register1, register2)
   }
-  private val features = enumSetOf<CpuFeature>(SSE2)
+  private val features = enumSetOf(SSE2)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2, false, BitRange.BITS_0_127)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_127, true)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_127)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register: XmmRegister, addressExpression: AddressExpression128, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -457,8 +457,8 @@ object MovapdXmmXmmm128 : XmmXmmm128Instruction(), VectorInstruction, MoveInstru
   override fun trace(tracer: InstructionTracer, register: XmmRegister, addressExpression: AddressExpression128)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(addressExpression)
-    tracer.traceWrite(register, false, BitRange.BITS_0_127, true)
+    tracer.traceRead(addressExpression, 1)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -486,15 +486,15 @@ object MovapdXmmm128Xmm : Xmmm128XmmInstruction(), VectorInstruction, MoveInstru
     Encoding.encodeOpcode(buffer, 0x0F, 0x29)
     ModRmSib.encode(buffer, options, register2, register1)
   }
-  private val features = enumSetOf<CpuFeature>(SSE2)
+  private val features = enumSetOf(SSE2)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register1: XmmRegister, register2: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register2, false, BitRange.BITS_0_127)
-    tracer.traceWrite(register1, false, BitRange.BITS_0_127, true)
+    tracer.traceRead(register2, 1, BitRange.BITS_0_127)
+    tracer.traceWrite(register1, 0, BitRange.BITS_0_127, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, addressExpression: AddressExpression128, register: XmmRegister, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -507,8 +507,8 @@ object MovapdXmmm128Xmm : Xmmm128XmmInstruction(), VectorInstruction, MoveInstru
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression128, register: XmmRegister)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.SSE2)
-    tracer.traceRead(register, false, BitRange.BITS_0_127)
-    tracer.traceWrite(addressExpression)
+    tracer.traceRead(register, 1, BitRange.BITS_0_127)
+    tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

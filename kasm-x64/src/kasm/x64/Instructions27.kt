@@ -17,11 +17,11 @@ object JbeRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -44,10 +44,10 @@ object JecxzRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -70,10 +70,10 @@ object JaRel8RipD : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -96,12 +96,12 @@ object JgRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -124,11 +124,11 @@ object JgeRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceRead(kasm.x64.RflagsField.SF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -151,11 +151,11 @@ object JlRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceRead(kasm.x64.RflagsField.SF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -178,12 +178,12 @@ object JleRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.OF)
     tracer.traceRead(kasm.x64.RflagsField.SF)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -206,10 +206,10 @@ object JneRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -232,10 +232,10 @@ object JnoRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.OF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -258,10 +258,10 @@ object JnpRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.PF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -284,10 +284,10 @@ object JnsRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.SF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -310,10 +310,10 @@ object JoRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.OF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -336,10 +336,10 @@ object JpRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.PF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -362,10 +362,10 @@ object JsRel8Rip : Imm8Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Byte)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_8)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_8)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.SF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -388,11 +388,11 @@ object JaRel32Rip : Imm32Instruction(), JumpInstruction {
   }
   override fun trace(tracer: InstructionTracer, immediate: Int)  {
     tracer.beginTracing()
-    tracer.traceRead(immediate.toLong(), false, BitSize.BITS_32)
-    tracer.traceRead(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63)
+    tracer.traceRead(immediate, 0, BitSize.BITS_32)
+    tracer.traceImplicitRead(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.RflagsField.ZF)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(kasm.x64.IpRegister.RIP, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.IpRegister.RIP, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

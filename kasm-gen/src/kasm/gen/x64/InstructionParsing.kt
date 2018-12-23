@@ -87,7 +87,7 @@ class InstructionGenerator(generator: Generator,
                 writeEncodeFunctionBody(writer, false)
             }
 
-            writer.println("private val features = enumSetOf<CpuFeature>(${features.joinToString(", ")})")
+            writer.println("private val features = enumSetOf${if(features.isEmpty()) "<CpuFeature>" else ""}(${features.joinToString(", ")})")
             writer.writeFunction("isSupported", listOf(), modifiers = CodeWriter.OVERRIDE_FUNCTION_MODIFIER, returnType = "Boolean") {
                 writeIsSupportedFunctionBody(writer)
             }
@@ -366,13 +366,13 @@ class InstructionGenerator(generator: Generator,
             operand.parameterVariants.registerVariant
         }
 
-        val functionName = "tracer.trace" + if (write) "Write" else "Read"
+        val functionName = "tracer.trace${if (operand.isImplicit) "Implicit" else ""}${if (write) "Write" else "Read"}"
 
         val name = when (operand) {
-            is ImplicitImmediateOperand      -> operand.value.toString() + "L"
+            is ImplicitImmediateOperand      -> operand.value.toString()
             is ImplicitRegisterOperand       -> operand.register.qualifiedName()
             is ImplicitMemoryOperand         -> "AddressExpression${operand.size.toInt()}(${operand.baseRegister.qualifiedName(true)}, ${operand.indexRegister?.qualifiedName(true) ?: "null"})"
-            is ExplicitImmediateOperand      -> parameter!!.name + if (operand.size != BitSize.BITS_64) ".toLong()" else ""
+            is ExplicitImmediateOperand      -> parameter!!.name
             is ExplicitRegisterOperand       -> parameter!!.name
             is ExplicitMemoryRegisterOperand -> parameter!!.name
             else                             -> parameter!!.name
@@ -382,7 +382,7 @@ class InstructionGenerator(generator: Generator,
 
         val rangeOrSizeParameter = when (operand) {
             is ExplicitImmediateOperand -> "BitSize." + operand.size
-            is ImplicitImmediateOperand -> "null"
+            is ImplicitImmediateOperand -> null
             else                        -> {
                 if (haveAddressParameter) {
                     null
@@ -403,14 +403,15 @@ class InstructionGenerator(generator: Generator,
                         }
                     }?.let {
                         "BitRange." + it
-                    } ?: "null"
+                    } ?: null
                 }
             }
         }
 
-        val implicitParameter = if (haveAddressParameter) null else if (operand.isImplicit) "true" else "false"
+//        val implicitParameter = if (haveAddressParameter) null else if (operand.isImplicit) "true" else "false"
 
-        val parameters = mutableListOf(name, implicitParameter, rangeOrSizeParameter)
+        val explicitOperandIndex = if(operand.isImplicit) null else explicitOperands.indexOf(operand).toString()
+        val parameters = mutableListOf(name, explicitOperandIndex, rangeOrSizeParameter)
         if (write && !haveAddressParameter) {
             parameters.add(if (operand.isAlwaysWritten) "true" else "false")
         }

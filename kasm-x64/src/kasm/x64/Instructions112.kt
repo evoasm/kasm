@@ -11,16 +11,16 @@ object FaddSt0Sti : X87Instruction(), FpuInstruction {
     RexPrefix.Reg.encode(buffer, options, register)
     Encoding.encodeOpcodeO(buffer, 0xD8, 0xC0, register)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register: X87Register)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63)
-    tracer.traceRead(register, false, BitRange.BITS_0_79)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST0, BitRange.BITS_0_63)
+    tracer.traceRead(register, 0, BitRange.BITS_0_79)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, false)
@@ -41,16 +41,16 @@ object FaddStiSt0 : X87Instruction(), FpuInstruction {
     RexPrefix.Reg.encode(buffer, options, register)
     Encoding.encodeOpcodeO(buffer, 0xDC, 0xC0, register)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register: X87Register)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(register, false, BitRange.BITS_0_79)
-    tracer.traceRead(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63)
-    tracer.traceWrite(register, false, BitRange.BITS_0_79, true)
+    tracer.traceRead(register, 0, BitRange.BITS_0_79)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST0, BitRange.BITS_0_63)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_79, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, false)
@@ -71,17 +71,17 @@ object FaddpStiSt0 : X87Instruction(), FpuInstruction {
     RexPrefix.Reg.encode(buffer, options, register)
     Encoding.encodeOpcodeO(buffer, 0xDE, 0xC0, register)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, register: X87Register)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(register, false, BitRange.BITS_0_79)
-    tracer.traceRead(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63)
+    tracer.traceRead(register, 0, BitRange.BITS_0_79)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST0, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.X87StatusField.TOP)
-    tracer.traceWrite(register, false, BitRange.BITS_0_79, true)
+    tracer.traceWrite(register, 0, BitRange.BITS_0_79, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.TOP, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
@@ -103,17 +103,17 @@ object FaddpSt0St1 : NullaryInstruction(), FpuInstruction {
     RexPrefix.Np.encode(buffer, options)
     Encoding.encodeOpcode(buffer, 0xDE, 0xC1)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63)
-    tracer.traceRead(kasm.x64.X87Register.ST1, true, BitRange.BITS_0_63)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST0, BitRange.BITS_0_63)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST1, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.X87StatusField.TOP)
-    tracer.traceWrite(kasm.x64.X87Register.ST1, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST1, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.TOP, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
@@ -136,16 +136,16 @@ object FiaddM32intSt0 : M32Instruction(), FpuInstruction {
     Encoding.encodeOpcode(buffer, 0xDA)
     ModRmSib.encode(buffer, options, 0, addressExpression)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression32)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, true)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST0, BitRange.BITS_0_63)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, false)
@@ -167,16 +167,16 @@ object FiaddM16intSt0 : M16Instruction(), FpuInstruction {
     Encoding.encodeOpcode(buffer, 0xDE)
     ModRmSib.encode(buffer, options, 0, addressExpression)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression16)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(addressExpression)
-    tracer.traceRead(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, true)
+    tracer.traceRead(addressExpression, 0)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST0, BitRange.BITS_0_63)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, false)
@@ -198,16 +198,16 @@ object FbldM80decSt0 : M80Instruction(), FpuInstruction {
     Encoding.encodeOpcode(buffer, 0xDF)
     ModRmSib.encode(buffer, options, 4, addressExpression)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer, addressExpression: AddressExpression80)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(addressExpression)
+    tracer.traceRead(addressExpression, 0)
     tracer.traceRead(kasm.x64.X87StatusField.TOP)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.TOP, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
@@ -230,7 +230,7 @@ object FbstpM80bcd : M80Instruction(), FpuInstruction {
     Encoding.encodeOpcode(buffer, 0xDF)
     ModRmSib.encode(buffer, options, 6, addressExpression)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
@@ -238,7 +238,7 @@ object FbstpM80bcd : M80Instruction(), FpuInstruction {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
     tracer.traceRead(kasm.x64.X87StatusField.TOP)
-    tracer.traceWrite(addressExpression)
+    tracer.traceWrite(addressExpression, 0)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.TOP, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
@@ -260,16 +260,16 @@ object FchsSt0 : NullaryInstruction(), FpuInstruction {
     RexPrefix.Np.encode(buffer, options)
     Encoding.encodeOpcode(buffer, 0xD9, 0xE0)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
   override fun trace(tracer: InstructionTracer)  {
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
-    tracer.traceRead(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63)
+    tracer.traceImplicitRead(kasm.x64.X87Register.ST0, BitRange.BITS_0_63)
     tracer.traceRead(kasm.x64.X87StatusField.TOP)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, true)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.TOP, false)
@@ -291,7 +291,7 @@ object Fclex : NullaryInstruction(), FpuInstruction {
     RexPrefix.Np.encode(buffer, options)
     Encoding.encodeOpcode(buffer, 0x9B, 0xDB, 0xE2)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
@@ -323,7 +323,7 @@ object Fnclex : NullaryInstruction(), FpuInstruction {
     RexPrefix.Np.encode(buffer, options)
     Encoding.encodeOpcode(buffer, 0xDB, 0xE2)
   }
-  private val features = enumSetOf<CpuFeature>(FPU)
+  private val features = enumSetOf(FPU)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
@@ -355,7 +355,7 @@ object FcmovbSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIns
     RexPrefix.Reg.encode(buffer, options, register)
     Encoding.encodeOpcodeO(buffer, 0xDA, 0xC0, register)
   }
-  private val features = enumSetOf<CpuFeature>(FPU, CMOV)
+  private val features = enumSetOf(FPU, CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
@@ -363,9 +363,9 @@ object FcmovbSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIns
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register, false, BitRange.BITS_0_79)
+    tracer.traceRead(register, 0, BitRange.BITS_0_79)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, false)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
@@ -386,7 +386,7 @@ object FcmoveSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIns
     RexPrefix.Reg.encode(buffer, options, register)
     Encoding.encodeOpcodeO(buffer, 0xDA, 0xC8, register)
   }
-  private val features = enumSetOf<CpuFeature>(FPU, CMOV)
+  private val features = enumSetOf(FPU, CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
@@ -394,9 +394,9 @@ object FcmoveSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIns
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register, false, BitRange.BITS_0_79)
+    tracer.traceRead(register, 0, BitRange.BITS_0_79)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, false)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
@@ -417,7 +417,7 @@ object FcmovbeSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIn
     RexPrefix.Reg.encode(buffer, options, register)
     Encoding.encodeOpcodeO(buffer, 0xDA, 0xD0, register)
   }
-  private val features = enumSetOf<CpuFeature>(FPU, CMOV)
+  private val features = enumSetOf(FPU, CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
@@ -425,9 +425,9 @@ object FcmovbeSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIn
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register, false, BitRange.BITS_0_79)
+    tracer.traceRead(register, 0, BitRange.BITS_0_79)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, false)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
@@ -448,7 +448,7 @@ object FcmovuSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIns
     RexPrefix.Reg.encode(buffer, options, register)
     Encoding.encodeOpcodeO(buffer, 0xDA, 0xD8, register)
   }
-  private val features = enumSetOf<CpuFeature>(FPU, CMOV)
+  private val features = enumSetOf(FPU, CMOV)
   override fun isSupported(): Boolean  {
     return CpuId.features.containsAll(features)
   }
@@ -456,9 +456,9 @@ object FcmovuSt0Sti : X87Instruction(), MoveInstruction, FpuInstruction, CmovIns
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.FPU)
     tracer.traceFeature(CpuFeature.CMOV)
-    tracer.traceRead(register, false, BitRange.BITS_0_79)
+    tracer.traceRead(register, 0, BitRange.BITS_0_79)
     tracer.traceRead(kasm.x64.RflagsField.CF)
-    tracer.traceWrite(kasm.x64.X87Register.ST0, true, BitRange.BITS_0_63, false)
+    tracer.traceImplicitWrite(kasm.x64.X87Register.ST0, BitRange.BITS_0_63, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C1, true)
     tracer.traceWrite(kasm.x64.X87StatusField.C3, false)
     tracer.traceWrite(kasm.x64.X87StatusField.C2, false)
