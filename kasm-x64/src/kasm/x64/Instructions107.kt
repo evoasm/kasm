@@ -342,7 +342,7 @@ object VpmaskmovdM128XmmXmm : M128XmmXmmInstruction(), VectorInstruction, MoveIn
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1, 1, BitRange.BITS_0_127)
-    tracer.traceRead(register2, 1, BitRange.BITS_0_127)
+    tracer.traceRead(register2, 2, BitRange.BITS_0_127)
     tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
@@ -369,7 +369,7 @@ object VpmaskmovdM256YmmYmm : M256YmmYmmInstruction(), VectorInstruction, MoveIn
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1, 1, BitRange.BITS_0_255)
-    tracer.traceRead(register2, 1, BitRange.BITS_0_255)
+    tracer.traceRead(register2, 2, BitRange.BITS_0_255)
     tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
@@ -396,7 +396,7 @@ object VpmaskmovqM128XmmXmm : M128XmmXmmInstruction(), VectorInstruction, MoveIn
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1, 1, BitRange.BITS_0_127)
-    tracer.traceRead(register2, 1, BitRange.BITS_0_127)
+    tracer.traceRead(register2, 2, BitRange.BITS_0_127)
     tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }
@@ -423,7 +423,7 @@ object VpmaskmovqM256YmmYmm : M256YmmYmmInstruction(), VectorInstruction, MoveIn
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register1, 1, BitRange.BITS_0_255)
-    tracer.traceRead(register2, 1, BitRange.BITS_0_255)
+    tracer.traceRead(register2, 2, BitRange.BITS_0_255)
     tracer.traceWrite(addressExpression, 0)
     tracer.endTracing()
   }

@@ -410,7 +410,7 @@ class InstructionGenerator(generator: Generator,
 
 //        val implicitParameter = if (haveAddressParameter) null else if (operand.isImplicit) "true" else "false"
 
-        val explicitOperandIndex = if(operand.isImplicit) null else explicitOperands.indexOf(operand).toString()
+        val explicitOperandIndex = if(operand.isImplicit) null else explicitOperands.indexOfFirst { it === operand }.toString()
         val parameters = mutableListOf(name, explicitOperandIndex, rangeOrSizeParameter)
         if (write && !haveAddressParameter) {
             parameters.add(if (operand.isAlwaysWritten) "true" else "false")

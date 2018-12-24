@@ -20,7 +20,7 @@ object VmovhlpsXmmXmm64To127Xmm64To127 : XmmXmmXmmInstruction(), VectorInstructi
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register2, 1, BitRange.BITS_64_127)
-    tracer.traceRead(register3, 1, BitRange.BITS_64_127)
+    tracer.traceRead(register3, 2, BitRange.BITS_64_127)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_511, true)
     tracer.endTracing()
   }
@@ -283,7 +283,7 @@ object VmovlhpsXmmXmm0To63Xmm0To63 : XmmXmmXmmInstruction(), VectorInstruction, 
     tracer.beginTracing()
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register2, 1, BitRange.BITS_0_63)
-    tracer.traceRead(register3, 1, BitRange.BITS_0_63)
+    tracer.traceRead(register3, 2, BitRange.BITS_0_63)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_511, true)
     tracer.endTracing()
   }

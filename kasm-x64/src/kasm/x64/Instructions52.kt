@@ -76,7 +76,7 @@ object VpblendvbXmmXmmXmmm128Xmm : XmmXmmXmmm128XmmInstruction(), VectorInstruct
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register2, 1, BitRange.BITS_0_127)
     tracer.traceRead(register3, 2, BitRange.BITS_0_127)
-    tracer.traceRead(register4, 1, BitRange.BITS_0_127)
+    tracer.traceRead(register4, 3, BitRange.BITS_0_127)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_511, true)
     tracer.endTracing()
   }
@@ -93,7 +93,7 @@ object VpblendvbXmmXmmXmmm128Xmm : XmmXmmXmmm128XmmInstruction(), VectorInstruct
     tracer.traceFeature(CpuFeature.AVX)
     tracer.traceRead(register2, 1, BitRange.BITS_0_127)
     tracer.traceRead(addressExpression, 2)
-    tracer.traceRead(register3, 1, BitRange.BITS_0_127)
+    tracer.traceRead(register3, 3, BitRange.BITS_0_127)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_511, true)
     tracer.endTracing()
   }
@@ -132,7 +132,7 @@ object VpblendvbYmmYmmYmmm256Ymm : YmmYmmYmmm256YmmInstruction(), VectorInstruct
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2, 1, BitRange.BITS_0_255)
     tracer.traceRead(register3, 2, BitRange.BITS_0_255)
-    tracer.traceRead(register4, 1, BitRange.BITS_0_255)
+    tracer.traceRead(register4, 3, BitRange.BITS_0_255)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_255, true)
     tracer.endTracing()
   }
@@ -149,7 +149,7 @@ object VpblendvbYmmYmmYmmm256Ymm : YmmYmmYmmm256YmmInstruction(), VectorInstruct
     tracer.traceFeature(CpuFeature.AVX2)
     tracer.traceRead(register2, 1, BitRange.BITS_0_255)
     tracer.traceRead(addressExpression, 2)
-    tracer.traceRead(register3, 1, BitRange.BITS_0_255)
+    tracer.traceRead(register3, 3, BitRange.BITS_0_255)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_255, true)
     tracer.endTracing()
   }

@@ -270,7 +270,7 @@ object MulxR32R32Rm32Edx : R32R32R32m32Instruction(), Bmi2Instruction {
     tracer.traceRead(register3, 2, BitRange.BITS_0_31)
     tracer.traceImplicitRead(kasm.x64.GpRegister32.EDX, BitRange.BITS_0_31)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_63, true)
-    tracer.traceWrite(register2, 0, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register2, 1, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: GpRegister32, register2: GpRegister32, addressExpression: AddressExpression32, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -286,7 +286,7 @@ object MulxR32R32Rm32Edx : R32R32R32m32Instruction(), Bmi2Instruction {
     tracer.traceRead(addressExpression, 2)
     tracer.traceImplicitRead(kasm.x64.GpRegister32.EDX, BitRange.BITS_0_31)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_63, true)
-    tracer.traceWrite(register2, 0, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register2, 1, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -324,7 +324,7 @@ object MulxR64R64Rm64Rdx : R64R64R64m64Instruction(), Bmi2Instruction {
     tracer.traceRead(register3, 2, BitRange.BITS_0_63)
     tracer.traceImplicitRead(kasm.x64.GpRegister64.RDX, BitRange.BITS_0_63)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_63, true)
-    tracer.traceWrite(register2, 0, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register2, 1, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, register1: GpRegister64, register2: GpRegister64, addressExpression: AddressExpression64, options: EncodingOptions, tracer: InstructionTracer?)  {
@@ -340,7 +340,7 @@ object MulxR64R64Rm64Rdx : R64R64R64m64Instruction(), Bmi2Instruction {
     tracer.traceRead(addressExpression, 2)
     tracer.traceImplicitRead(kasm.x64.GpRegister64.RDX, BitRange.BITS_0_63)
     tracer.traceWrite(register1, 0, BitRange.BITS_0_63, true)
-    tracer.traceWrite(register2, 0, BitRange.BITS_0_63, true)
+    tracer.traceWrite(register2, 1, BitRange.BITS_0_63, true)
     tracer.endTracing()
   }
   override fun encode(buffer: ByteBuffer, parameters: InstructionParameters, options: EncodingOptions, tracer: InstructionTracer?)  {

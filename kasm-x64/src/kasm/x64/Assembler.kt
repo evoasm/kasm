@@ -349,12 +349,13 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
         stmxcsr(AddressExpression32(scratchRegister))
     }
 
-    fun align(alignment: UInt) {
+    fun align(alignment: UInt) : Int {
         val currentAddress = buffer.address.value + buffer.position().toULong()
         val alignedAddress = currentAddress.alignUp(alignment)
         val nopSize = (alignedAddress - currentAddress).toInt()
 
         nop(nopSize)
+        return nopSize
     }
 
     fun align(alignment: Int) = align(alignment.toUInt())
