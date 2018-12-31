@@ -403,7 +403,7 @@ class InstructionGenerator(generator: Generator,
                         }
                     }?.let {
                         "BitRange." + it
-                    } ?: null
+                    }
                 }
             }
         }

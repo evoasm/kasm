@@ -6,43 +6,43 @@ interface InstructionTracer {
     fun beginTracing() {}
     fun endTracing() {}
 
-    fun traceWrite(register: GpRegister8, index: Int, range: BitRange?, always: Boolean) {}
-    fun traceWrite(register: GpRegister16, index: Int, range: BitRange?, always: Boolean) {}
-    fun traceWrite(register: GpRegister32, index: Int, range: BitRange?, always: Boolean) {}
-    fun traceWrite(register: GpRegister64, index: Int, range: BitRange?, always: Boolean) {}
-    fun traceWrite(register: XmmRegister, index: Int, range: BitRange?, always: Boolean) {}
-    fun traceWrite(register: YmmRegister, index: Int, range: BitRange?, always: Boolean) {}
-    fun traceWrite(register: MmRegister, index: Int, range: BitRange?, always: Boolean) {}
-    fun traceWrite(register: X87Register, index: Int, range: BitRange?, always: Boolean) {}
+    fun traceWrite(register: GpRegister8, index: Int, range: BitRange, always: Boolean) {}
+    fun traceWrite(register: GpRegister16, index: Int, range: BitRange, always: Boolean) {}
+    fun traceWrite(register: GpRegister32, index: Int, range: BitRange, always: Boolean) {}
+    fun traceWrite(register: GpRegister64, index: Int, range: BitRange, always: Boolean) {}
+    fun traceWrite(register: XmmRegister, index: Int, range: BitRange, always: Boolean) {}
+    fun traceWrite(register: YmmRegister, index: Int, range: BitRange, always: Boolean) {}
+    fun traceWrite(register: MmRegister, index: Int, range: BitRange, always: Boolean) {}
+    fun traceWrite(register: X87Register, index: Int, range: BitRange, always: Boolean) {}
 
-    fun traceRead(register: GpRegister8, index: Int, range: BitRange?) {}
-    fun traceRead(register: GpRegister16, index: Int, range: BitRange?) {}
-    fun traceRead(register: GpRegister32, index: Int, range: BitRange?) {}
-    fun traceRead(register: GpRegister64, index: Int, range: BitRange?) {}
-    fun traceRead(register: XmmRegister, index: Int, range: BitRange?) {}
-    fun traceRead(register: YmmRegister, index: Int, range: BitRange?) {}
-    fun traceRead(register: MmRegister, index: Int, range: BitRange?) {}
-    fun traceRead(register: X87Register, index: Int, range: BitRange?) {}
+    fun traceRead(register: GpRegister8, index: Int, range: BitRange) {}
+    fun traceRead(register: GpRegister16, index: Int, range: BitRange) {}
+    fun traceRead(register: GpRegister32, index: Int, range: BitRange) {}
+    fun traceRead(register: GpRegister64, index: Int, range: BitRange) {}
+    fun traceRead(register: XmmRegister, index: Int, range: BitRange) {}
+    fun traceRead(register: YmmRegister, index: Int, range: BitRange) {}
+    fun traceRead(register: MmRegister, index: Int, range: BitRange) {}
+    fun traceRead(register: X87Register, index: Int, range: BitRange) {}
 
-    fun traceImplicitWrite(register: GpRegister8, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: GpRegister16, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: GpRegister32, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: GpRegister64, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: XmmRegister, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: YmmRegister, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: MmRegister, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: X87Register, range: BitRange?, always: Boolean) {}
-    fun traceImplicitWrite(register: IpRegister, range: BitRange?, always: Boolean) {}
+    fun traceImplicitWrite(register: GpRegister8, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: GpRegister16, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: GpRegister32, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: GpRegister64, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: XmmRegister, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: YmmRegister, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: MmRegister, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: X87Register, range: BitRange, always: Boolean) {}
+    fun traceImplicitWrite(register: IpRegister, range: BitRange, always: Boolean) {}
 
-    fun traceImplicitRead(register: GpRegister8, range: BitRange?) {}
-    fun traceImplicitRead(register: GpRegister16,range: BitRange?) {}
-    fun traceImplicitRead(register: GpRegister32, range: BitRange?) {}
-    fun traceImplicitRead(register: GpRegister64, range: BitRange?) {}
-    fun traceImplicitRead(register: XmmRegister, range: BitRange?) {}
-    fun traceImplicitRead(register: YmmRegister, range: BitRange?) {}
-    fun traceImplicitRead(register: MmRegister, range: BitRange?) {}
-    fun traceImplicitRead(register: X87Register, range: BitRange?) {}
-    fun traceImplicitRead(register: IpRegister, range: BitRange?) {}
+    fun traceImplicitRead(register: GpRegister8, range: BitRange) {}
+    fun traceImplicitRead(register: GpRegister16,range: BitRange) {}
+    fun traceImplicitRead(register: GpRegister32, range: BitRange) {}
+    fun traceImplicitRead(register: GpRegister64, range: BitRange) {}
+    fun traceImplicitRead(register: XmmRegister, range: BitRange) {}
+    fun traceImplicitRead(register: YmmRegister, range: BitRange) {}
+    fun traceImplicitRead(register: MmRegister, range: BitRange) {}
+    fun traceImplicitRead(register: X87Register, range: BitRange) {}
+    fun traceImplicitRead(register: IpRegister, range: BitRange) {}
 
     fun traceImplicitRead(immediate: Int) {}
     fun traceImplicitRead(addressExpression: AddressExpression8) {}
@@ -102,37 +102,37 @@ interface InstructionTracer {
 }
 
 interface InstructionParameters {
-    fun getGpRegister8(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister8
-    fun getGpRegister16(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister16
-    fun getGpRegister32(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister32
-    fun getGpRegister64(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister64
-    fun getMmRegister(index: Int, isRead: Boolean, isWritten: Boolean): MmRegister
-    fun getXmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): XmmRegister
-    fun getYmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): YmmRegister
-    fun getZmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): ZmmRegister
-    fun getX87Register(index: Int, isRead: Boolean, isWritten: Boolean): X87Register
+    fun getGpRegister8(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister8 = throw NotImplementedError()
+    fun getGpRegister16(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister16 = throw NotImplementedError()
+    fun getGpRegister32(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister32 = throw NotImplementedError()
+    fun getGpRegister64(index: Int, isRead: Boolean, isWritten: Boolean): GpRegister64 = throw NotImplementedError()
+    fun getMmRegister(index: Int, isRead: Boolean, isWritten: Boolean): MmRegister = throw NotImplementedError()
+    fun getXmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): XmmRegister = throw NotImplementedError()
+    fun getYmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): YmmRegister = throw NotImplementedError()
+    fun getZmmRegister(index: Int, isRead: Boolean, isWritten: Boolean): ZmmRegister = throw NotImplementedError()
+    fun getX87Register(index: Int, isRead: Boolean, isWritten: Boolean): X87Register = throw NotImplementedError()
 
-    fun getAddressExpression8(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression8
-    fun getAddressExpression16(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression16
-    fun getAddressExpression32(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression32
-    fun getAddressExpression64(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression64
-    fun getAddressExpression80(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression80
-    fun getAddressExpression128(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression128
-    fun getAddressExpression256(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression256
-    fun getAddressExpression512(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512
+    fun getAddressExpression8(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression8 = throw NotImplementedError()
+    fun getAddressExpression16(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression16 = throw NotImplementedError()
+    fun getAddressExpression32(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression32 = throw NotImplementedError()
+    fun getAddressExpression64(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression64 = throw NotImplementedError()
+    fun getAddressExpression80(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression80 = throw NotImplementedError()
+    fun getAddressExpression128(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression128 = throw NotImplementedError()
+    fun getAddressExpression256(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression256 = throw NotImplementedError()
+    fun getAddressExpression512(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512 = throw NotImplementedError()
 
-    fun getAddressExpression28Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression28Bytes
-    fun getAddressExpression108Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression108Bytes
-    fun getAddressExpression512Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512Bytes
+    fun getAddressExpression28Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression28Bytes = throw NotImplementedError()
+    fun getAddressExpression108Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression108Bytes = throw NotImplementedError()
+    fun getAddressExpression512Bytes(index: Int, isRead: Boolean, isWritten: Boolean): AddressExpression512Bytes = throw NotImplementedError()
 
-    fun getVectorAddress(index: Int, isRead: Boolean, isWritten: Boolean): VectorAddressExpression
+    fun getVectorAddress(index: Int, isRead: Boolean, isWritten: Boolean): VectorAddressExpression = throw NotImplementedError()
 
-    fun useSibd(): Boolean
+    fun useSibd(): Boolean = throw NotImplementedError()
 
-    fun getByteImmediate(index: Int): Byte
-    fun getShortImmediate(index: Int): Short
-    fun getIntImmediate(index: Int): Int
-    fun getLongImmediate(index: Int): Long
+    fun getByteImmediate(index: Int): Byte = throw NotImplementedError()
+    fun getShortImmediate(index: Int): Short = throw NotImplementedError()
+    fun getIntImmediate(index: Int): Int = throw NotImplementedError()
+    fun getLongImmediate(index: Int): Long = throw NotImplementedError()
 }
 
 data class EncodingOptions(

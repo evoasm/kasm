@@ -103,66 +103,56 @@ enum class BitRange {
 
 
     BITS_0_7 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 7
+        override fun contains(other: BitRange) = false
         override val size = BitSize.BITS_8
     },
     BITS_8_15 {
-        override fun contains(bit: Int) = bit >= 8 && bit <= 15
+        override fun contains(other: BitRange) = false
         override val size = BitSize.BITS_8
     },
     BITS_0_15 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 15
         override val size = BitSize.BITS_16
     },
     BITS_0_31 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 31
         override val size = BitSize.BITS_32
     },
     BITS_0_63 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 63
         override val size = BitSize.BITS_64
     },
     BITS_0_79 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 79
         override val size = BitSize.BITS_80
     },
     BITS_64_127 {
-        override fun contains(bit: Int) = bit >= 64 && bit <= 127
+        override fun contains(other: BitRange) = false
         override val size = BitSize.BITS_64
     },
     BITS_0_127 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 127
         override val size = BitSize.BITS_128
     },
     BITS_0_255 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 255
         override val size = BitSize.BITS_256
     },
 
     //FIXME: should rather be 0_VMAX instead
     BITS_0_511 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 511
         override val size = BitSize.BITS_512
     },
 
     BYTES_0_27 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 223
         override val size = BitSize.BYTES_28
     },
 
     BYTES_0_107 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 864
         override val size = BitSize.BYTES_108
     },
 
     BYTES_0_511 {
-        override fun contains(bit: Int) = bit >= 0 && bit <= 4095
         override val size = BitSize.BYTES_512
     }
 
     ;
 
-    abstract fun contains(bit: Int): Boolean
+    open operator fun contains(other: BitRange) = other.ordinal < this.ordinal
     abstract val size: BitSize
 }
 

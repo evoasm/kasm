@@ -73,7 +73,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     fun ifEqual(ifBlock: Assembler.() -> Unit) {
         je(0xdeadbeef.toInt())
         val offset1 = buffer.position()
-        ifBlock()
+        this.ifBlock()
         val offset2 = buffer.position()
 
         buffer.putInt(offset1 - 4, offset2 - offset1)
@@ -82,7 +82,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     fun ifNotEqual(ifBlock: Assembler.() -> Unit) {
         jne(0xdeadbeef.toInt())
         val offset1 = buffer.position()
-        ifBlock()
+        this.ifBlock()
         val offset2 = buffer.position()
         buffer.putInt(offset1 - 4, offset2 - offset1)
     }
@@ -90,10 +90,10 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     fun ifEqual(ifBlock: Assembler.() -> Unit, elseBlock: Assembler.() -> Unit) {
         je(0xdeadbeef.toInt())
         val offset1 = buffer.position()
-        elseBlock()
+        this.elseBlock()
         jmp(0xdeadbeef.toInt())
         val offset2 = buffer.position()
-        ifBlock()
+        this.ifBlock()
         val offset3 = buffer.position()
 
         buffer.putInt(offset1 - 4, offset2 - offset1)
@@ -103,10 +103,10 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     fun ifNotEqual(ifBlock: Assembler.() -> Unit, elseBlock: Assembler.() -> Unit) {
         jne(0xdeadbeef.toInt())
         val offset1 = buffer.position()
-        elseBlock()
+        this.elseBlock()
         jmp(0xdeadbeef.toInt())
         val offset2 = buffer.position()
-        ifBlock()
+        this.ifBlock()
         val offset3 = buffer.position()
 
         buffer.putInt(offset1 - 4, offset2 - offset1)
@@ -152,7 +152,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
             push(register)
         }
 
-        action()
+        this.action()
 
         for (index in registers.lastIndex downTo 0) {
             pop(registers[index])
@@ -164,7 +164,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
             push(register)
         }
 
-        action()
+        this.action()
 
         for (index in registers.lastIndex downTo 0) {
             pop(registers[index])
@@ -173,7 +173,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
 
     inline fun pushed(register: GpRegister64, action: Assembler.() -> Unit) {
         push(register)
-        action()
+        this.action()
         pop(register)
     }
 
