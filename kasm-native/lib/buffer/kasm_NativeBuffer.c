@@ -45,7 +45,7 @@
 
 #define KASM_ARY_LEN(ary) (sizeof(ary) / sizeof((ary)[0]))
 
-static atomic_bool kasm_installed;
+static atomic_int kasm_install_counter;
 
 static jclass
 kasm_find_class(JNIEnv *env, const char *cls_name) {
@@ -247,7 +247,7 @@ typedef struct {
 
 static _Thread_local kasm_signal_ctx_t _kasm_sig_ctx;
 static int _kasm_sigs[] = {SIGFPE, SIGSEGV, SIGILL};
-static _Thread_local kasm_prev_sigactions_t _kasm_prev_sigactions;
+static kasm_prev_sigactions_t _kasm_prev_sigactions;
 
 typedef enum {
   KASM_EXCP_ZERO_DIV,
@@ -257,8 +257,8 @@ typedef enum {
 
 static void
 kasm_sig_uninstall() {
-  bool expected = true;
-  if(atomic_compare_exchange_strong(&kasm_installed, &expected, false)) {
+  int old_val = atomic_fetch_sub(&kasm_install_counter, 1);
+  if(old_val == 1) {
     for(size_t i = 0; i < KASM_ARY_LEN(_kasm_sigs); i++) {
       if(sigaction(_kasm_sigs[i], &_kasm_prev_sigactions.sigactions[i], NULL) < 0) {
         perror("sigaction");
@@ -302,8 +302,8 @@ kasm_sig_handler(int sig, siginfo_t *siginfo, void *ctx) {
 
 static void
 kasm_sig_install() {
-  bool expected = false;
-  if(atomic_compare_exchange_strong(&kasm_installed, &expected, true)) {
+  int old_val = atomic_fetch_add(&kasm_install_counter, 1);
+  if(old_val == 0) {
     for(size_t i = 0; i < KASM_ARY_LEN(_kasm_sigs); i++) {
       struct sigaction action = {0};
 
@@ -318,7 +318,6 @@ kasm_sig_install() {
     }
   }
 }
-
 #else
 #error
 #endif
@@ -326,7 +325,7 @@ kasm_sig_install() {
 
 void
 Java_kasm_NativeBuffer_register(JNIEnv *env, jclass cls) {
-  atomic_init(&kasm_installed, false);
+  atomic_init(&kasm_install_counter, 0);
 }
 
 static intptr_t
