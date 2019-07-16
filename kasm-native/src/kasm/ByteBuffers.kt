@@ -45,6 +45,7 @@ object ByteBuffers {
 
 val ByteBuffer.address get() = Address(NativeBuffer.getAddress(this).toULong())
 val NativeBuffer.address get() = this.byteBuffer.address
+val ByteBuffer.positionAddress get() = Address(NativeBuffer.getAddress(this).toULong() + this.position().toULong())
 
 fun ByteBuffer.toArray() : ByteArray {
     return ByteBuffers.toArray(this)

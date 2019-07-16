@@ -1,6 +1,7 @@
 #include "kasm_NativeBuffer.h"
 
 #include <stdbool.h>
+#include <stdatomic.h>
 
 #if defined(__linux__) || defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))
 #  define KASM_UNIX
@@ -43,6 +44,8 @@
 #define KASM_ILLEGAL_INSTRUCTION_EXCEPTION "kasm/IllegalInstructionException"
 
 #define KASM_ARY_LEN(ary) (sizeof(ary) / sizeof((ary)[0]))
+
+static atomic_bool kasm_installed;
 
 static jclass
 kasm_find_class(JNIEnv *env, const char *cls_name) {
@@ -94,7 +97,7 @@ kasm_mprot(JNIEnv *env, void *p, size_t size, bool exec) {
 #elif defined(_POSIX_VERSION)
   int mode;
   if(exec) {
-    mode = PROT_READ | PROT_EXEC;
+    mode = PROT_READ |PROT_WRITE | PROT_EXEC;
   } else {
     mode = PROT_READ | PROT_WRITE;
   }
@@ -238,9 +241,13 @@ typedef struct {
   volatile uintptr_t sig_addr;
 } kasm_signal_ctx_t;
 
-_Thread_local kasm_signal_ctx_t _kasm_sig_ctx;
+typedef struct {
+    struct sigaction sigactions[8];
+} kasm_prev_sigactions_t;
+
+static _Thread_local kasm_signal_ctx_t _kasm_sig_ctx;
 static int _kasm_sigs[] = {SIGFPE, SIGSEGV, SIGILL};
-static struct sigaction _kasm_prev_sigactions[KASM_ARY_LEN(_kasm_sigs)];
+static _Thread_local kasm_prev_sigactions_t _kasm_prev_sigactions;
 
 typedef enum {
   KASM_EXCP_ZERO_DIV,
@@ -248,14 +255,17 @@ typedef enum {
   KASM_EXCP_ILL_INST
 } kasm_excp_t;
 
-
 static void
 kasm_sig_uninstall() {
-  for(size_t i = 0; i < KASM_ARY_LEN(_kasm_sigs); i++)
-    if(sigaction(_kasm_sigs[i], &_kasm_prev_sigactions[i], NULL) < 0) {
-      perror("sigaction");
-      exit(1);
+  bool expected = true;
+  if(atomic_compare_exchange_strong(&kasm_installed, &expected, false)) {
+    for(size_t i = 0; i < KASM_ARY_LEN(_kasm_sigs); i++) {
+      if(sigaction(_kasm_sigs[i], &_kasm_prev_sigactions.sigactions[i], NULL) < 0) {
+        perror("sigaction");
+        exit(1);
+      }
     }
+  }
 }
 
 static void
@@ -292,29 +302,32 @@ kasm_sig_handler(int sig, siginfo_t *siginfo, void *ctx) {
 
 static void
 kasm_sig_install() {
+  bool expected = false;
+  if(atomic_compare_exchange_strong(&kasm_installed, &expected, true)) {
+    for(size_t i = 0; i < KASM_ARY_LEN(_kasm_sigs); i++) {
+      struct sigaction action = {0};
 
-  for(size_t i = 0; i < KASM_ARY_LEN(_kasm_sigs); i++) {
-    struct sigaction action = {0};
+      action.sa_sigaction = kasm_sig_handler;
+      sigemptyset(&action.sa_mask);
+      action.sa_flags = SA_SIGINFO;
 
-    action.sa_sigaction = kasm_sig_handler;
-    sigemptyset(&action.sa_mask);
-    action.sa_flags = SA_SIGINFO;
-
-    if(sigaction(_kasm_sigs[i], &action, &_kasm_prev_sigactions[i]) < 0) {
-      perror("sigaction");
-      exit(1);
+      if(sigaction(_kasm_sigs[i], &action, &_kasm_prev_sigactions.sigactions[i]) < 0) {
+        perror("sigaction");
+        exit(1);
+      }
     }
   }
-
-}
-
-void
-Java_kasm_NativeBuffer_register(JNIEnv *env, jclass cls) {
 }
 
 #else
 #error
 #endif
+
+
+void
+Java_kasm_NativeBuffer_register(JNIEnv *env, jclass cls) {
+  atomic_init(&kasm_installed, false);
+}
 
 static intptr_t
 kasm_exec_asm0(void *mem) {
@@ -382,6 +395,17 @@ kasm_exec_asm6(void *mem, intptr_t arg1, intptr_t arg2, intptr_t arg3, intptr_t 
     kasm_throw_sig(env, excp_cls, _kasm_sig_ctx.sig_addr);\
   }\
   return (jlong) result;
+
+
+jlong Java_kasm_NativeBuffer_executeUnsafe0(JNIEnv *env, jclass cls, jobject buf) {
+  void *mem = (*env)->GetDirectBufferAddress(env, buf);
+  return (jlong) kasm_exec_asm0(mem);
+}
+
+jlong Java_kasm_NativeBuffer_executeUnsafe1(JNIEnv *env, jclass cls, jobject buf, jlong arg1) {
+  void *mem = (*env)->GetDirectBufferAddress(env, buf);
+  return (jlong) kasm_exec_asm1(mem, arg1);
+}
 
 jlong Java_kasm_NativeBuffer_execute0(JNIEnv *env, jclass cls, jobject buf) {
   KASM_EXEC_ASM_PRE

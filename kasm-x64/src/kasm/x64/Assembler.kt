@@ -4,6 +4,7 @@ import kasm.Address
 import kasm.NativeBuffer
 import kasm.address
 import kasm.ext.alignUp
+import kasm.ext.enumSetOf
 import java.nio.ByteBuffer
 
 class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
@@ -11,7 +12,7 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
     constructor(buffer: NativeBuffer) : this(buffer.byteBuffer)
 
     companion object {
-        val SYSV_CALLEE_SAVED_REGISTERS = listOf(
+        val SYSV_CALLEE_SAVED_REGISTERS = enumSetOf(
                 GpRegister64.RBP,
                 GpRegister64.RBX,
                 GpRegister64.R12,
@@ -194,6 +195,22 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
             vmovsd(addressExpression, register)
         } else {
             movsd(addressExpression, register)
+        }
+    }
+
+    fun movFloat(register: XmmRegister, addressExpression: AddressExpression32) {
+        if(VmovssXmmM32.isSupported()) {
+            vmovss(register, addressExpression)
+        } else {
+            movss(register, addressExpression)
+        }
+    }
+
+    fun movFloat(addressExpression: AddressExpression32, register: XmmRegister) {
+        if(VmovssXmmM32.isSupported()) {
+            vmovss(addressExpression, register)
+        } else {
+            movss(addressExpression, register)
         }
     }
 
@@ -417,8 +434,8 @@ class Assembler(override val buffer: ByteBuffer) : AbstractAssembler() {
 //        mov(register, field.getAddress(*indices))
 //    }
 
-    inline fun emitStackFrame(action: Assembler.() -> Unit) {
-        pushed(SYSV_CALLEE_SAVED_REGISTERS, action = action)
+    inline fun emitStackFrame(argumentRegisters: Set<GpRegister64> = enumSetOf<GpRegister64>(), action: Assembler.() -> Unit) {
+        pushed((SYSV_CALLEE_SAVED_REGISTERS - argumentRegisters).toList(), action = action)
         emms()
         cld()
         ret()

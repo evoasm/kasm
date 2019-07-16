@@ -2,6 +2,127 @@ package kasm.x64
 
 import java.nio.ByteBuffer
 
+
+abstract class SimpleInstructionTracer : InstructionTracer {
+
+    abstract fun traceWrite(register: Register, index: Int, range: BitRange, always: Boolean)
+    abstract fun traceRead(register: Register, index: Int, range: BitRange)
+    abstract fun traceImplicitWrite(register: Register, range: BitRange, always: Boolean)
+    abstract fun traceImplicitRead(register: Register, range: BitRange)
+    abstract fun traceImplicitRead(addressExpression: AddressExpression)
+    abstract fun traceWrite(addressExpression: AddressExpression, index: Int)
+    abstract fun traceRead(addressExpression: AddressExpression, index: Int)
+    abstract override fun traceImplicitRead(immediate: Int)
+    abstract override fun traceRead(immediate: Long, index: Int, size: BitSize)
+    abstract fun traceWrite(statusOrControlField: StatusOrControlField)
+    abstract fun traceRead(statusOrControlField: StatusOrControlField)
+
+    override fun traceWrite(register: GpRegister8, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+    override fun traceWrite(register: GpRegister16, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+    override fun traceWrite(register: GpRegister32, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+    override fun traceWrite(register: GpRegister64, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+    override fun traceWrite(register: XmmRegister, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+    override fun traceWrite(register: YmmRegister, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+    override fun traceWrite(register: MmRegister, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+    override fun traceWrite(register: X87Register, index: Int, range: BitRange, always: Boolean) = traceWrite(register as Register, index, range, always)
+
+    override fun traceRead(register: GpRegister8, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+    override fun traceRead(register: GpRegister16, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+    override fun traceRead(register: GpRegister32, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+    override fun traceRead(register: GpRegister64, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+    override fun traceRead(register: XmmRegister, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+    override fun traceRead(register: YmmRegister, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+    override fun traceRead(register: MmRegister, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+    override fun traceRead(register: X87Register, index: Int, range: BitRange)  = traceRead(register as Register, index, range)
+
+    override fun traceImplicitWrite(register: GpRegister8, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: GpRegister16, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: GpRegister32, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: GpRegister64, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: XmmRegister, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: YmmRegister, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: MmRegister, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: X87Register, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+    override fun traceImplicitWrite(register: IpRegister, range: BitRange, always: Boolean)  = traceImplicitWrite(register as Register, range, always)
+
+
+    override fun traceImplicitRead(register: GpRegister8, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: GpRegister16, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: GpRegister32, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: GpRegister64, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: XmmRegister, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: YmmRegister, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: MmRegister, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: X87Register, range: BitRange)  = traceImplicitRead(register as Register, range)
+    override fun traceImplicitRead(register: IpRegister, range: BitRange)  = traceImplicitRead(register as Register, range)
+
+
+    override fun traceImplicitRead(addressExpression: AddressExpression8)  = traceImplicitRead(addressExpression as AddressExpression)
+
+
+    override fun traceImplicitRead(addressExpression: AddressExpression16)  = traceImplicitRead(addressExpression as AddressExpression)
+    override fun traceImplicitRead(addressExpression: AddressExpression32)  = traceImplicitRead(addressExpression as AddressExpression)
+    override fun traceImplicitRead(addressExpression: AddressExpression64)  = traceImplicitRead(addressExpression as AddressExpression)
+
+
+    override fun traceImplicitWrite(addressExpression: AddressExpression8)  = traceImplicitWrite(addressExpression as AddressExpression)
+
+    abstract fun traceImplicitWrite(addressExpression: AddressExpression)
+
+    override fun traceImplicitWrite(addressExpression: AddressExpression16)  = traceImplicitWrite(addressExpression as AddressExpression)
+    override fun traceImplicitWrite(addressExpression: AddressExpression32)  = traceImplicitWrite(addressExpression as AddressExpression)
+    override fun traceImplicitWrite(addressExpression: AddressExpression64)  = traceImplicitWrite(addressExpression as AddressExpression)
+
+
+    override fun traceWrite(addressExpression: AddressExpression80, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+
+
+    override fun traceWrite(addressExpression: AddressExpression64, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression32, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression16, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression8, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression128, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression256, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression512, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression28Bytes, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression108Bytes, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+    override fun traceWrite(addressExpression: AddressExpression512Bytes, index: Int)  = traceWrite(addressExpression as AddressExpression, index)
+
+
+    override fun traceRead(addressExpression: AddressExpression64, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression32, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression16, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression8, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression80, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression128, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression256, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression512, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression28Bytes, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression108Bytes, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: AddressExpression512Bytes, index: Int)  = traceRead(addressExpression as AddressExpression, index)
+    override fun traceRead(addressExpression: VectorAddressExpression, index: Int) {}
+
+    override fun traceRead(immediate: Byte, index: Int, size: BitSize) = traceRead(immediate.toLong(), index, size)
+    override fun traceRead(immediate: Short, index: Int, size: BitSize) = traceRead(immediate.toLong(), index, size)
+    override fun traceRead(immediate: Int, index: Int, size: BitSize) = traceRead(immediate.toLong(), index, size)
+
+
+
+    override fun traceWrite(rflagsField: RflagsField, always: Boolean) = traceWrite(rflagsField as StatusOrControlField)
+    override fun traceWrite(mxcsrField: MxcsrField, always: Boolean) = traceWrite(mxcsrField as StatusOrControlField)
+    override fun traceWrite(x87TagField: X87TagField, always: Boolean) = traceWrite(x87TagField as StatusOrControlField)
+    override fun traceWrite(x87StatusField: X87StatusField, always: Boolean) = traceWrite(x87StatusField as StatusOrControlField)
+    override fun traceWrite(x87ControlField: X87ControlField, always: Boolean) = traceWrite(x87ControlField as StatusOrControlField)
+
+    override fun traceRead(rflagsField: RflagsField) = traceRead(rflagsField as StatusOrControlField)
+    override fun traceRead(mxcsrField: MxcsrField) = traceRead(mxcsrField as StatusOrControlField)
+    override fun traceRead(x87TagField: X87TagField) =  traceRead(x87TagField as StatusOrControlField)
+    override fun traceRead(x87StatusField: X87StatusField) =  traceRead(x87StatusField as StatusOrControlField)
+    override fun traceRead(x87ControlField: X87ControlField) = traceRead(x87ControlField as StatusOrControlField)
+
+
+}
+
 interface InstructionTracer {
     fun beginTracing() {}
     fun endTracing() {}
@@ -80,10 +201,10 @@ interface InstructionTracer {
     fun traceRead(addressExpression: AddressExpression512Bytes, index: Int) {}
     fun traceRead(addressExpression: VectorAddressExpression, index: Int) {}
 
-    fun traceRead(immediate: Byte, index: Int, size: BitSize?) {}
-    fun traceRead(immediate: Short, index: Int, size: BitSize?) {}
-    fun traceRead(immediate: Int, index: Int, size: BitSize?) {}
-    fun traceRead(immediate: Long, index: Int, size: BitSize?) {}
+    fun traceRead(immediate: Byte, index: Int, size: BitSize) {}
+    fun traceRead(immediate: Short, index: Int, size: BitSize) {}
+    fun traceRead(immediate: Int, index: Int, size: BitSize) {}
+    fun traceRead(immediate: Long, index: Int, size: BitSize) {}
 
     fun traceRead(rflagsField: RflagsField) {}
     fun traceWrite(rflagsField: RflagsField, always: Boolean) {}

@@ -293,7 +293,9 @@ object CpuId {
             }
         }
 
+        buffer.setExecutable(true)
         buffer.execute()
+        buffer.setExecutable(false)
 
         val enumSet = EnumSet.noneOf(CpuFeature::class.java)
         CPUID_MAP.entries.forEachIndexed { leafIndex, (_, outputRegisters) ->

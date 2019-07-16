@@ -10,6 +10,7 @@ public class NativeBuffer {
     static {
         System.loadLibrary("kasm_buffer");
 
+        register();
         /*FIXME: not sure about keeping this in a static context */
         cleaner = Cleaner.create();
     }
@@ -72,53 +73,46 @@ public class NativeBuffer {
     private static native long execute2(ByteBuffer byteBuffer, long arg1, long arg2) throws SignalException;
     private static native long execute6(ByteBuffer byteBuffer, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) throws SignalException;
 
-    private static native long executeUnsafe(ByteBuffer byteBuffer);
+    private static native long executeUnsafe0(ByteBuffer byteBuffer);
+    private static native long executeUnsafe1(ByteBuffer byteBuffer, long arg);
+
+    private static native void register();
     private static native void release(long address, int capacity);
     protected static native long getAddress(ByteBuffer byteBuffer);
 
-    public synchronized long execute() throws Exception {
+    public long execute() throws Exception {
         long result;
-
-        protect(byteBuffer, true);
         result = execute0(byteBuffer);
-        protect(byteBuffer, false);
-
         return result;
     }
 
-    public synchronized long execute(long arg1) throws Exception {
+    public long execute(long arg1) throws Exception {
         long result;
-
-        protect(byteBuffer, true);
         result = execute1(byteBuffer, arg1);
-        protect(byteBuffer, false);
-
         return result;
     }
 
-    public synchronized long execute(long arg1, long arg2) throws Exception {
+    public long execute(long arg1, long arg2) throws Exception {
         long result;
-
-        protect(byteBuffer, true);
         result = execute2(byteBuffer, arg1, arg2);
-        protect(byteBuffer, false);
-
         return result;
     }
 
-    public synchronized long execute(long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) throws Exception {
+    public long execute(long arg1, long arg2, long arg3, long arg4, long arg5, long arg6) throws Exception {
         long result;
-
-        protect(byteBuffer, true);
         result = execute6(byteBuffer, arg1, arg2, arg3, arg4, arg5, arg6);
-        protect(byteBuffer, false);
-
         return result;
     }
 
-    public synchronized void executeUnsafe() {
-        protect(byteBuffer, true);
-        executeUnsafe(byteBuffer);
-        protect(byteBuffer, false);
+    public void setExecutable(boolean executable) {
+        protect(byteBuffer, executable);
+    }
+
+    public void executeUnsafe() {
+        executeUnsafe0(byteBuffer);
+    }
+
+    public void executeUnsafe(long arg1) {
+        executeUnsafe1(byteBuffer, arg1);
     }
 }

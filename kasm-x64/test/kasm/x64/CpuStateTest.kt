@@ -46,8 +46,8 @@ internal class CpuStateTest {
             it.isAccessible = true
             it.getDelegate(cpuState1).let {
                 when(it) {
-                    is Structure.LongField -> it.set(random.nextLong())
-                    is Structure.VectorField -> {
+                    is LongStructureField -> it.set(random.nextLong())
+                    is VectorStructureField -> {
                         val array = ByteArray(it.elementSize)
                         random.nextBytes(array)
                         for(i in array.indices) {
