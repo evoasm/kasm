@@ -7,6 +7,11 @@
 #  define KASM_UNIX
 #endif
 
+#ifdef _OPENMP
+#  include <omp.h>
+#endif
+
+
 #if defined(_WIN32)
 #  include <malloc.h>
 #endif
@@ -364,15 +369,26 @@ kasm_exec_asm6(void *mem, intptr_t arg1, intptr_t arg2, intptr_t arg3, intptr_t 
   return result;
 }
 
-#define KASM_EXEC_ASM_PRE \
+static void
+kasm_exec_asm_parallel(void *mem, int n) {
+  #pragma omp parallel for num_threads(n)
+  for(int i = 0; i < n; i++) {
+    kasm_exec_asm1(mem, i);
+  }
+}
+
+#define KASM_EXEC_ASM_PRE_NORET \
   void *mem = (*env)->GetDirectBufferAddress(env, buf);\
-  jlong result = -1;\
   \
   kasm_sig_install();\
   \
   if(KASM_SIG_TRY()) {\
 
-#define KASM_EXEC_ASM_POST \
+#define KASM_EXEC_ASM_PRE \
+  jlong result = -1;\
+  KASM_EXEC_ASM_PRE_NORET
+
+#define KASM_EXEC_ASM_POST_NORET \
     kasm_sig_uninstall();\
   } else {\
     const char *excp_cls;\
@@ -392,8 +408,37 @@ kasm_exec_asm6(void *mem, intptr_t arg1, intptr_t arg2, intptr_t arg3, intptr_t 
     }\
     kasm_sig_uninstall();\
     kasm_throw_sig(env, excp_cls, _kasm_sig_ctx.sig_addr);\
-  }\
+  }
+
+#define KASM_EXEC_ASM_POST \
+  KASM_EXEC_ASM_POST_NORET \
   return (jlong) result;
+
+
+#ifndef _OPENMP
+static void kasm_throw_no_openmp(JNIEnv *env) {
+  kasm_throw(env, KASM_RUNTIME_EXCEPTION, "Kasm was compiled without OpenMP support");
+}
+#endif
+
+void Java_kasm_NativeBuffer_executeParallel0(JNIEnv *env, jclass cls, jobject buf, jint count) {
+#ifdef _OPENMP
+  KASM_EXEC_ASM_PRE_NORET
+  kasm_exec_asm_parallel(mem, count);
+  KASM_EXEC_ASM_POST_NORET
+#else
+    kasm_throw_no_openmp(env);
+#endif
+}
+
+void Java_kasm_NativeBuffer_executeParallelUnsafe0(JNIEnv *env, jclass cls, jobject buf, jint count) {
+#ifdef _OPENMP
+  void *mem = (*env)->GetDirectBufferAddress(env, buf);
+  kasm_exec_asm_parallel(mem, count);
+#else
+    kasm_throw_no_openmp(env);
+#endif
+}
 
 
 jlong Java_kasm_NativeBuffer_executeUnsafe0(JNIEnv *env, jclass cls, jobject buf) {

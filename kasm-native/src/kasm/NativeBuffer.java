@@ -76,6 +76,9 @@ public class NativeBuffer {
     private static native long executeUnsafe0(ByteBuffer byteBuffer);
     private static native long executeUnsafe1(ByteBuffer byteBuffer, long arg);
 
+    private static native void executeParallel0(ByteBuffer byteBuffer, int count);
+    private static native void executeParallelUnsafe0(ByteBuffer byteBuffer, int count);
+
     private static native void register();
     private static native void release(long address, int capacity);
     protected static native long getAddress(ByteBuffer byteBuffer);
@@ -84,6 +87,14 @@ public class NativeBuffer {
         long result;
         result = execute0(byteBuffer);
         return result;
+    }
+
+    public void executeParallel(int count) throws Exception {
+        executeParallel0(byteBuffer, count);
+    }
+
+    public void executeParallelUnsafe(int count) {
+        executeParallelUnsafe0(byteBuffer, count);
     }
 
     public long execute(long arg1) throws Exception {

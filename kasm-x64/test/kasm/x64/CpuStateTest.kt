@@ -67,7 +67,7 @@ internal class CpuStateTest {
             cpuState2.emitSave(this)
         }
 
-        println(buffer.toByteString())
+        println("CPUID test: #{buffer.toByteString()}")
 
         buffer.execute()
 

@@ -81,6 +81,30 @@ JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_executeUnsafe1
 
 /*
  * Class:     kasm_NativeBuffer
+ * Method:    executeParallel0
+ * Signature: (Ljava/nio/ByteBuffer;I)V
+ */
+JNIEXPORT void JNICALL Java_kasm_NativeBuffer_executeParallel0
+  (JNIEnv *, jclass, jobject, jint);
+
+/*
+ * Class:     kasm_NativeBuffer
+ * Method:    executeParallelUnsafe0
+ * Signature: (Ljava/nio/ByteBuffer;I)V
+ */
+JNIEXPORT void JNICALL Java_kasm_NativeBuffer_executeParallelUnsafe0
+  (JNIEnv *, jclass, jobject, jint);
+
+/*
+ * Class:     kasm_NativeBuffer
+ * Method:    register
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_kasm_NativeBuffer_register
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     kasm_NativeBuffer
  * Method:    release
  * Signature: (JI)V
  */
@@ -94,14 +118,6 @@ JNIEXPORT void JNICALL Java_kasm_NativeBuffer_release
  */
 JNIEXPORT jlong JNICALL Java_kasm_NativeBuffer_getAddress
   (JNIEnv *, jclass, jobject);
-
-/*
- * Class:     kasm_NativeBuffer
- * Method:    register
- * Signature: ()V
- */
-JNIEXPORT void JNICALL Java_kasm_NativeBuffer_register
-  (JNIEnv *, jclass);
 
 #ifdef __cplusplus
 }
